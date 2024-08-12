@@ -1,0 +1,39 @@
+Client Health Checks
+    dbo.v_ClientHealthState.HealthType = '1000' and dbo.v_ClientHealthState.HealthState = '1'         Client is successfully communicating with the Management Point
+    dbo.v_ClientHealthState.HealthType = '1001' and dbo.v_ClientHealthState.HealthState = '1'         Client is successfully retrieving a certificate from the local certificate store
+
+    /* 1000	2	Client is failing to communicate with the Management Point	Client is failing to communicate with the Management Point */
+    select * from v_ClientHealthState where HealthType = '1000' and HealthState = '2'
+
+
+    /* 1001	2	Client is failing to retrieve a certificate from the local certificate store	Client is failing to retrieve a certificate from the local certificate store */
+    select * from v_ClientHealthState where HealthType = '1001' and HealthState = '2'
+
+
+/* Client Action Status */
+select SMS_G_System_ClientActionStatus.* from  SMS_R_System inner join SMS_G_System_ClientActionStatus on SMS_G_System_ClientActionStatus.ResourceId = SMS_R_System.ResourceId
+
+/* Client Events */
+select SMS_G_System_ClientEvents.* from  SMS_R_System inner join SMS_G_System_ClientEvents on SMS_G_System_ClientEvents.ResourceId = SMS_R_System.ResourceId
+
+/* Client Diagnostics  */
+select SMS_G_System_CLIENT_DIAGNOSTICS.* from  SMS_R_System inner join SMS_G_System_CLIENT_DIAGNOSTICS on SMS_G_System_CLIENT_DIAGNOSTICS.ResourceId = SMS_R_System.ResourceId
+
+/* Client Operation Status */
+select SMS_G_System_ClientOperationStatus.* from  SMS_R_System inner join SMS_G_System_ClientOperationStatus on SMS_G_System_ClientOperationStatus.ResourceId = SMS_R_System.ResourceId
+
+/* Client Status */
+select SMS_G_System_CH_ClientSummary.* from  SMS_R_System inner join SMS_G_System_CH_ClientSummary on SMS_G_System_CH_ClientSummary.ResourceId = SMS_R_System.ResourceId
+
+
+Last Hardware & Software Scan
+    dbo.v_CH_ClientHealth.LastDDR older than specified time OR dbo.v_CH_ClientHealth.IsActiveDDR = '0'
+    dbo.v_CH_ClientHealth.LastHW older than specified time OR dbo.v_CH_ClientHealth.IsActiveHW = '0'
+    dbo.v_CH_ClientHealth.LastSW older than specified time  OR dbo.v_CH_ClientHealth.IsActiveSW = '0'
+    dbo.v_CH_ClientHealth.LastHealthEvaluationResult != '7'
+    dbo.v_CH_ClientHealth.LastHealthEvaluation older than specified time  OR dbo.v_CH_ClientHealth.LastEvaluationHealthy = '0'
+    dbo.v_CH_ClientHealth.LastPolicyRequest older than specified time OR dbo.v_CH_ClientHealth.IsActivePolicyRequest = '0'
+    dbo.v_CH_ClientHealth.LastActiveTime older than specified time  OR dbo.v_CH_ClientHealth.ClientActiveStatus = '0'
+    dbo.v_CH_ClientHealth.LastOnlineTime older than specified time
+    dbo.v_CH_ClientHealth.ErrorCode != 0
+    select * from  SMS_R_System inner join SMS_CH_ClientHealth on SMS_CH_ClientHealth.ResourceId = SMS_R_System.ResourceId

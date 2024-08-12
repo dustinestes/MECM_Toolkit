@@ -1,0 +1,31 @@
+//===================================================
+// TPM Chip
+//===================================================
+
+[ SMS_Report (TRUE),
+  SMS_Group_Name ("TPM"),
+  SMS_Class_ID ("MICROSOFT|TPM|1.0"),
+  Namespace ("\\\\\\\\.\\\\root\\\\CIMv2\\\\Security\\\\MicrosoftTpm") ]
+class Win32_Tpm : SMS_Class_Template
+{
+    [ SMS_Report (TRUE) ]
+	boolean    IsActivated_InitialValue;
+    [ SMS_Report (TRUE) ]
+    boolean    IsEnabled_InitialValue;
+    [ SMS_Report (TRUE) ]
+    boolean    IsOwned_InitialValue;
+    [ SMS_Report (TRUE) ]
+    UInt32     ManufacturerId;
+    [ SMS_Report (TRUE) ]
+    String     ManufacturerVersion;
+    [ SMS_Report (TRUE) ]
+    String     ManufacturerVersionInfo;
+    [ SMS_Report (TRUE) ]
+    String     PhysicalPresenceVersionInfo;
+    [ SMS_Report (TRUE) ]
+    String     SpecVersion;
+};
+
+//=======================================================
+// TPM Chip end
+//=======================================================

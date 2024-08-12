@@ -1,0 +1,221 @@
+# MECM Toolkit - Infrastructure - Installation - Distribution Point - Roaming CMG DP
+
+This document outlines the use case, solution design, and configuration steps in order to deploy a "roaming", CMG-connected, Pull-Distribution Point.
+
+## References
+
+The following items are referenced in the code within this document. Familiarize yourself with them before moving on.
+
+| Name       | Link |
+|------------|------|
+| Install and Configure Distribution Points | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/core/servers/deploy/configure/install-and-configure-distribution-points) |
+| Supported Configurations for CMG | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/core/clients/manage/cmg/supported-configurations) |
+
+&nbsp;
+
+## Table of Contents
+
+- [MECM - Infrastructure - Installation - Distribution Point - Roaming CMG DP](#mecm---infrastructure---installation---distribution-point---roaming-cmg-dp)
+  - [References](#references)
+  - [Table of Contents](#table-of-contents)
+- [Background](#background)
+  - [Use-Case](#use-case)
+  - [Problems](#problems)
+  - [Goals](#goals)
+  - [Prerequisites \& Assumptions](#prerequisites--assumptions)
+  - [Final Design](#final-design)
+- [Install](#install)
+  - [Windows 10](#windows-10)
+    - [Site Server Access](#site-server-access)
+    - [Certificates](#certificates)
+    - [Roles \& Features](#roles--features)
+    - [Firewall Rules](#firewall-rules)
+    - [NO\_SMS\_ON\_DRIVE.sms File Setup](#no_sms_on_drivesms-file-setup)
+    - [Install Roles](#install-roles)
+    - [Add Certificate to IIS Site](#add-certificate-to-iis-site)
+  - [Windows Server](#windows-server)
+- [Configure Hierarchy](#configure-hierarchy)
+  - [Configure DP Role](#configure-dp-role)
+  - [Boundary Group](#boundary-group)
+  - [](#)
+- [Monitor](#monitor)
+  - [Role Insallation](#role-insallation)
+- [Role Status](#role-status)
+- [Validate](#validate)
+- [Appendices](#appendices)
+  - [Apdx A: \[Name\]](#apdx-a-name)
+
+&nbsp;
+
+# Background
+
+## Use-Case
+
+During the acquisition and transition phase, all devices owned by the acquired (child) organization need to be reimaged and migrated to the acquiring (parent) organization. This is due to a multitude of factors including licensing, security, audits/compliance, ease-of-management, etc.
+
+Certain problems and restrictions prevent the parent company from completely absorbing the child organization and some autonomy needs to remain. Therefore, a solution needs to be designed that would allow the child organization to take advantage of all of the powerful tools and automation that the parent organization has developed. Simultaneously, the parent organization needs to increase visibility, standardize, and incorporate the child organization and its processes to reduce cost and minimize management of all assets.
+
+## Problems
+
+The following problems were addressed in this design solution
+
+- Client acquired a new organization with separate network, infrastructure, and technical teams
+- Communication and trust could not be setup between organizations
+- Intune could not be used on the newly acquired organization's assets
+- Imaging needed to be standardized to complete the transition of the acquired organization's assets onto corporate standards and security tools
+
+## Goals
+
+When designing this
+
+- Localize a large set of content on a remote network
+- Utilize minimal hardware and investment
+- Minimize costs for CMG content
+- Provide on-prem imaging and application deployment
+- Prevent a many-to-one connection over the WAN for CMG content
+- Reduce WAN/Internet utilization
+- Allow for far more concurrent image deployments without significant impact or concern for network overutilization'
+- Unify management of devices at both organizations
+
+## Prerequisites & Assumptions
+
+The following items are required and, where applicable, some assumptions may be made:
+
+- MECM environment in a known-good, functional state
+  - Minimum Version: 1806
+- Cloud Management Gateway in a known-good, functional state
+- Hardware for hosting the Pull-DP Role that meets storage and compute requirements of your environment
+- Operating System for Roaming DP
+  - Windows 10/11: Pro or Enterprise
+  - Windows Server 2019 & Up: Standard or Datacenter
+- Role installation on the roaming DP hardware
+  - Management Point (optional)
+  - MECM Client (required for the Pull DP role to work and to communicate with the CMG)
+  - Pull Distribution Point
+
+## Final Design
+
+The design will incorporate the above prerequisites to allow for the creation and localization of this role outside of the parent organization's network.
+
+- Desktop (2 x 500 GB storage drives)
+
+This desktop will be provisioned on the parent orginization's network and pre-provisioned with all of the content. This will then be shipped/carried to the child org's office for secure storage and connection to the network.
+
+This device will utilize an internet connection to maintain network connectivity to the CMG and the parent org's infrastructure. The device will be configured to respond to PXE requests and the child org's network will be configured with helpers to point any PXE boot requests to the network address of this device.
+
+&nbsp;
+
+# Install
+
+## Windows 10
+
+### Site Server Access
+
+Add the Site Server's computer account as a local administrator on the device so that the server can successfully push roles to the device.
+
+```powershell
+Add-LocalGroupMember -Group "Administrators" -Member "[SiteServerComputerAccount]"
+```
+
+### Certificates
+
+A web server needs to be installed to enable SSL on the IIS server role and port.
+
+```powershell
+Get-Certificate -SubjectName $("CN=" + "[DPFQDN]") -DnsName "[DPName]", "[DPFQDN]" -CertStoreLocation "cert:\LocalMachine\My" -Template "[TemplateName]" -Url ldap:
+```
+
+### Roles & Features
+
+At the moment, there are no roles or features that you need to install manually. Adding the role in the MECM console will perform all installations as part of the deployment of the DP role.
+
+### Firewall Rules
+
+The following Firewall rules need to be allowed so that the Primary Site Server can connect to the DP and install the role(s)
+
+```powershell
+Set-NetFirewallRule -DisplayGroup "Windows Management Instrumentation (WMI)" -Action Allow -Profile Domain -Enabled True
+```
+
+### NO_SMS_ON_DRIVE.sms File Setup
+
+The "NO_SMS_ON_DRIVE.sms" file needs to exist before you install the role to ensure MECM does not try to utilize drives it should not for storing content. This can cause drives such as the C: to become full and impact or prevent operation of the OS.
+
+> Note: You may need to run this more than once changing the path to target all drives that should not contain content packages.
+
+```powershell
+New-Item -Path "C:\" -Name "NO_SMS_ON_DRIVE.sms" -ItemType File -Force
+```
+
+### Install Roles
+
+Once the above is complete, you can instruct the MECM Hiararchy Manager to now insall the required role(s) onto the device that will represent the Roaming DP.
+
+> Note: This step focuses only on installing the role. Configuration of the hierarchy and role will occur in the next section.
+
+1. Open MECM Console
+2. Navigate to: \Administration\Overview\Site Configuration\Servers and Site System Roles
+3. Right Click Servers and Site System Roles
+4. Click Create Site System Server
+5. Configure the General tab as follows
+   - FQDN of Device
+   - Select Site Code
+6. Click Next
+7. Configure the Proxy tab as follows
+   - Use a proxy if the environment requires one
+8. Configure the System Role Selection tab as follows
+   - Distribution Point: Enabled
+   - Management Point: Enabled
+9. Configure the Distribution Point as necessary
+10. Configure the Management Point as necessary
+
+See the monitoring section for role installation
+
+### Add Certificate to IIS Site
+
+
+## Windows Server
+
+# Configure Hierarchy
+
+## Configure DP Role
+
+## Boundary Group
+
+##
+
+&nbsp;
+
+# Monitor
+
+## Role Insallation
+
+After you submit the configuration to the MECM Hierarchy for the new Distribution Point Role, use the following for monitoring installation success/errors.
+
+- Open the Distmgr.log file on the Primary Site Server
+
+Wait for the installation process to complete and the log to show successful.
+
+> Note: If you installed the PXE Responder role, check to ensure the service exists on the device and that it is running.
+
+# Role Status
+
+You can check the stats of the role after installation by looking within the monitoring tab in the console.
+
+1. Navigate to: \Monitoring\Overview\Distribution Status\Distribution Point Configuration Status
+2. Select the new DP
+3. Check the Summary and Details tabs in the bottom pane to determine status
+
+&nbsp;
+
+# Validate
+
+&nbsp;
+
+# Appendices
+
+A collection of sections that provide detailed explanation or understanding to the above topic but are not necessary within the main body of the topic.
+
+## Apdx A: [Name]
+
+[Text]

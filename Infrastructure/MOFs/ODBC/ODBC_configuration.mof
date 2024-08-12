@@ -1,0 +1,17 @@
+------------------- Configuration.MOF-------------------------------
+#pragma namespace ("\\\\.\\root\\cimv2")
+[ dynamic,
+  provider("RegProv"),
+  ClassContext("local|HKEY_LOCAL_MACHINE\\SOFTWARE\\ODBC\\ODBC.INI")
+]
+class ODBC_Connections
+{
+     [Key]  string DSN;
+     [PropertyContext("Database")]
+            string Database;
+     [PropertyContext("Description")]
+            string Description;
+     [PropertyContext("Server")]
+            string Server;
+};
+------------------------------------------------------------------------

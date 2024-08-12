@@ -1,0 +1,25 @@
+------------------- sms_def.MOF-------------------------------
+//**************************************************************************
+//* Class: Registry for ODBC
+//* Derived from: (nothing)
+//*
+//* Key = Name, Version
+//*
+//* This registry class provides information on ODBC information for the machine
+//*
+//**************************************************************************
+[SMS_Report      (TRUE),
+SMS_Group_Name   ("ODBC System DSN"),
+SMS_Class_ID     ("OAI|ODBC System DSN|1.0")]
+class ODBC_Connections : SMS_Class_Template
+{
+  [SMS_Report(TRUE),Key]
+       string DSN;
+  [SMS_Report(TRUE)]
+       string Database;
+  [SMS_Report(TRUE)]
+       string Description;
+  [SMS_Report(TRUE)]
+       string Server;
+};
+------------------------------------------------------------------------ 

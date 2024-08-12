@@ -1,0 +1,14 @@
+select 
+	SMS_R_System.ResourceId, SMS_R_System.Name 
+from  SMS_R_System 
+where SMS_R_System.Name 
+	not in (
+		select SMS_R_System.Name 
+		from  SMS_R_System 
+		inner join SMS_G_System_INSTALLED_SOFTWARE 
+		on SMS_G_System_INSTALLED_SOFTWARE.ResourceID = SMS_R_System.ResourceId 
+		where SMS_G_System_INSTALLED_SOFTWARE.ARPDisplayName 
+		like "<software name>" 
+		and SMS_G_System_INSTALLED_SOFTWARE.ProductVersion 
+		like "<software version>"
+		)

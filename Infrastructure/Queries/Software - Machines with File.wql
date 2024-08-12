@@ -1,0 +1,10 @@
+Select Distinct 
+	SMS_R_System.Name, 
+	SMS_G_System_SoftwareFile.FilePath, 
+	SMS_G_System_SoftwareFile.FileName 
+From  
+	SMS_R_System 
+	Inner Join SMS_G_System_SoftwareFile 
+	On SMS_G_System_SoftwareFile.ResourceID = SMS_R_System.ResourceId 
+Where 
+	SMS_G_System_SoftwareFile.FileName like "tnsnames.ora"

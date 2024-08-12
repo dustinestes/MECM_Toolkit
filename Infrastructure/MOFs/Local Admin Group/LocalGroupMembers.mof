@@ -1,0 +1,12 @@
+#pragma deleteclass ("LocalGroupMembers",NOFAIL)
+[ SMS_Report     (TRUE),
+  SMS_Group_Name ("LocalGroupMembers"),
+  SMS_Class_ID   ("LocalGroupMembers") ]
+class cm_LocalGroupMembers : SMS_Class_Template
+{
+    [SMS_Report (TRUE), key ] string Account;
+    [SMS_Report (TRUE)      ] string Category;
+    [SMS_Report (TRUE)      ] string Domain;
+    [SMS_Report (TRUE), key ] string Name;
+    [SMS_Report (TRUE)      ] string Type;
+};

@@ -1,0 +1,12 @@
+Select 
+	R.ResourceID,
+	R.ResourceType,
+	R.Name,
+	R.SMSUniqueIdentifier,
+	R.ResourceDomainORWorkgroup,
+	R.Client 
+From 
+	SMS_R_System As r 
+	Full Join SMS_R_System As s1 On s1.ResourceId = r.ResourceId 
+	full Join SMS_R_System As s2 On s2.Name = s1.Name 
+Where s1.Name = s2.Name And s1.ResourceId != s2.ResourceId

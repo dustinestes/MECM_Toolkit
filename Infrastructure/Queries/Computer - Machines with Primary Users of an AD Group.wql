@@ -1,0 +1,5 @@
+Select SMS_R_SYSTEM.Name, SMS_R_User.UniqueUserName, SMS_R_SYSTEM.Client
+FROM SMS_R_System
+JOIN SMS_UserMachineRelationship ON SMS_R_System.Name=SMS_UserMachineRelationship.MachineResourceName
+JOIN SMS_R_User ON SMS_UserMachineRelationship.UniqueUserName=SMS_R_User.UniqueUserName
+Where SMS_R_User.UniqueUserName in (select UniqueUserName from SMS_R_User where UserGroupName = "SWN\\BIS Team All")

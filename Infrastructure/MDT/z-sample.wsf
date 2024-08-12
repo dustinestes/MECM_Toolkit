@@ -1,0 +1,82 @@
+<job id="Z-Sample">
+<script language="VBScript" src="ZTIUtility.vbs"/>
+<script language="VBScript">
+ 
+' //***************************************************************************
+' // ***** Script Header *****
+' //
+' // Solution: Solution Accelerator for Microsoft Deployment
+' // File: Z-Sample.wsf
+' //
+' // Purpose: Template
+' //
+' // Usage: cscript Z-Sample.wsf [/debug:true]
+' //
+' // Customer Build Version: 1.0.0
+' // Customer Script Version: 1.0.0
+' // Customer History:
+' //
+' // ***** End Header *****
+' //***************************************************************************
+ 
+'//----------------------------------------------------------------------------
+'//
+'// Global constant and variable declarations
+'//
+'//----------------------------------------------------------------------------
+ 
+Option Explicit
+ 
+Dim iRetVal,iTest1,iLoopCount
+Dim oTSProgressUI
+	Set oTSProgressUI = CreateObject("Microsoft.SMS.TSProgressUI")
+		oTSProgressUI.CloseProgressDialog()
+ 
+'//----------------------------------------------------------------------------
+'// End declarations
+'//----------------------------------------------------------------------------
+ 
+'//----------------------------------------------------------------------------
+'// Main routine
+'//----------------------------------------------------------------------------
+ 
+On Error Resume Next
+iRetVal = ZTIProcess
+ProcessResults iRetVal
+On Error Goto 0
+ 
+'//---------------------------------------------------------------------------
+'//
+'// Function: ZTIProcess()
+'//
+'// Input: None
+'//
+'// Return: Success - 0
+'// Failure - non-zero
+'//
+'// Purpose: Perform main ZTI processing
+'//
+'//---------------------------------------------------------------------------
+Function ZTIProcess()
+ 
+iRetVal = Success
+iTest1 = 0
+ 
+ZTIProcess = iRetval
+ 
+					Do
+						oLogging.ReportProgress "Percent Complete: " & iTest1, iTest1
+				
+							wscript.Sleep 1000
+							iTest1 = iTest1 + 10
+
+					If iTest1 > 300 then 	
+						Exit Do
+					End If
+					  
+					Loop Until (iTest1 = 100)
+ 
+End Function
+ 
+</script>
+</job>
