@@ -1,0 +1,6 @@
+# Output All TS Variables Starting With: "vr_"
+    $Object_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment
+
+    foreach ($Item in $($Object_TSEnvironment.GetVariables() | Where-Object -FilterScript {$_ -like "vr_*"})) { 
+        Write-Host "    $Item = " $Object_TSEnvironment.Value($Item)
+    }
