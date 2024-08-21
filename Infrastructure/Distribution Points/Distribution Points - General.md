@@ -8,7 +8,7 @@ The following items are referenced in the code within this document. Familiarize
 
 | Name       | Type       | Description                                                    | Link |
 |------------|------------|----------------------------------------------------------------|------|
-| Math       | .NET Class | Provides constants and static methods for trigonometric, logarithmic, and other common mathematical functions. | [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/api/system.math?view=net-8.0)
+| None | | | |
 
 &nbsp;
 
