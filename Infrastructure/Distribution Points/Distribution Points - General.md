@@ -1,4 +1,4 @@
-# Code Snippets - PowerShell - [Collection] - [Topic]
+# MECM Toolkit - Infrastructure - Distribution Points - General
 
 &nbsp;
 
@@ -14,7 +14,7 @@ The following items are referenced in the code within this document. Familiarize
 
 ## Table of Contents
 
-- [Code Snippets - PowerShell - \[Collection\] - \[Topic\]](#code-snippets---powershell---collection---topic)
+- [MECM Toolkit - Infrastructure - Distribution Points - General](#mecm-toolkit---infrastructure---distribution-points---general)
   - [References](#references)
   - [Table of Contents](#table-of-contents)
 - [Basic Snippets](#basic-snippets)
