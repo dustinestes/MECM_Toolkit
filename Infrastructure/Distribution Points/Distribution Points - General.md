@@ -21,8 +21,7 @@ The following items are referenced in the code within this document. Familiarize
   - [Reinstall the Distribution Point Role](#reinstall-the-distribution-point-role)
     - [Process](#process)
     - [Snippets](#snippets)
-  - [\[SnippetTitle\]](#snippettitle)
-    - [Example](#example)
+  - [Enable PXE Role On Distribution Points](#enable-pxe-role-on-distribution-points)
     - [Snippets](#snippets-1)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
@@ -66,18 +65,50 @@ WHERE ServerName = '[ServerFQDN]'
 
 &nbsp;
 
-## [SnippetTitle]
+## Enable PXE Role On Distribution Points
 
-[Text]
+The snippets below provide a method for configuring the PXE role on a single server or an entire hierarchy of servers.
 
-### Example
-
-[Text]
+> Note: Both snippets include Where-Object clauses to ensure that devices with PXE already enabled are not included and neither are CMG servers.
 
 ### Snippets
 
 ```powershell
-# Add Code Here
+# Single Server
+  $DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[SERVERFQDN]" | Where-Object {($_.EmbeddedProperties.IsPXE.Value -eq 0) -and ($_.NALType -ne "Windows Azure")}
+
+  $Params = @{
+  InputObject = $DistributionPoint
+  EnablePXE = $true
+  AllowPxeResponse = $true
+  EnableUnknownComputerSupport = $true
+  EnableNonWdsPxe = $true
+  PxePassword = $(ConvertTo-SecureString -String "[Password]" -AsPlainText -Force)
+  ClearMacAddressForRespondingPxeRequest = $true
+  UserDeviceAffinity = "AllowWithAutomaticApproval"
+  }
+
+  Set-CMDistributionPoint @Params
+
+# Multiple Servers
+  $DistributionPoints = Get-CMDistributionPoint -SiteSystemServerName "*" | Where-Object {($_.EmbeddedProperties.IsPXE.Value -eq 0) -and ($_.NALType -ne "Windows Azure")}
+
+  foreach ($DistributionPoint in $DistributionPoints) {
+    $Params = @{
+      InputObject = $DistributionPoint
+      EnablePXE = $true
+      AllowPxeResponse = $true
+      EnableUnknownComputerSupport = $true
+      EnableNonWdsPxe = $true
+      PxePassword = $(ConvertTo-SecureString -String "[Password]" -AsPlainText -Force)
+      ClearMacAddressForRespondingPxeRequest = $true
+      UserDeviceAffinity = "AllowWithAutomaticApproval"
+    }
+
+    Set-CMDistributionPoint @Params
+
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): PXE Enabled"
+  }
 ```
 
 &nbsp;
