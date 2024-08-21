@@ -125,7 +125,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                 "vr_Directory_Logs_Scripts"         = "%vr_Directory_Logs%\Scripts"                                 # A subdirectory for centralizing configuration baseline related logs
                 "vr_Directory_TaskSequences"        = "%vr_Directory_Logs%\TaskSequences\%vr_Meta_TaskSequenceName_Clean%\%vr_Meta_TimeStampUTC%"    # All log files associated with Task Sequences
                     "vr_Directory_TS_Client"        = "%vr_Directory_TaskSequences%\Client"                         # A subdirectory for centralizing client related logs
-                        "vr_Directory_TS_CCMSetup"  = "%vr_Directory_Client%\CCMSetup"                              # All log files associated with the ccmsetup process
+                        "vr_Directory_TS_CCMSetup"  = "%vr_Directory_TS_Client%\CCMSetup"                              # All log files associated with the ccmsetup process
                     "vr_Directory_TS_EventLogs"     = "%vr_Directory_TaskSequences%\EventLogs"                      # A subdirectory for exporting event log files
                     "vr_Directory_TS_Validation"    = "%vr_Directory_TaskSequences%\Validation"                     # A subdirectory for storing output from the validation scripts in the toolkit
                     "vr_Directory_TS_Variables"     = "%vr_Directory_TaskSequences%\Variables"                      # A subdirectory for exporting the Task Sequence variable dump
@@ -370,7 +370,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                     $Hash_VR_Variables.vr_Device_SerialNumber = (Get-CimInstance -ClassName Win32_BIOS).SerialNumber
                 }
                 else {
-                    $Hash_VR_Variables.vr_Device_SerialNumber = "[Empty]"
+                    $Hash_VR_Variables.vr_Device_SerialNumber = "[empty]"
                 }
 
                 Write-Host "        Serial Number: $($Hash_VR_Variables.vr_Device_SerialNumber)"
@@ -383,7 +383,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                     $Hash_VR_Variables.vr_Device_AssetTag = "[empty]"
                 }
 
-                Write-Host "        Model: $($Hash_VR_Variables.vr_Device_Model)"
+                Write-Host "        Asset Tag: $($Hash_VR_Variables.vr_Device_AssetTag)"
 
             # Device Type
                 switch ($Hash_VR_Variables.vr_Device_ChassisType) {
@@ -392,6 +392,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                     {$Array_ChassisType_Server -eq $_} { $Hash_VR_Variables.vr_Device_DeviceType = "Server" }
                     Default { $Hash_VR_Variables.vr_Device_DeviceType = "Unknown" }
                 }
+
+                Write-Host "        Device Type: $($Hash_VR_Variables.vr_Device_DeviceType)"
 
             # Is Virtual
                 $Object_MECM_TSEnvironment.Value("vr_Device_Virtual") = $false
@@ -402,6 +404,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                         $Hash_VR_Variables.vr_Device_DeviceType = "Virtual Machine"
                     }
                 }
+
+                Write-Host "        Is Virtual: $($Hash_VR_Variables.vr_Device_Virtual)"
 
             # Write-Host "        Status: Success"
         }
