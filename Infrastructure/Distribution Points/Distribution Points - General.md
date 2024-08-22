@@ -21,8 +21,9 @@ The following items are referenced in the code within this document. Familiarize
   - [Reinstall the Distribution Point Role](#reinstall-the-distribution-point-role)
     - [Process](#process)
     - [Snippets](#snippets)
-  - [Enable PXE Role On Distribution Points](#enable-pxe-role-on-distribution-points)
-    - [Snippets](#snippets-1)
+  - [Configure PXE](#configure-pxe)
+    - [Enable](#enable)
+    - [Disable](#disable)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
 - [Appendices](#appendices)
@@ -65,13 +66,13 @@ WHERE ServerName = '[ServerFQDN]'
 
 &nbsp;
 
-## Enable PXE Role On Distribution Points
+## Configure PXE
 
 The snippets below provide a method for configuring the PXE role on a single server or an entire hierarchy of servers.
 
-> Note: Both snippets include Where-Object clauses to ensure that devices with PXE already enabled are not included and neither are CMG servers.
+### Enable
 
-### Snippets
+> Note: Both snippets include Where-Object clauses to ensure that devices with PXE already enabled are not included and neither are CMG servers.
 
 ```powershell
 # Single Server
@@ -108,6 +109,38 @@ The snippets below provide a method for configuring the PXE role on a single ser
     Set-CMDistributionPoint @Params
 
     Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): PXE Enabled"
+  }
+```
+
+### Disable
+
+> Note: Both snippets include Where-Object clauses to ensure that devices with PXE already disabled are not included and neither are CMG servers.
+
+```powershell
+# Single Server
+	$DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[ServerFQDN]" | Where-Object {($_.EmbeddedProperties.IsPXE.Value -eq 1) -and ($_.NALType -ne "Windows Azure")}
+
+	$Params = @{
+	InputObject = $DistributionPoint
+	EnablePXE = $false
+	KeepWds = $true
+	}
+
+	Set-CMDistributionPoint @Params
+
+# Multiple Servers
+  $DistributionPoints = Get-CMDistributionPoint -SiteSystemServerName "*" | Where-Object {($_.EmbeddedProperties.IsPXE.Value -eq 1) -and ($_.NALType -ne "Windows Azure")}
+
+  foreach ($DistributionPoint in $DistributionPoints) {
+    $Params = @{
+      InputObject = $DistributionPoint
+      EnablePXE = $false
+      KeepWds = $true
+    }
+
+    Set-CMDistributionPoint @Params
+
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): PXE Disabled"
   }
 ```
 
