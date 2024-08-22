@@ -78,7 +78,7 @@ $MECM_Log_Type = " type=`"1`""
         $MECM_Log_Component     = " component=`"Logging`""
         $MECM_Log_Context       = " context=`"$([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)`""
         $MECM_Log_Thread        = " thread=`"$([Threading.Thread]::CurrentThread.ManagedThreadId)`""
-        $MECM_Log_File          = " file=`"VividRock Task Sequence Toolkit`">"
+        $MECM_Log_File          = " file=`"VividRock MECM Toolkit`">"
         $MECM_Log_Constructed   = $MECM_Log_MessagePrefix + $Item + $MECM_Log_MessageSuffix + $MECM_Log_Time + $MECM_Log_Date + $MECM_Log_Component + $MECM_Log_Context + $MECM_Log_Type + $MECM_Log_Thread + $MECM_Log_File
 
         try {

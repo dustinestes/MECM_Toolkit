@@ -11,7 +11,7 @@ TODO
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Configure OS Environment - Create Environment Variables"
+    Write-Host "  MECM Toolkit - Configure OS Environment - Create Environment Variables"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

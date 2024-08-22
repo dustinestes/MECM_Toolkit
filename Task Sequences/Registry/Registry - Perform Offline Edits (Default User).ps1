@@ -13,7 +13,7 @@ param (
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Registry - Perform Offline Edits (Default User)"
+    Write-Host "  MECM Toolkit - Registry - Perform Offline Edits (Default User)"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"
@@ -127,7 +127,7 @@ param (
                 New-ItemProperty -Path $Temp_RegistryPath -Name $Temp_PropertyName -Value $Temp_PropertyValue -PropertyType $Temp_PropertyType -Force -ErrorAction Stop | Out-Null
 
             Write-Host "          Success: Modified Taskbar Search Box"
-            
+
             Set-Variable -Name "Temp_*" -Value $null
         }
         catch {

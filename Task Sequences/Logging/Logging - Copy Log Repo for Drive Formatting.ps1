@@ -14,7 +14,7 @@ param (
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Logging - Copy Log Repository for Drive Formatting"
+    Write-Host "  MECM Toolkit - Logging - Copy Log Repository for Drive Formatting"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

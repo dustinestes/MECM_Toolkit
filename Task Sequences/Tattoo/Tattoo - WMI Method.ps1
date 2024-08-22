@@ -18,7 +18,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Tattoo-WMI
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Tattoo - WMI Method"
+    Write-Host "  MECM Toolkit - Tattoo - WMI Method"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -226,7 +226,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Tattoo-WMI
                 Value           = ""
             }
 
-            <# VvividRock - Task Sequence Toolkit Values #>
+            <# VividRock - MECM Toolkit Values #>
             201 = @{
                 WMIName         = "Status_Start_DateTimeUTC"
                 TSVariableName  = "vr_Meta_DateStartObject"
@@ -324,7 +324,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Tattoo-WMI
                 Value           = ""
             }
 
-            <# VvividRock - Light Touch Interface (LTI) Values #>
+            <# VividRock - Light Touch Interface (LTI) Values #>
             301 = @{
                 WMIName         = "LTI_ComputerName"
                 TSVariableName  = "vr_LTI_ComputerName"

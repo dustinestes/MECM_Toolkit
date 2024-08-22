@@ -18,7 +18,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - USMT - Run LoadState"
+    Write-Host "  MECM Toolkit - USMT - Run LoadState"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

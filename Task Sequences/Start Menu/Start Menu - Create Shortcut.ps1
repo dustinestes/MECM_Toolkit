@@ -19,7 +19,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Start Menu - Create Shortcut"
+    Write-Host "  MECM Toolkit - Start Menu - Create Shortcut"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

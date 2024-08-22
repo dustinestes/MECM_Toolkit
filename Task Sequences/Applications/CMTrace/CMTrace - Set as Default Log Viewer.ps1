@@ -15,7 +15,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - CMTrace - Set as Default Log Viewer"
+    Write-Host "  MECM Toolkit - CMTrace - Set as Default Log Viewer"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -45,7 +45,7 @@ param (
     # Names
 
     # Paths
-    
+
     # Registry
         $Registry_01 = @{
             "Path"          = "HKLM:\SOFTWARE\Classes\.lo_"
@@ -129,7 +129,7 @@ param (
             # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
             begin {
-                
+
             }
 
             process {
@@ -193,14 +193,14 @@ param (
     # Validate Registry Path Exists
         foreach ($Item in (Get-Variable -Name "Registry_0*")) {
             Write-Host "    - Path: $($Item.Value.Path)"
-            
+
             If (Test-Path $Item.Value.Path) {
                 Write-Host "        Success: Path Exists"
             }
             Else {
                 try {
                     New-Item -Path $Item.Value.Path -ItemType Directory -Force -ErrorAction Stop | Out-Null
-                    Write-Host "        Missing: Path Created"  
+                    Write-Host "        Missing: Path Created"
                 }
                 catch {
                     Write-Host "        Error: Path Could Not Be Created"

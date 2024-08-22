@@ -13,7 +13,7 @@
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Certificate - Enroll in Certificate"
+    Write-Host "  MECM Toolkit - Certificate - Enroll in Certificate"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"
@@ -60,7 +60,7 @@
 
     # Delete Cache Elements
         Write-Host "      - Delete Cache Elements"
-        
+
         try {
             foreach ($Item in $MECMCache_Elements) {
                 Write-Host "          Content ID: $($Item.ContentId)"
@@ -85,7 +85,7 @@
 
     # Output Status
         Write-Host "      - Output Status"
-        
+
         try {
             $MECMCache_Elements_Validate = $MECMObject.GetCacheInfo().GetCacheElements()
 

@@ -15,7 +15,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Task Sequences\Operating Syste
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Operating Systems - Offline Service a WIM"
+    Write-Host "  MECM Toolkit - Operating Systems - Offline Service a WIM"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -521,7 +521,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Task Sequences\Operating Syste
     Date:       $($Meta_DateTime.ToString("yyyy-MM-dd")) (UTC)
     Time:       $($Meta_DateTime.ToString("HH:mm:ss")) (UTC)
     Source:     This offline serviced copy of the WIM file was created using
-                the Task Sequence Toolkit - Operating Systems - Offline Servicing
+                the MECM Toolkit - Operating Systems - Offline Servicing
                 script.
     Links:      https://www.vividrock.com
 ------------------------------------------------------------------------------

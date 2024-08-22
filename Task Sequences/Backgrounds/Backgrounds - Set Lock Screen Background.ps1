@@ -16,7 +16,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Backgrounds - Set Lock Screen Background"
+    Write-Host "  MECM Toolkit - Backgrounds - Set Lock Screen Background"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

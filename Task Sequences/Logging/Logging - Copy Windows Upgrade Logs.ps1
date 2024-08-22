@@ -2,7 +2,7 @@
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Log Collection - Windows Upgrade Logs"
+    Write-Host "  MECM Toolkit - Log Collection - Windows Upgrade Logs"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

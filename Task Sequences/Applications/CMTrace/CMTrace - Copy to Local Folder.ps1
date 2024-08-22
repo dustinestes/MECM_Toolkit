@@ -16,7 +16,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - CMTrace - Copy to Local Folder"
+    Write-Host "  MECM Toolkit - CMTrace - Copy to Local Folder"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -83,7 +83,7 @@ param (
             # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
             begin {
-                
+
             }
 
             process {

@@ -15,7 +15,7 @@
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - USMT - Determine Distribution Point"
+    Write-Host "  MECM Toolkit - USMT - Determine Distribution Point"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

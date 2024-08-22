@@ -20,7 +20,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Core - Initialize Variables"
+    Write-Host "  MECM Toolkit - Core - Initialize Variables"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

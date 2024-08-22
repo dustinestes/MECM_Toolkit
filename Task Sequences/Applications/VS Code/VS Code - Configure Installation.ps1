@@ -16,7 +16,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - VS Code - Configure Installation"
+    Write-Host "  MECM Toolkit - VS Code - Configure Installation"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -85,7 +85,7 @@ param (
             # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
             begin {
-                
+
             }
 
             process {
@@ -164,7 +164,7 @@ param (
     # Winget Installed
     # Required for Updating VS Code
         # Write-Host "    - Winget Installed"
-        
+
         # try {
         #     if (Test-Path -Path $Path_Winget_SystemInstall -ErrorAction Stop) {
         #         Write-Host "        System"
@@ -203,7 +203,7 @@ param (
         else {
             foreach ($Item in $Param_Extensions) {
                 Write-Host "        $($Item.Name)"
-    
+
                 try {
                     Start-Process -NoNewWindow -FilePath 'code' -ArgumentList "--install-extension","$($Item)","-Force" -Wait -ErrorAction Stop
                     Write-Host "        Success"

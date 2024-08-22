@@ -15,7 +15,7 @@ param (
 #--------------------------------------------------------------------------------------------
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Firewall - Set Windows Firewall State"
+    Write-Host "  MECM Toolkit - Firewall - Set Windows Firewall State"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -50,7 +50,7 @@ param (
     # Arrays
 
     # Output to Log
-        Write-Host "    - Parameters" 
+        Write-Host "    - Parameters"
         Write-Host "        Profiles: $($Param_Profiles -join ", ")"
         Write-Host "        Enabled: $($Param_Enabled)"
 
@@ -75,7 +75,7 @@ param (
             # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
             begin {
-                
+
             }
 
             process {

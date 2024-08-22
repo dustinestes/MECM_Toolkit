@@ -15,7 +15,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Windows - License Activation (MAK)"
+    Write-Host "  MECM Toolkit - Windows - License Activation (MAK)"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -75,7 +75,7 @@ param (
     # [FunctionName]
         Write-Host "    - [FunctionName]"
         function Verb-Noun ($ParamName) {
-        
+
         begin {
 
         }
@@ -95,7 +95,7 @@ param (
         end {
 
         }
-        
+
         }
 
     # Write Error Codes
@@ -106,7 +106,7 @@ param (
             # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
             begin {
-                
+
             }
 
             process {

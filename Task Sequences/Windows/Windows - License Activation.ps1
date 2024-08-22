@@ -15,7 +15,7 @@
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  Task Sequence Toolkit - Windows - License Activation"
+    Write-Host "  MECM Toolkit - Windows - License Activation"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -88,7 +88,7 @@
             # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
             begin {
-                
+
             }
 
             process {
@@ -202,12 +202,12 @@
                     Write-Host "        Attempt $($Temp_Counter)/$($Temp_RetryMax)"
                     Start-Process -FilePath "C:\Windows\System32\cscript.exe" -ArgumentList "slmgr.vbs","/ato" -WindowStyle Hidden -Wait -ErrorAction Stop
                     Start-Sleep -Seconds 20
-                    
+
                 } until (
                     ($Dataset_WMI_SoftwareLicensingProduct.LicenseStatus -eq "1") -or ($Temp_Counter -eq $Temp_RetryMax)
                 )
-                
-    
+
+
                 Write-Host "        Success"
             }
             else {
