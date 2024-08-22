@@ -57,7 +57,7 @@ param (
         $Path_WMI_Namespace      = "root\cimV2"
 
     # Files
-        $File_HardwareInfo_LogOutput    = "$($Object_MECM_TSEnvironment.Value("vr_Directory_TaskSequences"))\$($Filename)"
+        $File_HardwareInfo_LogOutput    = "$($Object_MECM_TSEnvironment.Value("vr_Directory_TS_Validation"))\$($Filename)"
 
     # Hashtables
         $ErrorCodes_Win32PnpEntity_ConfigMngr = @{
