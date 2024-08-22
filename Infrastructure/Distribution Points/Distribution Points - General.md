@@ -21,9 +21,12 @@ The following items are referenced in the code within this document. Familiarize
   - [Reinstall the Distribution Point Role](#reinstall-the-distribution-point-role)
     - [Process](#process)
     - [Snippets](#snippets)
-  - [Configure PXE](#configure-pxe)
+  - [PXE](#pxe)
     - [Enable](#enable)
     - [Disable](#disable)
+  - [Content Validation](#content-validation)
+    - [Enable](#enable-1)
+    - [Disable](#disable-1)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
 - [Appendices](#appendices)
@@ -66,7 +69,7 @@ WHERE ServerName = '[ServerFQDN]'
 
 &nbsp;
 
-## Configure PXE
+## PXE
 
 The snippets below provide a method for configuring the PXE role on a single server or an entire hierarchy of servers.
 
@@ -108,7 +111,7 @@ The snippets below provide a method for configuring the PXE role on a single ser
 
     Set-CMDistributionPoint @Params
 
-    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): PXE Enabled"
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Completed Successfully"
   }
 ```
 
@@ -118,7 +121,7 @@ The snippets below provide a method for configuring the PXE role on a single ser
 
 ```powershell
 # Single Server
-	$DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[ServerFQDN]" | Where-Object {($_.EmbeddedProperties.IsPXE.Value -eq 1) -and ($_.NALType -ne "Windows Azure")}
+	$DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[SERVERFQDN]" | Where-Object {($_.EmbeddedProperties.IsPXE.Value -eq 1) -and ($_.NALType -ne "Windows Azure")}
 
 	$Params = @{
 	InputObject = $DistributionPoint
@@ -140,7 +143,75 @@ The snippets below provide a method for configuring the PXE role on a single ser
 
     Set-CMDistributionPoint @Params
 
-    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): PXE Disabled"
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Completed Successfully"
+  }
+```
+
+## Content Validation
+
+The snippets below provide a method for configuring the Content Validation settings on a single server or an entire hierarchy of servers.
+
+### Enable
+
+> Note: Both snippets include Where-Object clauses to ensure that devices with Content Validation already enabled are not included and neither are CMG servers.
+
+```powershell
+# Single Server
+	$DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[SERVERFQDN]" | Where-Object {($_.EmbeddedProperties.DPMonEnabled.Value -eq 0) -and ($_.NALType -ne "Windows Azure")}
+
+	$Params = @{
+    InputObject = $DistributionPoint
+    EnableContentValidation = $true
+    ContentValidationSchedule = New-CMSchedule -Start "2024-01-01T00:00:00.0000000" -DurationInterval Days -DurationCount 0 -RecurInterval Days -RecurCount 2
+    ContentMonitoringPriority = "Lowest"
+	}
+
+	Set-CMDistributionPoint @Params
+
+# Multiple Servers
+  $DistributionPoints = Get-CMDistributionPoint -SiteSystemServerName "*" | Where-Object {($_.EmbeddedProperties.DPMonEnabled.Value -eq 0) -and ($_.NALType -ne "Windows Azure")}
+
+  foreach ($DistributionPoint in $DistributionPoints) {
+    $Params = @{
+      InputObject = $DistributionPoint
+      EnableContentValidation = $true
+      ContentValidationSchedule = New-CMSchedule -Start "2024-01-01T00:00:00.0000000" -DurationInterval Days -DurationCount 0 -RecurInterval Days -RecurCount 2
+      ContentMonitoringPriority = "Lowest"
+    }
+
+    Set-CMDistributionPoint @Params
+
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Completed Successfully"
+  }
+```
+
+### Disable
+
+> Note: Both snippets include Where-Object clauses to ensure that devices with Content Validation already disabled are not included and neither are CMG servers.
+
+```powershell
+# Single Server
+	$DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[SERVERFQDN]" | Where-Object {($_.EmbeddedProperties.DPMonEnabled.Value -eq 1) -and ($_.NALType -ne "Windows Azure")}
+
+	$Params = @{
+    InputObject = $DistributionPoint
+    EnableContentValidation = $false
+	}
+
+	Set-CMDistributionPoint @Params
+
+# Multiple Servers
+  $DistributionPoints = Get-CMDistributionPoint -SiteSystemServerName "*" | Where-Object {($_.EmbeddedProperties.DPMonEnabled.Value -eq 0) -and ($_.NALType -ne "Windows Azure")}
+
+  foreach ($DistributionPoint in $DistributionPoints) {
+    $Params = @{
+      InputObject = $DistributionPoint
+      EnableContentValidation = $false
+    }
+
+    Set-CMDistributionPoint @Params
+
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Completed Successfully"
   }
 ```
 
