@@ -19,7 +19,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Maintenance Tasks\Deploym
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Maintenance Tasks - Deployment Package Rotation"
+    Write-Host "  MECM Toolkit - Maintenance Tasks - Deployment Package Rotation"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -103,7 +103,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Maintenance Tasks\Deploym
         $Path_SoftwareUpdates_DeploymentPackage_Source  = "$($Param_SourceDir)\$($Name_Month_Numerical)"
 
     # Settings
-        $Settings_SoftwareUpdates_DeploymentPackage_Description = "This Deployment Package is created as part of the VividRock - MECM Toolkit - Maintenance Tasks - Deployment Package Rotation script."
+        $Settings_SoftwareUpdates_DeploymentPackage_Description = "This Deployment Package is created as part of the MECM Toolkit - Maintenance Tasks - Deployment Package Rotation script."
         $Settings_SoftwareUpdates_DeploymentPackage_BinaryReplicationEnabled = $true
 
     # Files

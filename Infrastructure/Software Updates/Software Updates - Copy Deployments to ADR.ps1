@@ -18,7 +18,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Software Updates\Copy Dep
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Software Updates - Copy Deployments to ADR"
+    Write-Host "  MECM Toolkit - Software Updates - Copy Deployments to ADR"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

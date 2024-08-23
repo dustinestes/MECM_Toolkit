@@ -15,7 +15,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Client\CMG - Set Client t
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Client - Cloud Management Gateway - Set Client to Internet"
+    Write-Host "  MECM Toolkit - Client - Cloud Management Gateway - Set Client to Internet"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

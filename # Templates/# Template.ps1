@@ -17,7 +17,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 #Region Header
 
   Write-Host "------------------------------------------------------------------------------"
-  Write-Host "  VividRock - MECM Toolkit - [Collection] - [SpecificOperation]"
+  Write-Host "  MECM Toolkit - [Collection] - [SpecificOperation]"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host "    Author:     Dustin Estes"
   Write-Host "    Company:    VividRock"

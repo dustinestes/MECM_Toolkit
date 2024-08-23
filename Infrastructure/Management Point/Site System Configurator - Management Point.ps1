@@ -1,5 +1,5 @@
 <# ------------------------------------------------------------------------------------------------------------------------------------------
-    VividRock - MECM Toolkit - Site System Configurator - Management Point
+    MECM Toolkit - Site System Configurator - Management Point
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
     Author:     Dustin Estes
@@ -29,7 +29,7 @@
 
     Operation:
         The script functions as follows:
-            - 
+            -
 
     Exit Codes:
         Provide a table of the exit codes that are in the script so the reader can quickly identify the code to its
@@ -39,7 +39,7 @@
          1011       Incorrect Operating System
 
     Future Features:
-        1. 
+        1.
 
     Snippets
         # Step Name
@@ -51,7 +51,7 @@
             else {
                 Write-Host " Success" -ForegroundColor Green
             }
-    
+
         # Step Name
             Write-Host "  - <step name>: " -NoNewline
             try {
@@ -358,7 +358,7 @@ Clear-Host
 
             # Add .NET Framework
                 ".Net Framework 4.6" = "NET-Framework-45-Core"
-               
+
             # Install Background Intelligent Transfer Service (BITS)
                 "Background Intelligent Tranfser Service" = "BITS"
                 "BITS IIS Server Extensions" = "BITS-IIS-Ext"
@@ -377,7 +377,7 @@ Clear-Host
             Write-Host "    -"$Item.Key
             Write-Host "          Name: "$Item.Value
             Write-Host "          Status: " -NoNewLine
-    
+
             try {
                 if ($(Get-WindowsFeature -Name $Item.Value).Installed -eq $true) {
                     Write-Host "Already Installed" -ForegroundColor DarkGray
@@ -485,10 +485,10 @@ Clear-Host
 
     # Validate Request Filtering
         Write-Host "    - Validate Request Filtering"
-        
+
         # Define Variables
             $IIS_RequestFiltering_Verbs_Expected = @{
-                #VerbName       = ExpectedState  (Allow, Deny, NotExist) 
+                #VerbName       = ExpectedState  (Allow, Deny, NotExist)
                 # "GET"           = "Allow"
                 # "POST"          = "Allow"
                 # "CCM_POST"      = "Allow"
@@ -521,7 +521,7 @@ Clear-Host
 
                 $IIS_RequestFiltering_Verbs_CustomObject += $Temp_Object
             }
-            
+
         # Validate
             Write-Host "          Allow Verbs:"$(if (($IIS_RequestFiltering_Verbs_CustomObject | Where-Object -Property "ExpectedState" -eq "Allow" | Measure-Object).Count -le 0) {Write-Output "None"} else {Write-Output (($IIS_RequestFiltering_Verbs_CustomObject | Where-Object -Property "ExpectedState" -eq "Allow").Verb -join ", ")})
             Write-Host "          Deny Verbs:"$(if (($IIS_RequestFiltering_Verbs_CustomObject | Where-Object -Property "ExpectedState" -eq "Deny" | Measure-Object).Count -le 0) {Write-Output "None"} else {Write-Output (($IIS_RequestFiltering_Verbs_CustomObject | Where-Object -Property "ExpectedState" -eq "Deny").Verb -join ", ")})
@@ -543,7 +543,7 @@ Clear-Host
 
             # Check if Verb Exists and Get Actual State
                 $IIS_RequestFiltering_Verbs_Actual = Get-WebConfiguration  -PSPath "IIS:\sites\$($IIS_Website)" -Filter "System.WebServer/Security/RequestFiltering/Verbs/*" -Recurse
-                
+
                 foreach ($Item in $IIS_RequestFiltering_Verbs_CustomObject) {
                     if ($Item.Verb -in $IIS_RequestFiltering_Verbs_Actual.Verb) {
                         $Item.Exists = $true
@@ -612,7 +612,7 @@ Clear-Host
                                         else {
                                             New-IISConfigCollectionElement -ConfigCollection $IIS_RequestFiltering_Verbs_Collection -ConfigAttribute @{ 'verb'=$($Item.Verb);'allowed'=$false }
                                         }
-                                    
+
                                     # Complete Actions
                                         $Item.Status = 'Denied'
                                         Write-Host $Item.Status -ForegroundColor Green
@@ -633,7 +633,7 @@ Clear-Host
 
 
                                     Remove-IISConfigCollectionElement -ConfigCollection $IIS_RequestFiltering_Verbs_Collection -ConfigAttribute @{ 'verb'=$($Item.Verb) } -Confirm:$false -ErrorAction Stop
-                                    
+
                                     $Item.Status = 'Removed'
 
                                     Write-Host $Item.Status -ForegroundColor Green

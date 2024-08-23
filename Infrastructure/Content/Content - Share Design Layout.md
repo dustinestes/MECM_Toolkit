@@ -196,7 +196,7 @@ Use the following code snippet to quickly generate the above structure at the ta
 #Region
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Content Share"
+    Write-Host "  MECM Toolkit - Content Share"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Description:    Script for creating folder structure of a content share."
     Write-Host "    Version:        1.0"

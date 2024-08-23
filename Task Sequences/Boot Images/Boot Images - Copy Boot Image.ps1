@@ -16,7 +16,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Task Sequences - Boot Images - Copy Boot Image"
+    Write-Host "  MECM Toolkit - Task Sequences - Boot Images - Copy Boot Image"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

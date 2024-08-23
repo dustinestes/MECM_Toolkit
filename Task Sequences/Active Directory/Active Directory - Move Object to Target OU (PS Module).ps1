@@ -17,7 +17,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Active Directory - Move Object to Target OU (PS Module)"
+    Write-Host "  MECM Toolkit - Active Directory - Move Object to Target OU (PS Module)"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

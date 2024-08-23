@@ -17,7 +17,7 @@ Start-Transcript -Path "$($LogPath)\$($env:COMPUTERNAME).log" -Force -ErrorActio
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Client - Site Migration"
+    Write-Host "  MECM Toolkit - Client - Site Migration"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

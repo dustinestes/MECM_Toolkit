@@ -90,7 +90,7 @@ Snippet:
 #Region Header
 
   Out-File -InputObject "------------------------------------------------------------------------------" @Params_Logging
-  Out-File -InputObject "  VividRock - MECM Toolkit - Applications - Detection Logic" @Params_Logging
+  Out-File -InputObject "  MECM Toolkit - Applications - Detection Logic" @Params_Logging
   Out-File -InputObject "------------------------------------------------------------------------------" @Params_Logging
   Out-File -InputObject "    Author:     Dustin Estes" @Params_Logging
   Out-File -InputObject "    Company:    VividRock" @Params_Logging

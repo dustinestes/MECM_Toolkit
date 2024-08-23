@@ -21,7 +21,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Copy TS an
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  VividRock - MECM Toolkit - Task Sequences - Copy TS and All Sub TSes"
+    Write-Host "  MECM Toolkit - Task Sequences - Copy TS and All Sub TSes"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
@@ -171,7 +171,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Copy TS an
             process {
                 try {
                     $Temp_TS_Steps = Get-CMTSStepRunTaskSequence -TaskSequenceName $TsName -ErrorAction Stop | Select-Object -Property @{name="Parent"; expression={$($TsName)}},TsName,@{name="TsNameClean"; expression={($_.TsName -replace "$($_.TsPackageID),","").Trim()}},TsPackageID,@{name="New_TsParent"; expression={""}},@{name="New_TsName"; expression={""}},@{name="New_TsPackageID"; expression={""}},@{name="Status"; expression={"Unprocessed"}}
-                    
+
                     foreach ($Item in $Temp_TS_Steps) {
                         if (Get-CMTSStepRunTaskSequence -TaskSequenceId $Item.TsPackageID -ErrorAction Stop) {
                            # Recursive Items Found
@@ -374,7 +374,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Copy TS an
     #         if (Get-CMTaskSequence -Name $Param_Destination_Name -Fast -ErrorAction Stop) {
     #             Write-Host "            Status: Exists"
     #             Throw "Exists: A Task Sequence with the specified name already exists."
-                
+
     #         }
     #         else {
     #             Write-Host "            Status: Not Exists"
@@ -465,7 +465,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Copy TS an
 
     # Copy Source Task Sequence
         Write-Host "    - Source Task Sequence"
-    
+
         try {
             Write-Host "        Name: $($Param_Source_Name)"
             $Temp_TS_New_Parent = Copy-vr_MECMTaskSequence -TsName $Param_Source_Name -Destination $Path_Destination_FullPath
@@ -493,7 +493,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Copy TS an
                     else {
                         $Item.New_TsParent = ($Dataset_TS_Children | Where-Object -FilterScript { $_.TsNameClean -eq $Item.Parent }).New_TsName
                     }
-                    
+
                     $Item.New_TsName = $Temp_TS_New_Object.Name
                     $Item.New_TsPackageID = $Temp_TS_New_Object.PackageID
             }

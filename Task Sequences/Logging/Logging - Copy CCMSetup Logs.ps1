@@ -16,7 +16,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Logging - 
 #Region Header
 
 	Write-Host "------------------------------------------------------------------------------"
-	Write-Host "  VividRock - MECM Toolkit - Task Sequences - Logging - Copy CCMSetup Logs"
+	Write-Host "  MECM Toolkit - Task Sequences - Logging - Copy CCMSetup Logs"
 	Write-Host "------------------------------------------------------------------------------"
 	Write-Host "    Author:     Dustin Estes"
 	Write-Host "    Company:    VividRock"
