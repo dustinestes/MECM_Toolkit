@@ -22,7 +22,7 @@ $MECM_Log_Type = " type=`"1`""
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Logging - Write Log Entry"
+    Write-Host "  MECM Toolkit - Task Sequences - Logging - Write Log Entry"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

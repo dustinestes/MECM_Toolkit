@@ -9,7 +9,7 @@ param (
 
 $MECM_Log_Message = @(
     "------------------------------------------------------------------------------------------------------"
-    "  MECM Toolkit - Logging - Advanced Logging Integration"
+    "  MECM Toolkit - Task Sequences - Logging - Advanced Logging Integration"
     "------------------------------------------------------------------------------------------------------"
     "  Author:    Dustin Estes"
     "  Company:   VividRock"

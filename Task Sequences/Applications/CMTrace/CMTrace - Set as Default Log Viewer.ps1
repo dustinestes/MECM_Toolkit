@@ -15,7 +15,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - CMTrace - Set as Default Log Viewer"
+    Write-Host "  MECM Toolkit - Task Sequences - Applications - CMTrace - Set as Default Log Viewer"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

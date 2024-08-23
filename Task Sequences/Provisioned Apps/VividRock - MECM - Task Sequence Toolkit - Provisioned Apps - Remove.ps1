@@ -2,7 +2,7 @@
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Remove Provisioned Apps (Appx)"
+    Write-Host "  MECM Toolkit - Task Sequences - Remove Provisioned Apps (Appx)"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

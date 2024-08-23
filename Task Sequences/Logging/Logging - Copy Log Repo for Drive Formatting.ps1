@@ -3,8 +3,8 @@
 #--------------------------------------------------------------------------------------------
 
 param (
-    [string]$Source,
-    [string]$Destination
+    [string]$Source,                      # Backup: '%vr_Directory_MECM%'   Restore: 'X:\Temp\MECM'
+    [string]$Destination                  # Backup: 'X:\Temp'               Restore: '%vr_Directory_MECM%'
 )
 
 #--------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ param (
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Logging - Copy Log Repository for Drive Formatting"
+    Write-Host "  MECM Toolkit - Task Sequences - Logging - Copy Log Repository for Drive Formatting"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

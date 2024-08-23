@@ -16,7 +16,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Log Collection - Export Task Sequence XML"
+    Write-Host "  MECM Toolkit - Task Sequences - Logging - Export Task Sequence XML"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

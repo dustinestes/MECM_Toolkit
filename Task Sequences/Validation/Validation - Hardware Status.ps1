@@ -15,7 +15,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Validation - Hardware Status"
+    Write-Host "  MECM Toolkit - Task Sequences - Validation - Hardware Status"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

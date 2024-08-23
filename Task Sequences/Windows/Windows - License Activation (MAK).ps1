@@ -15,7 +15,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Windows - License Activation (MAK)"
+    Write-Host "  MECM Toolkit - Task Sequences - Windows - License Activation (MAK)"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

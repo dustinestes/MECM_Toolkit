@@ -13,7 +13,7 @@
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Services - Manage Status & Configurations"
+    Write-Host "  MECM Toolkit - Task Sequences - Services - Manage Status & Configurations"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

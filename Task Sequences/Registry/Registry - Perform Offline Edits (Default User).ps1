@@ -13,7 +13,7 @@ param (
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Registry - Perform Offline Edits (Default User)"
+    Write-Host "  MECM Toolkit - Task Sequences - Registry - Perform Offline Edits (Default User)"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

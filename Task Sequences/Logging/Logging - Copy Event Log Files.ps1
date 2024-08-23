@@ -15,7 +15,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Log Collection - Copy Event Log Files"
+    Write-Host "  MECM Toolkit - Task Sequences - Logging - Copy Event Log Files"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

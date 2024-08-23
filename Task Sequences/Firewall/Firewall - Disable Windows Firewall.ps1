@@ -15,7 +15,7 @@ param (
 #--------------------------------------------------------------------------------------------
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Firewall - Set Windows Firewall State"
+    Write-Host "  MECM Toolkit - Task Sequences - Firewall - Set Windows Firewall State"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

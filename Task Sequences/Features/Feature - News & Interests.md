@@ -17,7 +17,7 @@
 # Write Output Header Info to SMSTS.log
 # -------------------------------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Disable News & Interests"
+    Write-Host "  MECM Toolkit - Task Sequences - Disable News & Interests"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

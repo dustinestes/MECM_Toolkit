@@ -14,7 +14,7 @@ param (
 # Write Output Header Info to SMSTS.log
 #--------------------------------------------------------------------------------------------
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Start Menu - Import Start Menu Template"
+    Write-Host "  MECM Toolkit - Task Sequences - Start Menu - Import Start Menu Template"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:    Dustin Estes"
     Write-Host "    Company:   VividRock"

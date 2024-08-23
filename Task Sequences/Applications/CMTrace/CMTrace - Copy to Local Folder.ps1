@@ -16,7 +16,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - CMTrace - Copy to Local Folder"
+    Write-Host "  MECM Toolkit - Task Sequences - Applications - CMTrace - Copy to Local Folder"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"

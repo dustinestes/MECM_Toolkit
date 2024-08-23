@@ -1,7 +1,7 @@
 # Construct Message
     $Message = @"
 ----------------------------------------------------------------------------------------------
-  MECM - MECM Toolkit - Development Environment
+  MECM Toolkit - Task Sequences - Development Environment
 ----------------------------------------------------------------------------------------------
   Pausing Task Sequence Environment for development and troubleshooting.
     - Minimize this window until you are done testing

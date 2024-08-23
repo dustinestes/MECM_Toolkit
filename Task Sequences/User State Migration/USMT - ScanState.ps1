@@ -18,7 +18,7 @@ param (
 #Region Header
 
     Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - USMT - ScanState"
+    Write-Host "  MECM Toolkit - Task Sequences - USMT - ScanState"
     Write-Host "------------------------------------------------------------------------------"
     Write-Host "    Author:     Dustin Estes"
     Write-Host "    Company:    VividRock"
