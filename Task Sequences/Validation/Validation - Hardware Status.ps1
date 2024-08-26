@@ -72,7 +72,7 @@ param (
 		$Name_TSVariable_TotalErrors         = "vr_Validation_HardwareErrors"
 
   # Paths
-		$Path_HardwareInfo_Log    = "$($Object_MECM_TSEnvironment.Value("vr_Directory_TS_Validation"))\$($Filename)"
+		$Path_HardwareInfo_Log    = "$($Param_Path))\$($Filename)"
 
   # Files
 
