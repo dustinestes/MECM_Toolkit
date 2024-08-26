@@ -59,6 +59,9 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
     $Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::GetCurrent()
     $Meta_Script_Result = $false,"Failure"
 
+  # Preferences
+    $ErrorActionPreference = "Stop"
+
   # Names
 
   # Paths
@@ -196,7 +199,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 		Write-Host "    - Create Client COM Object"
 
 		try {
-			$Object_MECM_Client = New-Object -ComObject Microsoft.SMS.Client -ErrorAction Stop
+			$Object_MECM_Client = New-Object -ComObject Microsoft.SMS.Client
 			Write-Host "        Status: Success"
 		}
 		catch {
@@ -207,13 +210,12 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 		Write-Host "    - Create TSEnvironment COM Object"
 
 		try {
-			$Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Stop
+			$Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment
 			Write-Host "        Status: Success"
 		}
 		catch {
 			Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
 		}
-
 
 	# Connect to MECM Infrastructure
 		Write-Host "    - Connect to MECM Infrastructure"
@@ -223,8 +225,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 				# Import the PowerShell Module
 					Write-Host "        Import the PowerShell Module"
 
-					if((Get-Module ConfigurationManager -ErrorAction Stop) -in $null,"") {
-						Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1" -ErrorAction Stop
+					if((Get-Module ConfigurationManager) -in $null,"") {
+						Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
 						Write-Host "            Status: Success"
 					}
 					else {
@@ -234,8 +236,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 				# Create the Site Drive
 					Write-Host "        Create the Site Drive"
 
-					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction Stop) -in $null,"") {
-						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider -ErrorAction Stop
+					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
+						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
 						Write-Host "            Status: Success"
 					}
 					else {
@@ -245,8 +247,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 				# Set the Location
 					Write-Host "        Set the Location"
 
-					if ((Get-Location -ErrorAction Stop).Path -ne "$($Param_SiteCode):\") {
-						Set-Location "$($Param_SiteCode):\" -ErrorAction Stop
+					if ((Get-Location).Path -ne "$($Param_SiteCode):\") {
+						Set-Location "$($Param_SiteCode):\"
 						Write-Host "            Status: Success"
 					}
 					else {
@@ -287,7 +289,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 					Write-Host "            Status: Exists"
 				}
 				else {
-					New-Item -Path $Item.Value -ItemType Directory -Force -ErrorAction Stop | Out-Null
+					New-Item -Path $Item.Value -ItemType Directory -Force | Out-Null
 					Write-Host "            Status: Created"
 				}
 			}
@@ -422,7 +424,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 		Write-Host "    - Confirm Cleanup"
 
 		do {
-			$Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o" -ErrorAction Stop
+			$Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o"
 		} until (
 			$Temp_Cleanup_UserInput -in "Y","Yes","N","No"
 		)
