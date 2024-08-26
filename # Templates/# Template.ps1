@@ -60,7 +60,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
     $Meta_Script_Result = $false,"Failure"
 
   # Preferences
-    $ErrorActionPreference = "Stop"
+    $ErrorActionPreference        = "Stop"
+    $CMPSSuppressFastNotUsedCheck = $true
 
   # Names
 
