@@ -131,7 +131,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                     "vr_Directory_TS_Variables"     = "%vr_Directory_TaskSequences%\Variables"                      # A subdirectory for exporting the Task Sequence variable dump
                     "vr_Directory_TS_XML"           = "%vr_Directory_TaskSequences%\XML"                            # A subdirectory for exporting the XML content of all Task Sequences and Sub Taskequences executed
                 "vr_Directory_Logs_Updates"         = "%vr_Directory_Logs%\Updates"                                 # All log files associated with Windows Updates
-                "vr_Directory_Upgrades"             = "%vr_Directory_Logs%\Upgrades"                                # All log files associated with Windows Upgrades
+                "vr_Directory_Logs_Upgrades"        = "%vr_Directory_Logs%\Upgrades"                                # All log files associated with Windows Upgrades
             "vr_Directory_Tools"                    = "%vr_Directory_MECM%\Tools"                                   # A place to store tools that you need localized on devices for configuration, troubleshooting, support, etc.
 
             "vr_Logging_NetworkLogging"             = $Param_NetworkLogging                                         # [bool] Determines through parameter input whether the logging should also be uploaded to a network log repository.
