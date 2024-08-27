@@ -8,7 +8,7 @@ param (
     [string]$OrgName="VividRock",           # Organization Name: "VividRock"
     [string]$OrgAcronym="VR",               # Organization Acronym: "VR"
     [string]$OrgRootDirName="VividRock",    # Root Name of C: Folder: "VividRock"
-    [string]$OrgWMINamespace="MECM_Toolkit" # WMI Namespace for Custom Classes: "MECM_Toolkit"
+    [string]$OrgWMINamespace="MECM" # WMI Namespace for Custom Classes: "MECM_Toolkit"
 )
 
 #--------------------------------------------------------------------------------------------
@@ -73,10 +73,10 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
 
     # Hashtables
         $Hash_VR_Variables = @{
-            "vr_Organization_Name"                        = $OrgName                                                # Used by the toolkit to customize some of the output to the client's environment [to be set in task sequence]
-            "vr_Organization_Acronym"                     = $OrgAcronym                                             # Used by the toolkit to customize some of the output to the client's environment [to be set in task sequence]
-            "vr_Organization_CustomRootDirName"           = $OrgRootDirName                                         # Used by the toolkit to customize the name of the root directory [to be set in task sequence]
-            "vr_Organization_CustomWMINamespace"          = $OrgWMINamespace                                        # Used by the Tattoo WMI tool to customize the location within WMI where the image tattoo data is stored [to be set in task sequence]
+            "vr_Organization_Name"                        = $Param_OrgName                                                # Used by the toolkit to customize some of the output to the client's environment [to be set in task sequence]
+            "vr_Organization_Acronym"                     = $Param_OrgAcronym                                             # Used by the toolkit to customize some of the output to the client's environment [to be set in task sequence]
+            "vr_Organization_CustomRootDirName"           = $Param_OrgRootDirName                                         # Used by the toolkit to customize the name of the root directory [to be set in task sequence]
+            "vr_Organization_CustomWMINamespace"          = $Param_OrgWMINamespace                                        # Used by the Tattoo WMI tool to customize the location within WMI where the image tattoo data is stored [to be set in task sequence]
             # "vr_ImageStatus"                        = "%vr_ImageStatus%"                                          # Used by the Tattoo WMI tool to write the status of the imaging process to WMI. [to be set in task sequence]
 
             "vr_Device_Manufacturer"                = "[to be set within this script]"
@@ -108,7 +108,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
             "vr_Meta_TaskSequenceType"              = $Param_Type
             "vr_Meta_TaskSequenceName_Clean"        = "[to be set within this script]"                              # The cleaned version of the task sequence name for creating valid file names
 
-            "vr_Directory_RootDir"                  = "C:\%vr_Organization_CustomRootDirName%"                      # The main container where all content gets created for the Toolkit
+            "vr_Directory_RootDir"                  = "C:\$($Param_OrgRootDirName)"                      # The main container where all content gets created for the Toolkit
             "vr_Directory_MECM"                     = "%vr_Directory_RootDir%\MECM"                                 # The folder where all MECM related content will be created
             "vr_Directory_Cache"                    = "%vr_Directory_MECM%\Cache"                                   # A place to cache files needed for task sequences, scripts, or other files. The contents of this folder should only be items safe to delete once the operation is complete
                 "vr_Directory_Cache_Backgrounds"    = "%vr_Directory_Cache%\Backgrounds"                            # A place to cache backgrounds for configuring the device
