@@ -7,6 +7,7 @@ A collection of scripts, tools, and processes for the successful installation, a
 - [MECM\_Toolkit](#mecm_toolkit)
   - [Table of Contents](#table-of-contents)
   - [Folder Structure](#folder-structure)
+  - [Additional Resources](#additional-resources)
 
 ## Folder Structure
 
@@ -19,3 +20,18 @@ A collection of scripts, tools, and processes for the successful installation, a
 | Infrastructure | Infrastructure management folder for everything pertaining to installation, administration, and automation of the MECM environment                                             |
 | Integrations   | Integrations management folder for everything pertaining to integrating 3rd party components and products into MECM                                                            |
 | Task Sequences | Task Sequences folder for everything pertaining to the steps and their content for use with Operating System Deployments, In-place Upgrades, and other types of Task Sequences |
+
+&nbsp;
+
+## Additional Resources
+
+- [What’s New in Configuration Manager](https://learn.microsoft.com/mem/configmgr/core/plan-design/changes/whats-new-incremental-versions)
+- [Documentation for Configuration Manager](https://aka.ms/cmcbdocs)
+- [Microsoft Configuration Manager announcement](https://aka.ms/CMAnnounce)
+- [Microsoft Configuration Manager vision statement](https://aka.ms/MEMVisionPaper)
+- [Evaluate Configuration Manager in a lab](https://learn.microsoft.com/mem/configmgr/core/get-started/evaluate-with-lab-environment)
+- [Upgrade to Configuration Manager](https://learn.microsoft.com/mem/configmgr/core/servers/deploy/install/upgrade-to-configuration-manager)
+- [Configuration Manager Forums](https://aka.ms/cmcbforums)
+- [Configuration Manager Support](https://aka.ms/cmcbsupport)
+- [Report an issue](https://aka.ms/configmgrfeedback)
+- [Provide suggestions](https://aka.ms/configmgrsuggestions)
