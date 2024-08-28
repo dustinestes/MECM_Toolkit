@@ -53,8 +53,10 @@ Before implementing this upgrade, it is recommended that you review the Microsof
 Download the following products:
 
 - [ ] [Windows ADK 10.1.26100.1 (May 2024)](https://go.microsoft.com/fwlink/?linkid=2271337)
+- [ ] [Windows PE add-on for the Windows ADK 10.1.26100.1 (May 2024)](https://go.microsoft.com/fwlink/?linkid=2271338)
   - Site Servers
-- [ ] [Microsoft Visual C++ 2015-2019 (14.28.29914.0)](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+- [ ] [Microsoft Visual C++ 2015-2019](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+  - Minimum Version: 14.28.29914.0
   - Both x64 & x86
   - All Site System Servers in Hierarchy
 - [ ] [SQL ODBC Driver 18 for SQL Server](https://go.microsoft.com/fwlink/?linkid=2280794)
