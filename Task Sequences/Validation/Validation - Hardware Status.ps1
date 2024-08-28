@@ -72,7 +72,7 @@ param (
 		$Name_TSVariable_TotalErrors         = "vr_Validation_HardwareErrors"
 
   # Paths
-		$Path_HardwareInfo_Log    = "$($Param_Path))\$($Filename)"
+		$Path_HardwareInfo_Log    = "$($Param_Path)\$($Param_Filename)"
 
   # Files
 
