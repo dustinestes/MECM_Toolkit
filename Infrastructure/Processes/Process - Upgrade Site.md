@@ -24,8 +24,11 @@ The following items are referenced in the code within this document. Familiarize
   - [Backup](#backup)
     - [Hardware Inventories](#hardware-inventories)
     - [Site \& Database](#site--database)
+    - [Site Maintenance Tasks](#site-maintenance-tasks)
+    - [Customizations](#customizations)
   - [Upgrade](#upgrade)
   - [Post-Upgrade](#post-upgrade)
+    - [Enable Maintenance Tasks](#enable-maintenance-tasks)
     - [Enable Optional Features](#enable-optional-features)
     - [Update MECM Console Application Package](#update-mecm-console-application-package)
     - [Update Boot Image(s)](#update-boot-images)
@@ -84,6 +87,8 @@ The following backup procedures should be followed to ensure you have rollback a
 
 - [ ] Backup Hardware Inventories
 - [ ] Backup Site & Database
+- [ ] Site Maintenance Tasks
+- [ ] Customizations
 
 ### Hardware Inventories
 
@@ -127,7 +132,36 @@ Process
 5. Start the SMS_SITE_BACKUP service (services.msc or Configuration Manager Service Manager)
 6. Monitor using the smsbkup.log file
 
+### Site Maintenance Tasks
 
+The following site maintenance tasks should be disabled if they are scheduled to run during the time that the update is meant to take place.
+
+| Name | Schedule | Status |
+|-|-|-|
+| Backup Site Server | | |
+| Delete Aged Client Operations | | |
+| Delete Aged Discovery Data | | |
+
+Process
+
+1. Navigate to: \Administration\Overview\Site Configuration\Sites
+2. Click Site Maintenance
+3. Edit the maintenance task
+4. Copy the schedule into the table above
+5. Disable the maintenance task
+6. Repeat for each aintenance task above
+
+### Customizations
+
+The following table just lists some possible customizations that you will want to make sure you backup prior to an upgrade.
+
+| Name | Purpose | Location|
+|-|-|-|
+| osdinjection.xml | Allows injenction of files and configurations every time a Boot image is built. | \\[PrimarySiteServerFQDN]\SMS_[SiteCode]\bin\X64
+
+Process
+
+> Note Each of these customizations may require a different process so this section is left blank.
 
 &nbsp;
 
@@ -135,7 +169,11 @@ Process
 
 Once you have a clean, successful prerequisite check, the option to install the update will be enabled.
 
+- [ ] Disable Database Replicas for Management Points
+- [ ] Set SQL Server Always On Availability Groups to manual failover
+- [ ] Disable antivirus software
 - [ ] Upgrade the Site Version
+- [ ] Verify the Site Upgrade
 
 Monitor Using One of the Following:
 
@@ -150,11 +188,21 @@ Verify
 
 ## Post-Upgrade
 
+- [ ] Enable Maintenance Tasks
 - [ ] Enable Optional Features
 - [ ] Update MECM Console Application Package
 - [ ] Update Boot Image(s)
 - [ ] Update Clients
 - [ ] Update Collections
+
+### Enable Maintenance Tasks
+
+1. Navigate to: \Administration\Overview\Site Configuration\Sites
+2. Click Site Maintenance
+3. Edit the maintenance task
+4. Enable the maintenance task
+5. Set the schedule according to the data recorded in the backup table above
+6. Repeat for each aintenance task in the table
 
 ### Enable Optional Features
 
