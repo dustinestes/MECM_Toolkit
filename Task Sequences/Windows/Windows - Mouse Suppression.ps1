@@ -486,6 +486,19 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
 	# 		$Temp_Cleanup_UserInput -in "Y","Yes","N","No"
 	# 	)
 
+  # Run Garbage Collector
+		Write-Host "    - Run Garbage Collector"
+
+		try {
+      [System.GC]::Collect()
+      [System.GC]::WaitForPendingFinalizers()
+      Start-Sleep -Seconds 5
+      Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
+		}
+
 	# Unload Offline Registry Hive
 		Write-Host "    - Unload Offline Registry Hive"
 
@@ -504,7 +517,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
       }
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 1902 -Exit $true -Object $PSItem
 		}
 
 	Write-Host "    - Complete"
