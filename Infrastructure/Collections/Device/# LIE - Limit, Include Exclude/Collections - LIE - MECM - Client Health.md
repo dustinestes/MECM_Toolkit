@@ -46,77 +46,77 @@ The following prerequisites are needed before running any of the code snippets w
 
 ## Table of Contents
 
-- [MECM - Collections - LIE - MECM - Client Health](#mecm---collections---lie---mecm---client-health)
+- [MECM Toolkit - Collections - LIE - MECM - Client Health](#mecm-toolkit---collections---lie---mecm---client-health)
   - [About](#about)
   - [Prerequisites](#prerequisites)
   - [Table of Contents](#table-of-contents)
-  - [MECM - Client Health - Client Not Installed](#mecm---client-health---client-not-installed)
+  - [MECM Toolkit - Client Health - Client Not Installed](#mecm-toolkit---client-health---client-not-installed)
     - [General](#general)
     - [Membership Rules](#membership-rules)
     - [Update Schedule](#update-schedule)
     - [PowerShell](#powershell)
     - [SQL Query](#sql-query)
-  - [MECM - Client Health - Client Check Failed](#mecm---client-health---client-check-failed)
+  - [MECM Toolkit - Client Health - Client Check Failed](#mecm-toolkit---client-health---client-check-failed)
     - [General](#general-1)
     - [Membership Rules](#membership-rules-1)
     - [Update Schedule](#update-schedule-1)
     - [PowerShell](#powershell-1)
     - [SQL Query](#sql-query-1)
-  - [MECM - Client Health - Client Inactive](#mecm---client-health---client-inactive)
+  - [MECM Toolkit - Client Health - Client Inactive](#mecm-toolkit---client-health---client-inactive)
     - [General](#general-2)
     - [Membership Rules](#membership-rules-2)
     - [Update Schedule](#update-schedule-2)
     - [PowerShell](#powershell-2)
     - [SQL Query](#sql-query-2)
-  - [MECM - Client Health - Client Policy Request Inactive](#mecm---client-health---client-policy-request-inactive)
+  - [MECM Toolkit - Client Health - Client Policy Request Inactive](#mecm-toolkit---client-health---client-policy-request-inactive)
     - [General](#general-3)
     - [Membership Rules](#membership-rules-3)
     - [Update Schedule](#update-schedule-3)
     - [PowerShell](#powershell-3)
     - [SQL Query](#sql-query-3)
-  - [MECM - Client Health - Hardware Inventory Inactive](#mecm---client-health---hardware-inventory-inactive)
+  - [MECM Toolkit - Client Health - Hardware Inventory Inactive](#mecm-toolkit---client-health---hardware-inventory-inactive)
     - [General](#general-4)
     - [Membership Rules](#membership-rules-4)
     - [Update Schedule](#update-schedule-4)
     - [PowerShell](#powershell-4)
     - [SQL Query](#sql-query-4)
-  - [MECM - Client Health - Heartbeat (DDR) Inactive](#mecm---client-health---heartbeat-ddr-inactive)
+  - [MECM Toolkit - Client Health - Heartbeat (DDR) Inactive](#mecm-toolkit---client-health---heartbeat-ddr-inactive)
     - [General](#general-5)
     - [Membership Rules](#membership-rules-5)
     - [Update Schedule](#update-schedule-5)
     - [PowerShell](#powershell-5)
     - [SQL Query](#sql-query-5)
-  - [MECM - Client Health - Last Evaluation Unhealthy](#mecm---client-health---last-evaluation-unhealthy)
+  - [MECM Toolkit - Client Health - Last Evaluation Unhealthy](#mecm-toolkit---client-health---last-evaluation-unhealthy)
     - [General](#general-6)
     - [Membership Rules](#membership-rules-6)
     - [Update Schedule](#update-schedule-6)
     - [PowerShell](#powershell-6)
     - [SQL Query](#sql-query-6)
-  - [MECM - Client Health - Record Created in Last 24 Hours](#mecm---client-health---record-created-in-last-24-hours)
+  - [MECM Toolkit - Client Health - Record Created in Last 24 Hours](#mecm-toolkit---client-health---record-created-in-last-24-hours)
     - [General](#general-7)
     - [Membership Rules](#membership-rules-7)
     - [Update Schedule](#update-schedule-7)
     - [PowerShell](#powershell-7)
     - [SQL Query](#sql-query-7)
-  - [MECM - Client Health - Software Inventory Inactive](#mecm---client-health---software-inventory-inactive)
+  - [MECM Toolkit - Client Health - Software Inventory Inactive](#mecm-toolkit---client-health---software-inventory-inactive)
     - [General](#general-8)
     - [Membership Rules](#membership-rules-8)
     - [Update Schedule](#update-schedule-8)
     - [PowerShell](#powershell-8)
     - [SQL Query](#sql-query-8)
-  - [MECM - Client Health - Status Message Inactive](#mecm---client-health---status-message-inactive)
+  - [MECM Toolkit - Client Health - Status Message Inactive](#mecm-toolkit---client-health---status-message-inactive)
     - [General](#general-9)
     - [Membership Rules](#membership-rules-9)
     - [Update Schedule](#update-schedule-9)
     - [PowerShell](#powershell-9)
     - [SQL Query](#sql-query-9)
-  - [MECM - Client Health - Version Current](#mecm---client-health---version-current)
+  - [MECM Toolkit - Client Health - Version Current](#mecm-toolkit---client-health---version-current)
     - [General](#general-10)
     - [Membership Rules](#membership-rules-10)
     - [Update Schedule](#update-schedule-10)
     - [PowerShell](#powershell-10)
     - [SQL Query](#sql-query-10)
-  - [MECM - Client Health - Version Out of Date](#mecm---client-health---version-out-of-date)
+  - [MECM Toolkit - Client Health - Version Out of Date](#mecm-toolkit---client-health---version-out-of-date)
     - [General](#general-11)
     - [Membership Rules](#membership-rules-11)
     - [Update Schedule](#update-schedule-11)
@@ -1036,7 +1036,7 @@ A collection of devices with a Client Version that is equal to the current Site 
 | Type                          | Query                                                                                     |
 | Name                          | ClientVersion = Site.Version                                                              |
 | Resource Class                | System Resource                                                                           |
-| Snippet                       | select * from SMS_R_System inner join SMS_Site on SMS_Site.Version = SMS_R_System.ClientVersion where SMS_R_System.ClientVersion = SMS_Site.Version |
+| Snippet                       | select * from SMS_R_System join SMS_Site on SMS_R_System.ClientVersion >= SMS_Site.Version where SMS_R_System.ClientVersion >= SMS_Site.Version |
 
 | Property                      | Value                                                                                     |
 |-------------------------------|-------------------------------------------------------------------------------------------|
@@ -1073,7 +1073,7 @@ This snippet will create the collection with all of the identified settings abov
     $Collection_RefreshType     = "Both"
     $Schedule_FullUpdate        = New-CMSchedule -Start (Get-Date -Date "01/01/2020" -Hour "19" -Minute "22" -Second "00" -Format o) -DurationInterval Days -DurationCount 0 -RecurInterval Days -RecurCount 1
     $MembershipRule_Name        = 'ClientVersion = Site.Version'
-    $MembershipRule_QueryLogic  = 'select * from SMS_R_System inner join SMS_Site on SMS_Site.Version = SMS_R_System.ClientVersion where SMS_R_System.ClientVersion = SMS_Site.Version'
+    $MembershipRule_QueryLogic  = 'select * from SMS_R_System join SMS_Site on SMS_R_System.ClientVersion >= SMS_Site.Version where SMS_R_System.ClientVersion >= SMS_Site.Version'
 
 # Create Collection
     $Object_Collection = New-CMCollection -Name $Collection_Name -Comment $Collection_Comment -LimitingCollectionName $Collection_Limiting -CollectionType $Collection_Type -RefreshType $Collection_RefreshType -RefreshSchedule $Schedule_FullUpdate
