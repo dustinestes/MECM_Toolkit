@@ -202,7 +202,7 @@ param (
 
     Write-Host "  Execution"
 
-    # # Enable NetJoinLegacyAccountReuse
+    # # Modify Service
     #     foreach ($Item in (Get-Variable -Name "Service_0*")) {
     #         Write-Host "    - $($Item.Name)"
 
