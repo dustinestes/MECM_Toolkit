@@ -85,7 +85,7 @@ param (
 
     Write-Host "  Main Execution"
 
-    # Enable NetJoinLegacyAccountReuse
+    # Copy Source Files
         Write-Host "      - Copy Source Files"
 
         try {
