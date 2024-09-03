@@ -187,7 +187,7 @@ param (
 
     Write-Host "  Execution"
 
-    # Enable NetJoinLegacyAccountReuse
+    # Create Shortcut
         Write-Host "    - Create Shortcut"
 
         try {
