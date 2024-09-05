@@ -17,6 +17,7 @@ At the end of the script, the overall detection is evaluated and the script eith
   - [Applications](#applications)
     - [Application - Win32 (Registry)](#application---win32-registry)
     - [Application - Win32 (WMI)](#application---win32-wmi)
+    - [Application - MSIX (Cmdlet)](#application---msix-cmdlet)
     - [Application - MSIX (WMI)](#application---msix-wmi)
   - [Files \& Folders](#files--folders)
     - [File \& Folder (Existential)](#file--folder-existential)
@@ -380,6 +381,87 @@ Snippet:
       }
 
   #EndRegion Application - Win32 (WMI)
+  # -------------------------------------------------------
+```
+
+&nbsp;
+
+### Application - MSIX (Cmdlet)
+
+The following snippet is for detecting an Application installation using a PowerShell cmdlet.
+
+Cmdlets
+
+- [Get-AppxPackage](https://learn.microsoft.com/en-us/powershell/module/appx/get-appxpackage?view=windowsserver2022-ps)
+- [Get-AppxProvisionedPackage](https://learn.microsoft.com/en-us/powershell/module/dism/get-appxprovisionedpackage?view=windowsserver2022-ps)
+
+
+> Notes:
+>
+> Requires administrative rights to use the Get-AppxProvisionedPackage cmdlet
+>
+> Required Variables to edit
+> - App_MSIXCmdlet_Vendor - the value that is stored in the Vendor WMI property
+> - App_MSIXCmdlet_Name - the value that is stored in the Name WMI property
+> - App_MSIXCmdlet_Version - the value that is stored in the Version WMI property
+
+Snippet:
+
+```powershell
+  # -------------------------------------------------------
+  # Application - MSIX (Cmdlet)
+  # -------------------------------------------------------
+  #Region Application - MSIX (Cmdlet)
+
+    Out-File -InputObject "    - Application - MSIX (Cmdlet)" @Params_Logging
+
+    # Initialize Detection Values
+      $Detection_App_MSIXCmdlet_01   = $false
+      $Temp_Count_Matches         = 0
+
+    # Variables
+      Out-File -InputObject "        Variables" @Params_Logging
+
+      $App_MSIXCmdlet_Vendor      = "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+      $App_MSIXCmdlet_Name        = "MSTeams"
+      $App_MSIXCmdlet_Version     = "24193.1805.3040.8975"
+
+      $Dataset_App_MSIXCmdlet_Products = Get-AppxPackage -ErrorAction Stop | Where-Object -Property Name -eq $App_MSIXCmdlet_Name
+
+      foreach ($Item in (Get-Variable -Name "App_MSIXCmdlet_*")) {
+        Out-File -InputObject "            $(($Item.Name) -replace 'App_MSIXCmdlet_',''): $($Item.Value)" @Params_Logging
+      }
+
+    # Detection
+      Out-File -InputObject "        Detection" @Params_Logging
+
+      switch ($Dataset_App_MSIXCmdlet_Products) {
+        # Match Vendor Name and Exact Version
+          {($_.Publisher -eq $App_MSIXCmdlet_Vendor) -and ($_.Name -eq $App_MSIXCmdlet_Name) -and ($_.Version -eq $App_MSIXCmdlet_Version)} {
+            Out-File -InputObject "            Exact match: $($_.Publisher) - $($_.Name) - $($_.Version)" @Params_Logging
+            $Temp_Count_Matches += 1
+          }
+        # Match Vendor Name and Newer Version
+          {($_.Publisher -eq $App_MSIXCmdlet_Vendor) -and ($_.Name -eq $App_MSIXCmdlet_Name) -and ([System.Version]$_.Version -gt [System.Version]$App_MSIXCmdlet_Version)} {
+            Out-File -InputObject "            Newer Version: $($_.Publisher) - $($_.Name) - $($_.Version)" @Params_Logging
+            $Temp_Count_Matches += 1
+          }
+          Default {  }
+      }
+
+      if ($Temp_Count_Matches -eq 0) {
+        Out-File -InputObject "          Failure: No match found" @Params_Logging
+      }
+
+    # Evalaution
+      if ($Temp_Count_Matches -gt 0) {
+        $Detection_App_MSIXCmdlet_01 = $true
+      }
+      else {
+        $Detection_App_MSIXCmdlet_01 = $false
+      }
+
+  #EndRegion Application - MSIX (Cmdlet)
   # -------------------------------------------------------
 ```
 
