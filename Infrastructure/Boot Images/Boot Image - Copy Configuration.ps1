@@ -3,8 +3,10 @@
 #--------------------------------------------------------------------------------------------
 
 param (
-  [string]$Source,                # 'VR - Boot - Win11 - 1.0'
-  [string]$Target                 # 'VR - Boot - Win11 - 1.1'
+  [string]$SiteCode,                  # 'ABC'
+  [string]$SMSProvider,               # '[ServerFQDN]'
+  [string]$Source,                    # 'VR - Boot - Win11 - 1.0'
+  [string]$Target                     # 'VR - Boot - Win11 - 1.1'
 )
 
 #--------------------------------------------------------------------------------------------
@@ -20,13 +22,13 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
   Write-Host "------------------------------------------------------------------------------"
   Write-Host "    Author:     Dustin Estes"
   Write-Host "    Company:    VividRock"
-  Write-Host "    Date:       May 09, 2024"
+  Write-Host "    Date:       2024-05-09"
   Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
   Write-Host "    Purpose:    This script will mirror the settings of a source Boot Image to"
   Write-Host "                a target Boot Image. This wil include drivers, optional"
   Write-Host "                components, and settings."
   Write-Host "    Links:      None"
-  Write-Host "    Template:   1.0"
+  Write-Host "    Template:   1.1"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host ""
 
@@ -49,6 +51,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
   Write-Host "  Variables"
 
   # Parameters
+    $Param_SiteCode         = $SiteCode
+    $Param_SMSProvider      = $SMSProvider
     $Param_Source = $Source
     $Param_Target = $Target
 
@@ -56,7 +60,12 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
     $Meta_Script_Start_DateTime     = Get-Date
     $Meta_Script_Complete_DateTime  = $null
     $Meta_Script_Complete_TimeSpan  = $null
+    $Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::GetCurrent()
     $Meta_Script_Result = $false,"Failure"
+
+  # Preferences
+    $ErrorActionPreference        = "Stop"
+    $CMPSSuppressFastNotUsedCheck = $true
 
   # Names
     $Name_BootImage_Target      = "$($Param_Target).wim"
@@ -167,6 +176,10 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
     foreach ($Item in (Get-Variable -Name "Param_*")) {
       Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
     }
+    Write-Host "    - Names"
+    foreach ($Item in (Get-Variable -Name "Name_*")) {
+      Write-Host "        $(($Item.Name) -replace 'Name_',''): $($Item.Value)"
+    }
 
   Write-Host "    - Complete"
   Write-Host ""
@@ -205,6 +218,7 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
         switch ($Exit) {
           $true {
             Write-Host "        Exit: $($Code)"
+            Stop-Transcript
             Exit $Code
           }
           $false {
@@ -230,21 +244,79 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Environment
 
-  # Write-Host "  Environment"
+	Write-Host "  Environment"
 
-  # # Create TSEnvironment COM Object
-  #   Write-Host "    - Create TSEnvironment COM Object"
+	# Create Client COM Object
+		Write-Host "    - Create Client COM Object"
 
-  #   try {
-  #     $Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Stop
-  #     Write-Host "        Status: Success"
-  #   }
-  #   catch {
-  #     Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
-  #   }
+		try {
+			$Object_MECM_Client = New-Object -ComObject Microsoft.SMS.Client
+			Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
+		}
 
-  # Write-Host "    - Complete"
-  # Write-Host ""
+	# Create TSEnvironment COM Object
+		Write-Host "    - Create TSEnvironment COM Object"
+
+		try {
+			$Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment
+			Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
+		}
+
+	# Connect to MECM Infrastructure
+		Write-Host "    - Connect to MECM Infrastructure"
+
+		try {
+			if (Test-Connection -ComputerName $Param_SMSProvider -Count 2 -Quiet) {
+				# Import the PowerShell Module
+					Write-Host "        Import the PowerShell Module"
+
+					if((Get-Module ConfigurationManager) -in $null,"") {
+						Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+						Write-Host "            Status: Success"
+					}
+					else {
+						Write-Host "            Status: Already Imported"
+					}
+
+				# Create the Site Drive
+					Write-Host "        Create the Site Drive"
+
+					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
+						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
+						Write-Host "            Status: Success"
+					}
+					else {
+						Write-Host "            Status: Already Exists"
+					}
+
+				# Set the Location
+					Write-Host "        Set the Location"
+
+					if ((Get-Location).Path -ne "$($Param_SiteCode):\") {
+						Set-Location "$($Param_SiteCode):\"
+						Write-Host "            Status: Success"
+					}
+					else {
+						Write-Host "            Status: Already Set"
+					}
+			}
+			else {
+				Write-Host "        Status: MECM Server Unreachable"
+				Throw "Status: MECM Server Unreachable"
+			}
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1403 -Exit $true -Object $PSItem
+		}
+
+	Write-Host "    - Complete"
+	Write-Host ""
 
 #EndRegion Environment
 #--------------------------------------------------------------------------------------------
@@ -481,7 +553,7 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
     Write-Host "    - Confirm Cleanup"
 
     do {
-      $Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o" -ErrorAction Stop
+      $Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o"
     } until (
       $Temp_Cleanup_UserInput -in "Y","Yes","N","No"
     )
