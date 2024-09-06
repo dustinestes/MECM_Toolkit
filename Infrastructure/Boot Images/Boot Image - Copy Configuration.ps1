@@ -8,7 +8,7 @@ param (
 )
 
 #--------------------------------------------------------------------------------------------
-Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Boot Images - Copy Boot Image.log"  -Append -ErrorAction SilentlyContinue
+Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image - Copy Configuration.log"  -Append -ErrorAction SilentlyContinue
 
 #--------------------------------------------------------------------------------------------
 # Header
@@ -16,14 +16,15 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Boot Image
 #Region Header
 
   Write-Host "------------------------------------------------------------------------------"
-  Write-Host "  MECM Toolkit - Task Sequences - Boot Images - Copy Boot Image"
+  Write-Host "  MECM Toolkit - Infrastructure - Boot Image - Copy Configuration"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host "    Author:     Dustin Estes"
   Write-Host "    Company:    VividRock"
   Write-Host "    Date:       May 09, 2024"
   Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
-  Write-Host "    Purpose:    This script will create a copy of an existing Boot Image and"
-  Write-Host "                include drivers, optional components, and settings from source."
+  Write-Host "    Purpose:    This script will mirror the settings of a source Boot Image to"
+  Write-Host "                a target Boot Image. This wil include drivers, optional"
+  Write-Host "                components, and settings."
   Write-Host "    Links:      None"
   Write-Host "    Template:   1.0"
   Write-Host "------------------------------------------------------------------------------"
