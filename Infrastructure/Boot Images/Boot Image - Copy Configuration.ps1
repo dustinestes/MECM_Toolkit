@@ -251,27 +251,27 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 
 	Write-Host "  Environment"
 
-	# Create Client COM Object
-		Write-Host "    - Create Client COM Object"
+	# # Create Client COM Object
+	# 	Write-Host "    - Create Client COM Object"
 
-		try {
-			$Object_MECM_Client = New-Object -ComObject Microsoft.SMS.Client
-			Write-Host "        Status: Success"
-		}
-		catch {
-			Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
-		}
+	# 	try {
+	# 		$Object_MECM_Client = New-Object -ComObject Microsoft.SMS.Client
+	# 		Write-Host "        Status: Success"
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
+	# 	}
 
-	# Create TSEnvironment COM Object
-		Write-Host "    - Create TSEnvironment COM Object"
+	# # Create TSEnvironment COM Object
+	# 	Write-Host "    - Create TSEnvironment COM Object"
 
-		try {
-			$Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment
-			Write-Host "        Status: Success"
-		}
-		catch {
-			Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
-		}
+	# 	try {
+	# 		$Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment
+	# 		Write-Host "        Status: Success"
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
+	# 	}
 
 	# Connect to MECM Infrastructure
 		Write-Host "    - Connect to MECM Infrastructure"
