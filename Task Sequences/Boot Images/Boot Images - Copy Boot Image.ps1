@@ -3,36 +3,36 @@
 #--------------------------------------------------------------------------------------------
 
 param (
-    [string]$Source="VR - Boot - Win11 - v1.3",                # 'VR - Boot - Win11 - 1.0'
-    [string]$Target="VR - Boot - Win11 - v1.4"                 # 'VR - Boot - Win11 - 1.1'
+  [string]$Source,                # 'VR - Boot - Win11 - 1.0'
+  [string]$Target                 # 'VR - Boot - Win11 - 1.1'
 )
 
 #--------------------------------------------------------------------------------------------
-# Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Boot Images - Copy Boot Image.log"  -Append -ErrorAction SilentlyContinue
+Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Boot Images - Copy Boot Image.log"  -Append -ErrorAction SilentlyContinue
 
 #--------------------------------------------------------------------------------------------
 # Header
 #--------------------------------------------------------------------------------------------
 #Region Header
 
-    Write-Host "------------------------------------------------------------------------------"
-    Write-Host "  MECM Toolkit - Task Sequences - Boot Images - Copy Boot Image"
-    Write-Host "------------------------------------------------------------------------------"
-    Write-Host "    Author:     Dustin Estes"
-    Write-Host "    Company:    VividRock"
-    Write-Host "    Date:       May 09, 2024"
-    Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
-    Write-Host "    Purpose:    This script will create a copy of an existing Boot Image and"
-    Write-Host "                include drivers, optional components, and settings from source."
-    Write-Host "    Links:      None"
-    Write-Host "    Template:   1.0"
-    Write-Host "------------------------------------------------------------------------------"
-    Write-Host ""
+  Write-Host "------------------------------------------------------------------------------"
+  Write-Host "  MECM Toolkit - Task Sequences - Boot Images - Copy Boot Image"
+  Write-Host "------------------------------------------------------------------------------"
+  Write-Host "    Author:     Dustin Estes"
+  Write-Host "    Company:    VividRock"
+  Write-Host "    Date:       May 09, 2024"
+  Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
+  Write-Host "    Purpose:    This script will create a copy of an existing Boot Image and"
+  Write-Host "                include drivers, optional components, and settings from source."
+  Write-Host "    Links:      None"
+  Write-Host "    Template:   1.0"
+  Write-Host "------------------------------------------------------------------------------"
+  Write-Host ""
 
 <#
-    To Do:
-        - Item
-        - Item
+  To Do:
+    - Item
+    - Item
 #>
 
 #EndRegion Header
@@ -45,35 +45,35 @@ param (
 #--------------------------------------------------------------------------------------------
 #Region Variables
 
-    Write-Host "  Variables"
+  Write-Host "  Variables"
 
-    # Parameters
-        $Param_Source = $Source
-        $Param_Target = $Target
+  # Parameters
+    $Param_Source = $Source
+    $Param_Target = $Target
 
-    # Metadata
-        $Meta_Script_Start_DateTime     = Get-Date
-        $Meta_Script_Complete_DateTime  = $null
-        $Meta_Script_Complete_TimeSpan  = $null
-        $Meta_Script_Result = $false,"Failure"
+  # Metadata
+    $Meta_Script_Start_DateTime     = Get-Date
+    $Meta_Script_Complete_DateTime  = $null
+    $Meta_Script_Complete_TimeSpan  = $null
+    $Meta_Script_Result = $false,"Failure"
 
-    # Names
-        $Name_BootImage_Target      = "$($Param_Target).wim"
+  # Names
+    $Name_BootImage_Target      = "$($Param_Target).wim"
 
-    # Paths
+  # Paths
 
-    # Files
+  # Files
 
-    # Hashtables
+  # Hashtables
 
-    # Arrays
+  # Arrays
 
-    # Registry
+  # Registry
 
-    # WMI
+  # WMI
 
-    # Datasets
-        $Dataset_WinPE_OptionalComponents = @"
+  # Datasets
+    $Dataset_WinPE_OptionalComponents = @"
 UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageable
 1,x86,1,WinPE-DismCmdlets,{72BF9B2E-32B2-ED9A-2A97-628597F4FC91},36698,0,1
 2,x86,2,WinPE-Dot3Svc,{243F6A24-7A6B-35E4-01FD-13C6644E4216},2014250,0,1
@@ -159,16 +159,16 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 "@
     $Dataset_WinPE_OptionalComponents = $Dataset_WinPE_OptionalComponents | ConvertFrom-Csv
 
-    # Temporary
+  # Temporary
 
-    # Output to Log
-        Write-Host "    - Parameters"
-        foreach ($Item in (Get-Variable -Name "Param_*")) {
-            Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
-        }
+  # Output to Log
+    Write-Host "    - Parameters"
+    foreach ($Item in (Get-Variable -Name "Param_*")) {
+      Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
+    }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Variables
 #--------------------------------------------------------------------------------------------
@@ -180,44 +180,44 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Functions
 
-    Write-Host "  Functions"
+  Write-Host "  Functions"
 
-    # Write Error Codes
-        Write-Host "    - Write-vr_ErrorCode"
-        function Write-vr_ErrorCode ($Code,$Exit,$Object) {
-            # Code: XXXX   4-digit code to identify where in script the operation failed
-            # Exit: Boolean option to define if  exits or not
-            # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
+  # Write Error Codes
+    Write-Host "    - Write-vr_ErrorCode"
+    function Write-vr_ErrorCode ($Code,$Exit,$Object) {
+      # Code: XXXX   4-digit code to identify where in script the operation failed
+      # Exit: Boolean option to define if  exits or not
+      # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
-            begin {
+      begin {
 
-            }
+      }
 
-            process {
-                Write-Host "        Error: $($Object.Exception.ErrorId)"
-                Write-Host "        Command Name: $($Object.CategoryInfo.Activity)"
-                Write-Host "        Message: $($Object.Exception.Message)"
-                Write-Host "        Line/Position: $($Object.Exception.Line)/$($Object.Exception.Offset)"
-            }
+      process {
+        Write-Host "        Error: $($Object.Exception.ErrorId)"
+        Write-Host "        Command Name: $($Object.CategoryInfo.Activity)"
+        Write-Host "        Message: $($Object.Exception.Message)"
+        Write-Host "        Line/Position: $($Object.Exception.Line)/$($Object.Exception.Offset)"
+      }
 
-            end {
-                switch ($Exit) {
-                    $true {
-                        Write-Host "        Exit: $($Code)"
-                        Exit $Code
-                    }
-                    $false {
-                        Write-Host "        Continue Processing..."
-                    }
-                    Default {
-                        Write-Host "        Unknown Exit option in Write-vr_ErrorCode parameter"
-                    }
-                }
-            }
+      end {
+        switch ($Exit) {
+          $true {
+            Write-Host "        Exit: $($Code)"
+            Exit $Code
+          }
+          $false {
+            Write-Host "        Continue Processing..."
+          }
+          Default {
+            Write-Host "        Unknown Exit option in Write-vr_ErrorCode parameter"
+          }
         }
+      }
+    }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Functions
 #--------------------------------------------------------------------------------------------
@@ -229,21 +229,21 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Environment
 
-    # Write-Host "  Environment"
+  # Write-Host "  Environment"
 
-    # # Create TSEnvironment COM Object
-    #     Write-Host "    - Create TSEnvironment COM Object"
+  # # Create TSEnvironment COM Object
+  #   Write-Host "    - Create TSEnvironment COM Object"
 
-    #     try {
-    #         $Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Stop
-    #         Write-Host "        Status: Success"
-    #     }
-    #     catch {
-    #         Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
-    #     }
+  #   try {
+  #     $Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Stop
+  #     Write-Host "        Status: Success"
+  #   }
+  #   catch {
+  #     Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
+  #   }
 
-    # Write-Host "    - Complete"
-    # Write-Host ""
+  # Write-Host "    - Complete"
+  # Write-Host ""
 
 #EndRegion Environment
 #--------------------------------------------------------------------------------------------
@@ -255,130 +255,107 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Validation
 
-    Write-Host "  Validation"
+  Write-Host "  Validation"
 
-    # Source Boot Image
-        Write-Host "    - Source Boot Image"
+  # Source Boot Image
+    Write-Host "    - Source Boot Image"
 
-        try {
-            Write-Host "        Name: $($Param_Source)"
-            $Object_BootImage_Source = Get-CMBootImage -Name $Param_Source -ErrorAction Stop
+    try {
+      Write-Host "        Name: $($Param_Source)"
+      $Object_BootImage_Source = Get-CMBootImage -Name $Param_Source -ErrorAction Stop
 
-            if ($Object_BootImage_Source) {
-                Write-Host "        Path: $($Object_BootImage_Source.ImagePath)"
-                Write-Host "        Package ID: $($Object_BootImage_Source.PackageID)"
-                Write-Host "        OS Version: $($Object_BootImage_Source.ImageOSVersion)"
-                Write-Host "        Language: $($Object_BootImage_Source.Language)"
-                Write-Host "        Client Version: $($Object_BootImage_Source.ProductionClientVersion)"
-                Write-Host "        Optional Components: $($Object_BootImage_Source.OptionalComponents.Count)"
-                Write-Host "        Referenced Drivers: $($Object_BootImage_Source.ReferencedDrivers.Count)"
-                Write-Host "        Scratch Space: $($Object_BootImage_Source.ScratchSpace)"
-            }
-            else {
-                throw "A Boot Image with that name does not exist."
-            }
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
-        }
+      if ($Object_BootImage_Source) {
+        Write-Host "        Path: $($Object_BootImage_Source.ImagePath)"
+        Write-Host "        Package ID: $($Object_BootImage_Source.PackageID)"
+        Write-Host "        OS Version: $($Object_BootImage_Source.ImageOSVersion)"
+        Write-Host "        Language: $($Object_BootImage_Source.Language)"
+        Write-Host "        Client Version: $($Object_BootImage_Source.ProductionClientVersion)"
+        Write-Host "        Optional Components: $($Object_BootImage_Source.OptionalComponents.Count)"
+        Write-Host "        Referenced Drivers: $($Object_BootImage_Source.ReferencedDrivers.Count)"
+        Write-Host "        Scratch Space: $($Object_BootImage_Source.ScratchSpace)"
+      }
+      else {
+        throw "A Boot Image with that name does not exist."
+      }
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
+    }
 
-    # Target Boot Image
-        Write-Host "    - Target Boot Image"
+  # Target Boot Image
+    Write-Host "    - Target Boot Image"
 
-        try {
-            Write-Host "        Name: $($Param_Target)"
-            $Object_BootImage_Target = Get-CMBootImage -Name $Param_Target -ErrorAction Stop
+    try {
+      Write-Host "        Name: $($Param_Target)"
+      $Object_BootImage_Target = Get-CMBootImage -Name $Param_Target -ErrorAction Stop
 
-            if ($Object_BootImage_Target) {
-                throw "A Boot Image with that name exists."
-            }
-            else {
-                Write-Host "        Status: Not Exists"
-            }
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1502 -Exit $true -Object $PSItem
-        }
+      if ($Object_BootImage_Target) {
+        throw "A Boot Image with that name exists."
+      }
+      else {
+        Write-Host "        Status: Not Exists"
+      }
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1502 -Exit $true -Object $PSItem
+    }
 
-    # Source Boot WIM File
-        Write-Host "    - Source Boot WIM File"
+  # Source Boot WIM File
+    Write-Host "    - Source Boot WIM File"
 
-        try {
-            Write-Host "        Path: $($Object_BootImage_Source.ImagePath)"
+    try {
+      Write-Host "        Path: $($Object_BootImage_Source.ImagePath)"
 
-            # Create PSDrive
-                if ((Get-PSDrive -Name "vr_BootImages" -ErrorAction SilentlyContinue) -in "", $null) {
-                    New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) -ErrorAction Stop | Out-Null
-                }
-
-            # Check for File Existence
-                if (Test-Path -Path "vr_BootImages:\$($Object_BootImage_Source.ImagePath | Split-Path -Leaf)" -ErrorAction Stop) {
-                    Write-Host "        Status: Exists"
-                }
-                else {
-                    throw "A Boot WIM with that name exists."
-                }
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1503 -Exit $true -Object $PSItem
-        }
-        finally {
-            # Cleanup
-                Remove-PSDrive -Name "vr_BootImages" -Force
+      # Create PSDrive
+        if ((Get-PSDrive -Name "vr_BootImages" -ErrorAction SilentlyContinue) -in "", $null) {
+          New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) -ErrorAction Stop | Out-Null
         }
 
-    # Target Boot WIM File
-        Write-Host "    - Target Boot WIM File"
-
-        try {
-            Write-Host "        Path: $(($Object_BootImage_Source.ImagePath | Split-Path) + "\" + $Name_BootImage_Target)"
-
-            # Create PSDrive
-                if ((Get-PSDrive -Name "vr_BootImages" -ErrorAction SilentlyContinue) -in "", $null) {
-                    New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) -ErrorAction Stop | Out-Null
-                }
-
-            # Check for File Existence
-                if (Test-Path -Path "vr_BootImages:\$($Param_Target)" -ErrorAction Stop) {
-                    throw "A Boot WIM with that name exists."
-                }
-                else {
-                    Write-Host "        Status: Not Exists"
-                }
+      # Check for File Existence
+        if (Test-Path -Path "vr_BootImages:\$($Object_BootImage_Source.ImagePath | Split-Path -Leaf)" -ErrorAction Stop) {
+          Write-Host "        Status: Exists"
         }
-        catch {
-            Write-vr_ErrorCode -Code 1503 -Exit $true -Object $PSItem
+        else {
+          throw "A Boot WIM with that name exists."
         }
-        finally {
-            # Cleanup
-                Remove-PSDrive -Name "vr_BootImages" -Force
-        }
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1503 -Exit $true -Object $PSItem
+    }
+    finally {
+      # Cleanup
+        Remove-PSDrive -Name "vr_BootImages" -Force
+    }
 
+  # Target Boot WIM File
+    Write-Host "    - Target Boot WIM File"
 
+    try {
+      Write-Host "        Path: $(($Object_BootImage_Source.ImagePath | Split-Path) + "\" + $Name_BootImage_Target)"
 
-
-
-    # Sub Directories
-        Write-Host "    - Sub Directories"
-
-        try {
-            foreach ($Item in (Get-Variable -Name "Path_Local_*")) {
-                Write-Host "        Path: $($Item.Value)"
-                if (Test-Path -Path $Item.Value) {
-                    Write-Host "            Status: Exists"
-                }
-                else {
-                    New-Item -Path $Item.Value -ItemType Directory -Force -ErrorAction Stop | Out-Null
-                    Write-Host "            Status: Created"
-                }
-            }
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
+      # Create PSDrive
+        if ((Get-PSDrive -Name "vr_BootImages" -ErrorAction SilentlyContinue) -in "", $null) {
+          New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) -ErrorAction Stop | Out-Null
         }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+      # Check for File Existence
+        if (Test-Path -Path "vr_BootImages:\$($Param_Target)" -ErrorAction Stop) {
+          throw "A Boot WIM with that name exists."
+        }
+        else {
+          Write-Host "        Status: Not Exists"
+        }
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1503 -Exit $true -Object $PSItem
+    }
+    finally {
+      # Cleanup
+        Remove-PSDrive -Name "vr_BootImages" -Force
+    }
+
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Validation
 #--------------------------------------------------------------------------------------------
@@ -390,34 +367,34 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Data Gather
 
-    Write-Host "  Data Gather"
+  Write-Host "  Data Gather"
 
-    # [StepName]
-        Write-Host "    - [StepName]"
+  # [StepName]
+    Write-Host "    - [StepName]"
 
-        try {
+    try {
 
-            Write-Host "        Status: Success"
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1601 -Exit $true -Object $PSItem
-        }
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1601 -Exit $true -Object $PSItem
+    }
 
-    # [StepName]
-        foreach ($Item in (Get-Variable -Name "Path_*")) {
-            Write-Host "    - $($Item.Name)"
+  # [StepName]
+    foreach ($Item in (Get-Variable -Name "Path_*")) {
+      Write-Host "    - $($Item.Name)"
 
-            try {
+      try {
 
-                Write-Host "        Status: Success"
-            }
-            catch {
-                Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
-            }
-        }
+        Write-Host "        Status: Success"
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
+      }
+    }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Data Gather
 #--------------------------------------------------------------------------------------------
@@ -429,37 +406,37 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Execution
 
-    Write-Host "  Execution"
+  Write-Host "  Execution"
 
-    # [StepName]
-        Write-Host "    - [StepName]"
+  # [StepName]
+    Write-Host "    - [StepName]"
 
-        try {
+    try {
 
-            Write-Host "        Status: Success"
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
-        }
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
+    }
 
-    # [StepName]
-        foreach ($Item in (Get-Variable -Name "Path_*")) {
-            Write-Host "    - $($Item.Name)"
+  # [StepName]
+    foreach ($Item in (Get-Variable -Name "Path_*")) {
+      Write-Host "    - $($Item.Name)"
 
-            try {
+      try {
 
-                Write-Host "        Status: Success"
-            }
-            catch {
-                Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
-            }
-        }
+        Write-Host "        Status: Success"
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+      }
+    }
 
-    # Determine Script Result
-        $Meta_Script_Result = $true,"Success"
+  # Determine Script Result
+    $Meta_Script_Result = $true,"Success"
 
-    Write-Host "    - Complete"
-    Write-Host ""
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Execution
 #--------------------------------------------------------------------------------------------
@@ -471,21 +448,21 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Output
 
-    Write-Host "  Output"
+  Write-Host "  Output"
 
-    # [StepName]
-        Write-Host "    - [StepName]"
+  # [StepName]
+    Write-Host "    - [StepName]"
 
-        try {
+    try {
 
-            Write-Host "        Status: Success"
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1801 -Exit $true -Object $PSItem
-        }
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1801 -Exit $true -Object $PSItem
+    }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Output
 #--------------------------------------------------------------------------------------------
@@ -497,35 +474,35 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Cleanup
 
-    Write-Host "  Cleanup"
+  Write-Host "  Cleanup"
 
-    # Confirm Cleanup
-        Write-Host "    - Confirm Cleanup"
+  # Confirm Cleanup
+    Write-Host "    - Confirm Cleanup"
 
-        do {
-            $Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o" -ErrorAction Stop
-        } until (
-            $Temp_Cleanup_UserInput -in "Y","Yes","N","No"
-        )
+    do {
+      $Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o" -ErrorAction Stop
+    } until (
+      $Temp_Cleanup_UserInput -in "Y","Yes","N","No"
+    )
 
-    # [StepName]
-        Write-Host "    - [StepName]"
+  # [StepName]
+    Write-Host "    - [StepName]"
 
-        try {
-            if ($Temp_Cleanup_UserInput -in "Y", "Yes") {
+    try {
+      if ($Temp_Cleanup_UserInput -in "Y", "Yes") {
 
-                Write-Host "        Status: Success"
-            }
-            else {
-                Write-Host "            Status: Skipped"
-            }
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
-        }
+        Write-Host "        Status: Success"
+      }
+      else {
+        Write-Host "            Status: Skipped"
+      }
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
+    }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+  Write-Host "    - Complete"
+  Write-Host ""
 
 #EndRegion Cleanup
 #--------------------------------------------------------------------------------------------
@@ -536,23 +513,23 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 #--------------------------------------------------------------------------------------------
 #Region Footer
 
-    # Gather Data
-        $Meta_Script_Complete_DateTime  = Get-Date
-        $Meta_Script_Complete_TimeSpan  = New-TimeSpan -Start $Meta_Script_Start_DateTime -End $Meta_Script_Complete_DateTime
+  # Gather Data
+    $Meta_Script_Complete_DateTime  = Get-Date
+    $Meta_Script_Complete_TimeSpan  = New-TimeSpan -Start $Meta_Script_Start_DateTime -End $Meta_Script_Complete_DateTime
 
-    # Output
-        Write-Host ""
-        Write-Host "------------------------------------------------------------------------------"
-        Write-Host "  Script Result: $($Meta_Script_Result[0])"
-        Write-Host "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
-        Write-Host "  Script Completed: $($Meta_Script_Complete_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
-        Write-Host "  Total Time: $($Meta_Script_Complete_TimeSpan.Days) days, $($Meta_Script_Complete_TimeSpan.Hours) hours, $($Meta_Script_Complete_TimeSpan.Minutes) minutes, $($Meta_Script_Complete_TimeSpan.Seconds) seconds, $($Meta_Script_Complete_TimeSpan.Milliseconds) milliseconds"
-        Write-Host "------------------------------------------------------------------------------"
-        Write-Host "  End of Script"
-        Write-Host "------------------------------------------------------------------------------"
+  # Output
+    Write-Host ""
+    Write-Host "------------------------------------------------------------------------------"
+    Write-Host "  Script Result: $($Meta_Script_Result[0])"
+    Write-Host "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
+    Write-Host "  Script Completed: $($Meta_Script_Complete_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
+    Write-Host "  Total Time: $($Meta_Script_Complete_TimeSpan.Days) days, $($Meta_Script_Complete_TimeSpan.Hours) hours, $($Meta_Script_Complete_TimeSpan.Minutes) minutes, $($Meta_Script_Complete_TimeSpan.Seconds) seconds, $($Meta_Script_Complete_TimeSpan.Milliseconds) milliseconds"
+    Write-Host "------------------------------------------------------------------------------"
+    Write-Host "  End of Script"
+    Write-Host "------------------------------------------------------------------------------"
 
 #EndRegion Footer
 #--------------------------------------------------------------------------------------------
 
+Stop-Transcript
 Return $Meta_Script_Result[1]
-# Stop-Transcript
