@@ -340,7 +340,7 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 
     try {
       Write-Host "        Name: $($Param_Source)"
-      $Object_BootImage_Source = Get-CMBootImage -Name $Param_Source -ErrorAction Stop
+      $Object_BootImage_Source = Get-CMBootImage -Name $Param_Source
 
       if ($Object_BootImage_Source) {
         Write-Host "        Path: $($Object_BootImage_Source.ImagePath)"
@@ -365,7 +365,7 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 
     try {
       Write-Host "        Name: $($Param_Target)"
-      $Object_BootImage_Target = Get-CMBootImage -Name $Param_Target -ErrorAction Stop
+      $Object_BootImage_Target = Get-CMBootImage -Name $Param_Target
 
       if ($Object_BootImage_Target) {
         throw "A Boot Image with that name exists."
@@ -386,11 +386,11 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 
       # Create PSDrive
         if ((Get-PSDrive -Name "vr_BootImages" -ErrorAction SilentlyContinue) -in "", $null) {
-          New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) -ErrorAction Stop | Out-Null
+          New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) | Out-Null
         }
 
       # Check for File Existence
-        if (Test-Path -Path "vr_BootImages:\$($Object_BootImage_Source.ImagePath | Split-Path -Leaf)" -ErrorAction Stop) {
+        if (Test-Path -Path "vr_BootImages:\$($Object_BootImage_Source.ImagePath | Split-Path -Leaf)") {
           Write-Host "        Status: Exists"
         }
         else {
@@ -413,11 +413,11 @@ UniqueID,Architecture,ComponentID,Name,MsiComponentID,Size,IsRequired,IsManageab
 
       # Create PSDrive
         if ((Get-PSDrive -Name "vr_BootImages" -ErrorAction SilentlyContinue) -in "", $null) {
-          New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) -ErrorAction Stop | Out-Null
+          New-PSDrive -Name "vr_BootImages" -PSProvider FileSystem -Root ($Object_BootImage_Source.ImagePath | Split-Path) | Out-Null
         }
 
       # Check for File Existence
-        if (Test-Path -Path "vr_BootImages:\$($Param_Target)" -ErrorAction Stop) {
+        if (Test-Path -Path "vr_BootImages:\$($Param_Target)") {
           throw "A Boot WIM with that name exists."
         }
         else {
