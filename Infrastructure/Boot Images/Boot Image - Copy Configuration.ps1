@@ -26,7 +26,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
   Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
   Write-Host "    Purpose:    This script will mirror the settings of a source Boot Image to"
   Write-Host "                a target Boot Image. This wil include drivers, optional"
-  Write-Host "                components, and settings."
+  Write-Host "                components, and settings. If the Target Boot Image does not exist"
+  Write-Host "                then it will be created."
   Write-Host "    Links:      None"
   Write-Host "    Template:   1.1"
   Write-Host "------------------------------------------------------------------------------"
@@ -34,7 +35,10 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
 
 <#
   To Do:
-    - Item
+    - Add in logic to create new target boot image
+      - Copy boot WIM file
+      - Import to MECM
+      -
     - Item
 #>
 
@@ -53,8 +57,9 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
   # Parameters
     $Param_SiteCode         = $SiteCode
     $Param_SMSProvider      = $SMSProvider
-    $Param_Source = $Source
-    $Param_Target = $Target
+    $Param_Source           = $Source
+    $Param_Target           = $Target
+    $Param_CreateTarget     = $CreateTarget
 
   # Metadata
     $Meta_Script_Start_DateTime     = Get-Date
@@ -68,7 +73,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
     $CMPSSuppressFastNotUsedCheck = $true
 
   # Names
-    $Name_BootImage_Target      = "$($Param_Target).wim"
+    $Name_BootImage_Target = "$($Param_Target).wim"
 
   # Paths
 
