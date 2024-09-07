@@ -66,6 +66,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
   # Names
 
   # Paths
+    $Path_AdminService_ODataRoute = "https://$($Param_SMSProvider)/AdminService/v1.0/"
+    $Path_AdminService_WMIRoute   = "https://$($Param_SMSProvider)/AdminService/wmi/"
 
   # Files
 
@@ -93,6 +95,10 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
     Write-Host "    - Parameters"
     foreach ($Item in (Get-Variable -Name "Param_*")) {
       Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
+    }
+    Write-Host "    - Paths"
+    foreach ($Item in (Get-Variable -Name "Path_*")) {
+      Write-Host "        $(($Item.Name) -replace 'Path_',''): $($Item.Value)"
     }
     Write-Host "    - Array Items"
     foreach ($Item in $Array) {
@@ -280,6 +286,27 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 
 	Write-Host "  Validation"
 
+  # API Routes
+		Write-Host "    - API Routes"
+
+		try {
+			foreach ($Item in (Get-Variable -Name "Path_AdminService_*")) {
+				Write-Host "        Route: $($Item.Value)"
+
+				$Temp_API_Result = Invoke-RestMethod -Uri $Item.Value -Method Get -ContentType "Application/Json" -UseDefaultCredentials
+				if ($Temp_API_Result) {
+					Write-Host "            Status: Success"
+				}
+				else {
+					Write-Host "            Status: Error"
+					Throw
+				}
+			}
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
+		}
+
 	# Sub Directories
 		Write-Host "    - Sub Directories"
 
@@ -296,7 +323,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 			}
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 1502 -Exit $true -Object $PSItem
 		}
 
 	Write-Host "    - Complete"
@@ -314,6 +341,28 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 
 	Write-Host "  Data Gather"
 
+	# [WMIClassName]
+    Write-Host "    - [WMIClassName]"
+
+    try {
+      $Dataset_[WMIClassName] = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)[WMIClassName]" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1601 -Exit $true -Object $PSItem
+    }
+
+	# [OdataName]
+    Write-Host "    - [OdataName]"
+
+    try {
+      $Dataset_[OdataName] = (Invoke-RestMethod -Uri "$($Path_AdminService_ODataRoute)[OdataName]" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
+    }
+
 	# [StepName]
 		Write-Host "    - [StepName]"
 
@@ -322,7 +371,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 			Write-Host "        Status: Success"
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1601 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
 		}
 
 	# [StepName]
@@ -334,7 +383,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 				Write-Host "        Status: Success"
 			}
 			catch {
-				Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
+				Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
 			}
 		}
 
