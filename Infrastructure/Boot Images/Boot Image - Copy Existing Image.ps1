@@ -663,7 +663,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
           }
 
         # Check for File Existence
-          Write-Host "        Path: $(($Dataset_BootImage_Source_REST.value.ImagePath | Split-Path) + `"\`" + $Name_BootImage_Target)"
+          Write-Host "        Path: $(($Temp_BootImage_Source.ImagePath | Split-Path) + `"\`" + $Name_BootImage_Target)"
 
           if (Test-Path -Path "vr_BootImages:\$($Name_BootImage_Target)") {
             Write-Host "        Status: Exists"
