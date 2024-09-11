@@ -18,12 +18,14 @@ The following items are referenced in the code within this document. Familiarize
   - [References](#references)
   - [Table of Contents](#table-of-contents)
 - [Basic Snippets](#basic-snippets)
-  - [Enable Provisioning Mode](#enable-provisioning-mode)
+  - [Get Provisioning Mode State](#get-provisioning-mode-state)
     - [Snippets](#snippets)
-  - [Disable Provisioning Mode](#disable-provisioning-mode)
+  - [Enable Provisioning Mode](#enable-provisioning-mode)
     - [Snippets](#snippets-1)
-  - [Set Provisioning Mode Timeout](#set-provisioning-mode-timeout)
+  - [Disable Provisioning Mode](#disable-provisioning-mode)
     - [Snippets](#snippets-2)
+  - [Set Provisioning Mode Timeout](#set-provisioning-mode-timeout)
+    - [Snippets](#snippets-3)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
 - [Appendices](#appendices)
@@ -38,6 +40,26 @@ The following items are referenced in the code within this document. Familiarize
 These are quick, simple snippets of code to reference for a basic understanding and inclusion within larger scripts or codebases. When a more fully developed function or operation is created using these, that block of code can be added to the Advanced Function section below.
 
 > Note: These snippets tend to focus simply on the basic function at hand and should not incorporate other Basic Snippets or Advanced Functions. That is what the Advanced Functions section is for.
+
+## Get Provisioning Mode State
+
+This will get the current state of the Client Provisioning Mode.
+
+### Snippets
+
+```powershell
+# Local Device
+  $Check_Reg_ClientProvisioningMode = Get-ItemPropertyValue -Path "HKLM:\Software\Microsoft\CCM\CcmExec" -Name ProvisioningMode -ErrorAction SilentlyContinue
+
+  if ($Check_Reg_ClientProvisioningMode -in "",$null,$false) {
+    Write-Host "    Client Provisioning Mode: Not Found"
+  }
+  else {
+    Write-Host "    Client Provisioning Mode: $($Check_Reg_ClientProvisioningMode)"
+  }
+```
+
+&nbsp;
 
 ## Enable Provisioning Mode
 
