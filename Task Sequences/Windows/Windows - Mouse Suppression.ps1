@@ -11,7 +11,7 @@ param (
 )
 
 #--------------------------------------------------------------------------------------------
-Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - Configure Mouse Suppression.log" -ErrorAction SilentlyContinue
+# Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - Configure Mouse Suppression.log" -ErrorAction SilentlyContinue
 
 #--------------------------------------------------------------------------------------------
 # Header
@@ -162,7 +162,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
         switch ($Exit) {
           $true {
             Write-Host "        Exit: $($Code)"
-            Stop-Transcript
+            Stop-Transcript -ErrorAction SilentlyContinue
             Exit $Code
           }
           $false {
@@ -405,7 +405,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
           Write-Host "        Status: Updated"
         }
         else {
-          New-ItemProperty -Path $Registry_Disable.Path -Name $Registry_Disable.Name -Value $Registry_Disable.Value -PropertyType $Registry_Disable.PropertyType
+          $Temp_Handle = New-ItemProperty -Path $Registry_Disable.Path -Name $Registry_Disable.Name -Value $Registry_Disable.Value -PropertyType $Registry_Disable.PropertyType
+          $Temp_Handle.Handle.Close()
           Write-Host "        Status: Created"
         }
 			}
@@ -424,7 +425,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
           Write-Host "        Status: Updated"
         }
         else {
-          New-ItemProperty -Path $Registry_Enable.Path -Name $Registry_Enable.Name -Value $Registry_Enable.Value -PropertyType $Registry_Enable.PropertyType
+          $Temp_Handle = New-ItemProperty -Path $Registry_Enable.Path -Name $Registry_Enable.Name -Value $Registry_Enable.Value -PropertyType $Registry_Enable.PropertyType
+          $Temp_Handle.Handle.Close()
           Write-Host "        Status: Created"
         }
 			}
@@ -486,20 +488,24 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
 	# 		$Temp_Cleanup_UserInput -in "Y","Yes","N","No"
 	# 	)
 
-  # Run Garbage Collector
-		Write-Host "    - Run Garbage Collector"
+	# Run Garbage Collection
+		Write-Host "    - Run Garbage Collection"
 
 		try {
-      [System.GC]::Collect()
-      [System.GC]::WaitForPendingFinalizers()
-      Start-Sleep -Seconds 5
-      Write-Host "        Status: Success"
+      if ($Param_InWinPe -eq "True") {
+        [GC]::Collect()
+        [GC]::WaitForPendingFinalizers()
+        Start-Sleep -Seconds 10
+      }
+      else {
+          Write-Host "        Status: Skipped"
+      }
 		}
 		catch {
 			Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
 		}
 
-	# Unload Offline Registry Hive
+  # Unload Offline Registry Hive
 		Write-Host "    - Unload Offline Registry Hive"
 
 		try {
@@ -550,5 +556,5 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Windows - 
 #EndRegion Footer
 #--------------------------------------------------------------------------------------------
 
-Stop-Transcript
+# Stop-Transcript
 Return $Meta_Script_Result[1]
