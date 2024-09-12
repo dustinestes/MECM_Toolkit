@@ -174,8 +174,8 @@
   }
 
 # ---------------------------------------------------------------------------------------------------------------------------------
-# Add User(s) to Collection
-  SNCLog-DebugInfo "    - Add User(s) to Collection"
+# Modify User Collection
+  SNCLog-DebugInfo "    - Modify User Collection"
   try {
     Add-CMUserCollectionDirectMembershipRule -CollectionName $Collection -ResourceId $CM_ResourceIDs -ErrorAction Stop
     SNCLog-DebugInfo "        Status: Success"
