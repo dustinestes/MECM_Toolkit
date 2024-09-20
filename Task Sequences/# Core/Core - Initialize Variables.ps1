@@ -108,7 +108,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
             "vr_Meta_TaskSequenceType"              = $Param_Type
             "vr_Meta_TaskSequenceName_Clean"        = "[to be set within this script]"                              # The cleaned version of the task sequence name for creating valid file names
 
-            "vr_Directory_RootDir"                  = "C:\$($Param_OrgRootDirName)"                      # The main container where all content gets created for the Toolkit
+            "vr_Directory_RootDir"                  = "C:\$($Param_OrgRootDirName)"                                 # The main container where all content gets created for the Toolkit
             "vr_Directory_MECM"                     = "%vr_Directory_RootDir%\MECM"                                 # The folder where all MECM related content will be created
             "vr_Directory_Cache"                    = "%vr_Directory_MECM%\Cache"                                   # A place to cache files needed for task sequences, scripts, or other files. The contents of this folder should only be items safe to delete once the operation is complete
                 "vr_Directory_Cache_Backgrounds"    = "%vr_Directory_Cache%\Backgrounds"                            # A place to cache backgrounds for configuring the device
@@ -118,6 +118,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                 "vr_Directory_Applications"         = "%vr_Directory_Logs%\Applications"                            # A subdirectory for centralizing application related logs
                     "vr_Directory_Apps_Detection"   = "%vr_Directory_Applications%\Detection"                       # All log files associated with detecting an application
                     "vr_Directory_Apps_Install"     = "%vr_Directory_Applications%\Install"                         # All log files associated with installing an application
+                    "vr_Directory_Apps_Repair"      = "%vr_Directory_Applications%\Repair"                          # All log files associated with repairing an application
                     "vr_Directory_Apps_Uninstall"   = "%vr_Directory_Applications%\Uninstall"                       # All log files associated with uninstalling an application
                 "vr_Directory_ConfigurationBaselines" = "%vr_Directory_Logs%\ConfigurationBaselines"                # A subdirectory for centralizing configuration baseline related logs
                     "vr_Directory_CB_Discovery"     = "%vr_Directory_ConfigurationBaselines%\Discovery"             # All log files associated wtih configuration baseline discovery
@@ -125,7 +126,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                 "vr_Directory_Logs_Scripts"         = "%vr_Directory_Logs%\Scripts"                                 # A subdirectory for centralizing configuration baseline related logs
                 "vr_Directory_TaskSequences"        = "%vr_Directory_Logs%\TaskSequences\%vr_Meta_TaskSequenceName_Clean%\%vr_Meta_TimeStampUTC%"    # All log files associated with Task Sequences
                     "vr_Directory_TS_Client"        = "%vr_Directory_TaskSequences%\Client"                         # A subdirectory for centralizing client related logs
-                        "vr_Directory_TS_CCMSetup"  = "%vr_Directory_TS_Client%\CCMSetup"                              # All log files associated with the ccmsetup process
+                        "vr_Directory_TS_CCMSetup"  = "%vr_Directory_TS_Client%\CCMSetup"                           # All log files associated with the ccmsetup process
                     "vr_Directory_TS_EventLogs"     = "%vr_Directory_TaskSequences%\EventLogs"                      # A subdirectory for exporting event log files
                     "vr_Directory_TS_Validation"    = "%vr_Directory_TaskSequences%\Validation"                     # A subdirectory for storing output from the validation scripts in the toolkit
                     "vr_Directory_TS_Variables"     = "%vr_Directory_TaskSequences%\Variables"                      # A subdirectory for exporting the Task Sequence variable dump
