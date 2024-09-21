@@ -36,6 +36,30 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
   Write-Host ""
 
   <#
+    How To Use:
+    Note: Perform all of the below steps on the Primary Site Server
+
+    Create Source Content
+      1. Save this script to a directory accessible by the Primary Site Server
+        i.e. \\[servername]\[share]\VividRock\MECM Toolkit\Maintenance Tasks\Maintenance Task - Cleanup - Log Repository.ps1
+
+    Create Scheduled Task
+      1. Create Folder Structure: Task Scheduler Library / [CompanyName] / MECM / Maintenance Tasks
+      2. Create Scheduled Task
+        General Tab
+          Name: Cleanup - Log Repository - [Name of Log Folder To Cleanup]
+          Description: This script runs as a Scheduled Task and performs the tasks necessary to cleanup old log directories based on the retention days defined.
+          User Account: SYSTEM
+          Run Option: Run whether user is logged on or not
+        Triggers Tab
+          Note: Set this to run on a schedule that meets your organization's needs.
+          Recommended: Ever 1 days @ 23:00 Local Time
+        Action Tab
+          Action: Start a Program
+            Program/Script: powershell.exe
+            Arguments: -NoProfile -NoLogo -WindowStyle Hidden -ExecutionPolicy Bypass -File "" -Path "" -Depth "" -RetentionDays "" -Criteria "" -OutputDir "" -OutputName ""
+            Start In: "\\[pathtofile]"
+
     To Do:
       - Item
       - Item
@@ -68,7 +92,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
     $Meta_Script_Complete_DateTime  = $null
     $Meta_Script_Complete_TimeSpan  = $null
     $Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-    $Meta_Script_Result = $false,"Failure"
+    $Meta_Script_Result             = $false,"Failure"
 
   # Preferences
     $ErrorActionPreference        = "Stop"
