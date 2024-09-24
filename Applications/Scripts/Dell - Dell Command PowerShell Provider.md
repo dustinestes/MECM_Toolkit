@@ -23,6 +23,7 @@ How To Use:
     - [Installation](#installation-1)
     - [Uninstallation](#uninstallation-1)
     - [Detection](#detection-1)
+  - [Apdx B: Registry Paths for ARP Entries](#apdx-b-registry-paths-for-arp-entries)
 
 &nbsp;
 
@@ -61,6 +62,19 @@ Script
     Write-Host "  - Copy Files"
     Copy-Item -Path ".\*" -Destination $Folders[1] -Recurse
 
+# Add ARP Entry
+  # Create Folder
+    $Temp_Entry = New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" -Name "Dell Command | PowerShell Provider - 2.8.0"
+
+  # Add Properties
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "Publisher" -Value "Dell Inc." -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayName" -Value "Dell Command | PowerShell Provider" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayVersion" -Value "2.8.0" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayIcon" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\icon.ico" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallDate" -Value $(Get-Date -Format "yyyyMMdd") -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\" -PropertyType ""
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "UninstallString" -Value "Powershell.exe -ExecutionPolicy Bypass -File `"Uninstall.ps1`"" -PropertyType "String"
+
 # End Logging
   Stop-Transcript
 ```
@@ -92,6 +106,10 @@ Script
         Remove-Item -Path $Folder -Recurse | Out-Null
       }
     }
+
+# Remove ARP Entry
+  # Remove Folder
+    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Dell Command | PowerShell Provider - 2.8.0"
 
 # End Logging
   Stop-Transcript
@@ -331,3 +349,14 @@ Script
 ```powershell
 
 ```
+
+&nbsp;
+
+## Apdx B: Registry Paths for ARP Entries
+
+| Scope             | Path                                                                    |
+|-------------------|-------------------------------------------------------------------------|
+| Machine (x86)     | "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall" |
+| Machine (x64)     | "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"             |
+| CurrentUser (x86) | "HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall" |
+| CurrentUser (x64) | "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"             |
