@@ -72,7 +72,7 @@ Script
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayVersion" -Value "2.8.0" -PropertyType "String"
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayIcon" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\icon.ico" -PropertyType "String"
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallDate" -Value $(Get-Date -Format "yyyyMMdd") -PropertyType "String"
-    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\" -PropertyType ""
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\" -PropertyType "String"
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "UninstallString" -Value "Powershell.exe -ExecutionPolicy Bypass -File `"Uninstall.ps1`"" -PropertyType "String"
 
 # End Logging
