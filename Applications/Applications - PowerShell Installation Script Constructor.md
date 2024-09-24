@@ -356,6 +356,7 @@ Snippet
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallDate" -Value $(Get-Date -Format "yyyyMMdd") -PropertyType "String"
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "[PathToInstallation]" -PropertyType "String"
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "UninstallString" -Value "[UninstallCommand]" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "EstimatedSize" -Value "[NumericalValueInKB]" -PropertyType "DWord"
 ```
 
 Example
@@ -373,6 +374,7 @@ Example
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallDate" -Value $(Get-Date -Format "yyyyMMdd") -PropertyType "String"
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\" -PropertyType ""
     New-ItemProperty -Path $Temp_Entry.PSPath -Name "UninstallString" -Value "Powershell.exe -ExecutionPolicy Bypass -File `"Uninstall.ps1`"" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "EstimatedSize" -Value "5692" -PropertyType "DWord"
 ```
 
 ### Remove ARP Entry
