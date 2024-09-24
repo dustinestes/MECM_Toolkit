@@ -194,6 +194,81 @@ Script
     Out-File -InputObject "    - Delay Detection: $($Meta_Script_DetectionDelay) seconds" @Params_Logging
     Start-Sleep -Seconds $Meta_Script_DetectionDelay
 
+# -------------------------------------------------------
+  # Application - Win32 (Registry)
+  # -------------------------------------------------------
+  #Region Application - Win32 (Registry)
+
+    Out-File -InputObject "    - Application - Win32 (Registry)" @Params_Logging
+
+    # Initialize Detection Values
+      $Detection_App_Win32Reg_01  = $false
+      $Temp_Count_Matches         = 0
+
+    # Variables
+      Out-File -InputObject "        Variables" @Params_Logging
+
+      $App_Win32Reg_Publisher         = "Dell Inc."
+      $App_Win32Reg_DisplayName       = "Dell Command | PowerShell Provider"
+      $App_Win32Reg_DisplayVersion    = "2.8.0"
+
+      switch ($App_Win32Reg_DisplayVersion) {
+        {$App_Win32Reg_DisplayVersion -match "^[\d\.]+$"} { $App_Win32Reg_VersionDataType = "Integer" }
+        Default { $App_Win32Reg_VersionDataType = "String" }
+      }
+
+      $App_Win32Reg_RegistryPaths = @(
+        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+        "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
+        "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
+      )
+
+      $Dataset_App_Win32Reg_Applications = $null
+      foreach ($Item in $App_Win32Reg_RegistryPaths) {
+        $Dataset_App_Win32Reg_Applications += Get-ChildItem $Item
+      }
+
+      foreach ($Item in (Get-Variable -Name "App_Win32Reg_*")) {
+        Out-File -InputObject "            $(($Item.Name) -replace 'App_Win32Reg_',''): $($Item.Value)" @Params_Logging
+      }
+
+    # Detection
+      Out-File -InputObject "        Detection" @Params_Logging
+
+      if ($App_Win32Reg_VersionDataType -eq "String") {
+        switch ($Dataset_App_Win32Reg_Applications) {
+          {($_.GetValue("Publisher") -like $App_Win32Reg_Publisher) -and ($_.GetValue("DisplayName") -like $App_Win32Reg_DisplayName) -and ($_.GetValue("DisplayVersion") -eq $App_Win32Reg_DisplayVersion)} {
+            Out-File -InputObject "            Exact Match: $($_.GetValue("Publisher")) - $($_.GetValue("DisplayName")) - $($_.GetValue("DisplayVersion")) ($($_.Name))" @Params_Logging
+            $Temp_Count_Matches += 1
+          }
+          Default {}
+        }
+      }
+      elseif ($App_Win32Reg_VersionDataType -eq "Integer") {
+        switch ($Dataset_App_Win32Reg_Applications) {
+          {($_.GetValue("Publisher") -like $App_Win32Reg_Publisher) -and ($_.GetValue("DisplayName") -like $App_Win32Reg_DisplayName) -and ([System.Version]$_.GetValue("DisplayVersion") -eq [System.Version]$App_Win32Reg_DisplayVersion)} {
+            Out-File -InputObject "            Exact Match: $($_.GetValue("Publisher")) - $($_.GetValue("DisplayName")) - $($_.GetValue("DisplayVersion")) ($($_.Name))" @Params_Logging
+            $Temp_Count_Matches += 1
+          }
+          {($_.GetValue("Publisher") -like $App_Win32Reg_Publisher) -and ($_.GetValue("DisplayName") -like $App_Win32Reg_DisplayName) -and ([System.Version]$_.GetValue("DisplayVersion") -gt [System.Version]$App_Win32Reg_DisplayVersion)} {
+            Out-File -InputObject "            Newer Version: $($_.GetValue("Publisher")) - $($_.GetValue("DisplayName")) - $($_.GetValue("DisplayVersion")) ($($_.Name))" @Params_Logging
+            $Temp_Count_Matches += 1
+          }
+          Default {}
+        }
+      }
+
+    # Evalaution
+      if ($Temp_Count_Matches -gt 0) {
+        $Detection_App_Win32Reg_01 = $true
+      }
+      else {
+        $Detection_App_Win32Reg_01 = $false
+      }
+
+  #EndRegion Application - Win32 (Registry)
+  # -------------------------------------------------------
+
   # -------------------------------------------------------
   # Files & Folders: Existential
   # -------------------------------------------------------
