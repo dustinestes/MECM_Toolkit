@@ -18,11 +18,14 @@ The below ToC links you to the various sections and code snippets within this ma
   - [Uninstallation](#uninstallation)
     - [Standard Uninstallation](#standard-uninstallation)
     - [MSI Bulk Uninstallation](#msi-bulk-uninstallation)
+  - [Add/Remove Programs (ARP) Entry](#addremove-programs-arp-entry)
+    - [Add ARP Entry](#add-arp-entry)
+    - [Remove ARP Entry](#remove-arp-entry)
   - [Delay/Sleep](#delaysleep)
     - [Start Sleep](#start-sleep)
   - [File \& Folder Management](#file--folder-management)
     - [Copy Files](#copy-files)
-  - [File \& Folder Management](#file--folder-management-1)
+  - [WMI Management](#wmi-management)
   - [Shortcut Management](#shortcut-management)
     - [Create Start Menu Shortcut (All Users)](#create-start-menu-shortcut-all-users)
     - [Create Start Menu Shortcut (Current User)](#create-start-menu-shortcut-current-user)
@@ -328,12 +331,82 @@ Snippet
 
 &nbsp;
 
+## Add/Remove Programs (ARP) Entry
+
+The following snippets are for adding or removing the Add/Remove Programs (ARP) Entry in the registry. This is especially helpful to include for applications with non-standard installers, powershell modules, etc. that do not create their own ARP entries.
+
+> Important:
+>
+> The ARP data is what is inventoried by the MECM agent for reporting installed products across an organization.
+
+### Add ARP Entry
+
+Snippet
+
+```powershell
+# Add ARP Entry
+  # Create Folder
+    $Temp_Entry = New-Item -Path "[RegistryUninstallKeyPath]" -Name "[ProductName]"
+
+  # Add Properties
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "Publisher" -Value "[Publisher]" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayName" -Value "[ProductName]" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayVersion" -Value "[Version]" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayIcon" -Value "[PathToICOFile]" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallDate" -Value $(Get-Date -Format "yyyyMMdd") -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "[PathToInstallation]" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "UninstallString" -Value "[UninstallCommand]" -PropertyType "String"
+```
+
+Example
+
+```powershell
+# Add ARP Entry
+  # Create Folder
+    $Temp_Entry = New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" -Name "Dell Command | PowerShell Provider - 2.8.0"
+
+  # Add Properties
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "Publisher" -Value "Dell Inc." -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayName" -Value "Dell Command | PowerShell Provider" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayVersion" -Value "2.8.0" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "DisplayIcon" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\icon.ico" -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallDate" -Value $(Get-Date -Format "yyyyMMdd") -PropertyType "String"
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "InstallLocation" -Value "C:\Program Files\WindowsPowerShell\Modules\DellCommandPowerShellProvider\2.8.0\" -PropertyType ""
+    New-ItemProperty -Path $Temp_Entry.PSPath -Name "UninstallString" -Value "Powershell.exe -ExecutionPolicy Bypass -File `"Uninstall.ps1`"" -PropertyType "String"
+```
+
+### Remove ARP Entry
+
+> Note:
+>
+> To remove an ARP entry you just need to remove the parent Registry Key that contains all of the property/value pairs.
+
+Snippet
+
+```powershell
+# Remove ARP Entry
+  # Remove Folder
+    Remove-Item -Path "[RegistryKeyPath]"
+```
+
+Example
+
+```powershell
+# Remove ARP Entry
+  # Remove Folder
+    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Dell Command | PowerShell Provider - 2.8.0"
+```
+
+
+&nbsp;
+
 ## Delay/Sleep
 
 The following snippets are for adding delays or sleeping execution of the script.
+
 | Name | Purpose | Description | Link |
 | ---- | ------- | ----------- | ---- |
-| start sleep | Delay/Sleep | sleeps the execution of the script for the specified number of seconds. | [Link](###-logging---start-start-snippet |
+| Start Sleep | Delay/Sleep | sleeps the execution of the script for the specified number of seconds. | [Link](###-logging---start-start-snippet) |
 
 &nbsp;
 
@@ -403,7 +476,7 @@ Example
 
 &nbsp;
 
-## File & Folder Management
+## WMI Management
 
 The following snippets are for managing files and folders:
 
