@@ -10,8 +10,7 @@ The following items are referenced in the code within this document. Familiarize
 |-----------------------|-----------------------------|-------------------------------------------------------------------------------------------------------------------|------|
 | Message IDs           | Documentation               | Provides a list of Message IDs used to trigger the various actions.                                               | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/osd/understand/provisioning-mode) |
 | Send Schedule Tool    | Documentation               | Provides details on using the tool for client management.                                                         | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/core/support/send-schedule-tool)  |
-|
-
+| SMS_Client            | WMI Class                   | Represents the client and facilitates manipulation and retrieval of client information.                           | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/core/clients/client-classes/sms_client-client-wmi-class) |
 
 &nbsp;
 
@@ -21,12 +20,14 @@ The following items are referenced in the code within this document. Familiarize
   - [References](#references)
   - [Table of Contents](#table-of-contents)
 - [Basic Snippets](#basic-snippets)
-  - [Command Prompt](#command-prompt)
+  - [Trigger Client Actions](#trigger-client-actions)
     - [Snippets](#snippets)
-  - [PowerShell](#powershell)
+    - [Send Schedule Tool (SendSchedule.exe)](#send-schedule-tool-sendscheduleexe)
+    - [Output](#output)
+  - [\[SnippetTitle\]](#snippettitle)
+    - [Example](#example)
     - [Snippets](#snippets-1)
-  - [Send Schedule Tool (SendSchedule.exe)](#send-schedule-tool-sendscheduleexe)
-    - [Snippets](#snippets-2)
+    - [Output](#output-1)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
 - [Appendices](#appendices)
@@ -42,48 +43,106 @@ These are quick, simple snippets of code to reference for a basic understanding 
 
 > Note: These snippets tend to focus simply on the basic function at hand and should not incorporate other Basic Snippets or Advanced Functions. That is what the Advanced Functions section is for.
 
-## Command Prompt
+## Trigger Client Actions
 
-You can use the Command Prompt to trigger Client actions using the WMIC tool.
+This snippet uses the TriggerSchedule method to run the specified schdules.
 
 ### Snippets
 
-```dos
-WMIC /namespace:\\root\CCM path SMS_Client CALL TriggerSchedule "{00000000-0000-0000-0000-000000000021}" /NOINTERACTIVE
+PowerShell
+
+```powershell
+# Local Device
+  # Using WmiMethod
+    $Trigger = "{00000000-0000-0000-0000-000000000021}"
+    Invoke-WmiMethod -Namespace 'root\ccm' -Class SMS_Client -Name TriggerSchedule $Trigger
+
+  # Using CimMethod
+    $Trigger = "{00000000-0000-0000-0000-000000000021}"
+    Invoke-CimMethod -Namespace 'root\CCM' -ClassName SMS_Client -MethodName TriggerSchedule -Arguments @{sScheduleID=$Trigger}
+
+# Remote Device
+
 ```
 
-## PowerShell
+Command Prompt
 
-You can use PowerShell to trigger Client actions using either the Invoke-WmiMethod cmdlet or the Invoke-CimMethod.
+```bat
+REM Local Device
+  WMIC /namespace:\\root\CCM path SMS_Client CALL TriggerSchedule "{00000000-0000-0000-0000-000000000021}" /NOINTERACTIVE
+
+REM Remote Device
+  REM Not Supported
+```
+
+### Send Schedule Tool (SendSchedule.exe)
+
+PowerShell
+
+```powershell
+# Local Device
+
+# Remote Device
+
+```
+
+Command Prompt
+
+```bat
+REM Run On Local Device
+  SendSchedule.exe {00000000-0000-0000-0000-000000000001}
+
+REM Run On Remote Device
+  SendSchedule.exe {00000000-0000-0000-0000-000000000001} MyPC
+
+REM Trigger a Specific Configuration Baseline Evaluation
+  SendSchedule.exe ScopeId_611E8382-C064-4B62-B0DE-EFFB52AE8994/Baseline_36722778-69dd-4423-9632-b61148b2b67e
+```
+
+### Output
+
+```powershell
+# Add Code Here
+```
+
+## [SnippetTitle]
+
+[Text]
+
+### Example
+
+[Text]
 
 ### Snippets
 
 ```powershell
-# Using WmiMethod
-  $Trigger = "{00000000-0000-0000-0000-000000000021}"
-  Invoke-WmiMethod -Namespace 'root\ccm' -Class SMS_Client -Name TriggerSchedule $Trigger
+# Local Device
 
-# Using CimMethod
-  $Trigger = "{00000000-0000-0000-0000-000000000021}"
-  Invoke-CimMethod -Namespace 'root\CCM' -ClassName SMS_Client -MethodName TriggerSchedule -Arguments @{sScheduleID=$Trigger}
+
+# Remote Device
+
 ```
 
-## Send Schedule Tool (SendSchedule.exe)
-
-The Send Schedule Tool is a part of the Configuration Manager Tools provided for client management.
-
-### Snippets
+### Output
 
 ```powershell
-# Run On Local Device
-SendSchedule {00000000-0000-0000-0000-000000000001}
-
-# Run On Remote Device
-SendSchedule {00000000-0000-0000-0000-000000000001} MyPC
-
-# Trigger a Specific Configuration Baseline Evaluation
-SendSchedule ScopeId_611E8382-C064-4B62-B0DE-EFFB52AE8994/Baseline_36722778-69dd-4423-9632-b61148b2b67e
+# Add Code Here
 ```
+
+&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 &nbsp;
 
