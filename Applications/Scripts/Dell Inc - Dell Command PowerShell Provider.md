@@ -7,7 +7,7 @@ How To Use:
 1. Place the Command Line code into the Application's "Installation Program" field
 2. Save the Script code into a ps1 file and save that to the source content folder for the application
 3. Repeat for the Uninstallation Command Line and Installation Script
-4. Add the Detection script to the
+4. Add the Detection code to the Application once created within MECM
 
 ## Table of Contents
 
