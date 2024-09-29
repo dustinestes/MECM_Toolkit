@@ -1,1 +1,0 @@
-[text](https://www.asquaredozen.com/2019/02/12/the-system-center-configuration-manager-adminservice-guide/)
