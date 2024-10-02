@@ -560,7 +560,7 @@ param (
 
         foreach ($Item in $Array_LogFileNames) {
             try {
-                Copy-Item -Path $($Path_Log_Source + "\" + $Item) -Destination $Param_Log_Destination -Force -ErrorAction Stop
+                Copy-Item -Path $($Path_Log_Source + "\" + $Item) -Destination $($Param_Log_Destination + "\" + $Item.Replace("%4","")) -Force -ErrorAction Stop
                 Write-Host "        $($Item): Success"
             }
             catch {
