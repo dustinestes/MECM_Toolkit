@@ -5,7 +5,7 @@
 param (
   [string]$SiteCode,                  # 'ABC'
   [string]$SMSProvider,               # '[ServerFQDN]'
-  [array]$Exclude,                   # @('VR100001,VR100002')
+  [array]$Exclude,                    # @('VR100001,VR100002')
   [string]$OutputDir,                 # '\\[URI]\Share'
   [string]$OutputName                 # 'Content Management - Redistribute Failed Content'
 )
