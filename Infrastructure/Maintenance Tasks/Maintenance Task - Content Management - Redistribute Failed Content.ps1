@@ -5,7 +5,6 @@
 param (
   [string]$SiteCode,                  # 'ABC'
   [string]$SMSProvider,               # '[ServerFQDN]'
-  [array]$Exclude,                    # @('VR100001,VR100002')
   [string]$OutputDir,                 # '\\[URI]\Share'
   [string]$OutputName                 # 'Content Management - Redistribute Failed Content'
 )
@@ -30,14 +29,8 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
   Write-Host "                necessary to redistribute failed content distributions to their"
   Write-Host "                respective Distribution Points without unnecessarily redistributing"
   Write-Host "                to Distribution Points that already successfully received the content."
-  Write-Host "    Links:      https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/core/servers/configure/sms_packagestatus-server-wmi-class"
-  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/core/servers/configure/sms_package-server-wmi-class"
-  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/osd/sms_imagepackage-server-wmi-class"
-  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/osd/sms_bootimagepackage-server-wmi-class"
-  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/osd/sms_operatingsysteminstallpackage-server-wmi-class"
-  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/osd/sms_driverpackage-server-wmi-class"
-  Write-host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/sum/sms_softwareupdatespackage-server-wmi-class"
-  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/apps/sms_application-server-wmi-class"
+  Write-Host "    Links:      https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/core/servers/console/sms_objectcontentinfo-server-wmi-class"
+  Write-Host "                https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/core/servers/configure/sms_distributiondpstatus-server-wmi-class"
   Write-Host "    Template:   1.1"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host ""
@@ -69,7 +62,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
         Action Tab
           Action: Start a Program
             Program/Script: powershell.exe
-            Arguments: -NoProfile -NoLogo -WindowStyle Hidden -ExecutionPolicy Bypass -File "" -SiteCode "" -SMSProvider "" -Exclude "" -OutputDir "" -OutputName ""
+            Arguments: -NoProfile -NoLogo -WindowStyle Hidden -ExecutionPolicy Bypass -File "" -SiteCode "" -SMSProvider "" -OutputDir "" -OutputName ""
             Start In: "\\[pathtofile]"
 
   To Do:
@@ -92,7 +85,6 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
   # Parameters
     $Param_SiteCode         = $SiteCode
     $Param_SMSProvider      = $SMSProvider
-    $Param_Exclude          = $Exclude
     $Param_OutputDir        = $OutputDir
     $Param_OutputName       = $OutputName
 
@@ -117,49 +109,14 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 
   # Hashtables
     $Hashtable_Content_ObjectTypeID = @{
-      "2"     =   @{
-        WMISource     = "SMS_Package"
-        FriendlyName  = "Package"
-      }
-      "14"    =   @{
-        WMISource     = "SMS_OperatingSystemInstallPackage"
-        FriendlyName  = "Operating System Install Package"
-      }
-      "18"    =   @{
-        WMISource     = "SMS_ImagePackage"
-        FriendlyName  = "Image Package"
-      }
-      "19"    =   @{
-        WMISource     = "SMS_BootImagePackage"
-        FriendlyName  = "Boot Image Package"
-      }
-      "21"    =   @{
-        WMISource     = "SMS_DeviceSettingPackage"
-        FriendlyName  = "Device Settings Package"
-      }
-      "23"    =   @{
-        WMISource     = "SMS_DriverPackage"
-        FriendlyName  = "Driver Package"
-      }
-      "24"    =   @{
-        WMISource     = "SMS_SoftwareUpdatesPackage"
-        FriendlyName  = "Software Updates Package"
-      }
-      "31"    =   @{
-        WMISource     = "SMS_Application"
-        FriendlyName  = "Application"
-      }
-    }
-
-    $Hashtable_SMSPackageStatus_Status = @{
-      "0"	= "NONE"
-      "1"	= "SENT"
-      "2"	= "RECEIVED"
-      "3"	= "INSTALLED"
-      "4"	= "RETRY"
-      "5"	= "FAILED"
-      "6"	= "REMOVED"
-      "7"	= "PENDING_REMOVE"
+      "2"   = "Package"
+      "14"  = "Operating System Install Package"
+      "18"  = "Image Package"
+      "19"  = "Boot Image Package"
+      "21"  = "Device Settings Package"
+      "23"  = "Driver Package"
+      "24"  = "Software Updates Package"
+      "31"  = "Application"
     }
 
   # Arrays
@@ -168,16 +125,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 
   # WMI
     $WMI_Class_Sources = @{
-      "SMS_PackageStatus" = "Status"
-      "SMS_DistributionPoint" = "DistributionPoint"
-      "SMS_Package" = "Package"
-      "SMS_OperatingSystemInstallPackage" = "Operating System Upgrade"
-      "SMS_ImagePackage"  = "Operating System Image"
-      "SMS_BootImagePackage"  = "Boot Image"
-      "SMS_DeviceSettingPackage"  = "Device Setting"
-      "SMS_DriverPackage" = "Driver Package"
-      "SMS_SoftwareUpdatesPackage"  = "Software Update"
-      "SMS_Application" = "Application"
+      "SMS_DistributionDPStatus" = "DistributionDPStatus"
     }
 
   # Datasets
@@ -200,18 +148,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
     }
     Write-Host "    - Content Object Type IDs"
     foreach ($Item in $Hashtable_Content_ObjectTypeID.GetEnumerator()) {
-      Write-Host "        $($Item.Key)"
-      foreach ($SubItem in $Item.Value.GetEnumerator()) {
-        Write-Host "          $($SubItem.Key): $($SubItem.Value)"
-      }
-    }
-    Write-Host "    - SMS_PackageStatus: Status Codes"
-    foreach ($Item in $Hashtable_SMSPackageStatus_Status.GetEnumerator()) {
       Write-Host "        $($Item.Key): $($Item.Value)"
-    }
-    Write-Host "    - Excluded"
-    foreach ($Item in $Param_Exclude) {
-      Write-Host "        $($Item)"
     }
 
   Write-Host "    - Complete"
@@ -415,154 +352,91 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 
 	Write-Host "  Data Gather"
 
-  # WMI Classes
-    Write-Host "    - WMI Classes"
+  # Get SMS_ObjectContentInfo Data
+    Write-Host "    - Get SMS_ObjectContentInfo Data"
 
     try {
-      foreach ($Item in $WMI_Class_Sources.GetEnumerator().Name) {
-        Write-Host "        Variable Name: Dataset_$($Item)"
+      Write-Host "        Filter: ?`$filter=NumberErrors gt 0"
+      $Dataset_SMS_ObjectContentInfo = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + "SMS_ObjectContentInfo" + "?`$filter=NumberErrors gt 0")" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+      Write-Host "        Error Count: $($Dataset_SMS_ObjectContentInfo.Count)"
 
-        # Determine Expression
-          if ($Item -eq "SMS_PackageStatus") {
-            $Temp_Criteria = "?`$select=PackageId,PkgServer,Status%20&`$filter=Status%20eq%205"
-          }
-          elseif ($Item -eq "SMS_DistributionPoint") {
-            $Temp_Criteria = "?`$select=PackageId,ObjectTypeID,SecureObjectID"
-          }
-          elseif ($Item -eq "SMS_Application") {
-            $Temp_Criteria = "?`$select=ModelName,Manufacturer,LocalizedDisplayName,SoftwareVersion"
-          }
-          else {
-            $Temp_Criteria = "?`$select=PackageId,Name"
-          }
-
-        # Create Variables with REST API Content
-          New-Variable -Name "Dataset_$($Item)" -Value $((Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Item + $Temp_Criteria)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value)
-
-          Write-Host "            Count: $(((Get-Variable -Name "Dataset_$($Item)").Value | Measure-Object).Count)"
+      if ($Dataset_SMS_ObjectContentInfo.Count -eq 0) {
+        $Control_Skip_Execution = $true
+        Write-Host "        Status: Skipping Execution"
       }
-
-      Write-Host "        Status: Success"
+      else {
+        $Control_Skip_Execution = $false
+        Write-Host "        Status: Success"
+      }
     }
     catch {
       Write-vr_ErrorCode -Code 1601 -Exit $true -Object $PSItem
     }
 
-	# Filter Datasets
-    Write-Host "    - Filter Datasets"
-
-    try {
-      Write-Host "        SMS_DistributionPoint: Get Unique"
-      Write-Host "          Old Count: $($Dataset_SMS_DistributionPoint.Count)"
-      $Dataset_SMS_DistributionPoint = $Dataset_SMS_DistributionPoint | Get-Unique -AsString
-      Write-Host "          New Count: $($Dataset_SMS_DistributionPoint.Count)"
-      Write-Host "        Status: Success"
+  # Continue Processing Based on Logic
+    if ($Control_Skip_Execution -eq $true) {
+      # Do Nothing
     }
-    catch {
-      Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
-    }
+    else {
+      # WMI Classes
+        Write-Host "    - WMI Classes"
 
-	# Create Result Dataset
-    Write-Host "    - Create Result Dataset"
+        try {
+          foreach ($Item in $WMI_Class_Sources.GetEnumerator().Name) {
+            Write-Host "        Variable Name: Dataset_$($Item)"
 
-    try {
-      foreach ($Item in $Dataset_SMS_PackageStatus) {
-        # Construct Temporarary Object
-          $Temp_Object = [PSCustomObject]@{
-            "PackageID"     = $Item.PackageID
-            "ObjectTypeID"  = $null
-            "ObjectType"    = $null
-            "Name"          = $null
-            "ModelName"     = $null
-            "PkgServer"     = $null
-            "Status"        = $Item.Status
-            "Result"        = "Not Started"
+            # Determine Expression
+              switch ($Item) {
+                "SMS_DistributionDPStatus" { $Temp_Criteria = "?`$filter=MessageState gt 2 &`$select=PackageId,Name" }
+                Default { $Temp_Criteria = "?`$select=PackageId,Name" }
+              }
+
+            # Create Variables with REST API Content
+              New-Variable -Name "Dataset_$($Item)" -Value $((Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Item + $Temp_Criteria)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value)
+
+              Write-Host "            Count: $(((Get-Variable -Name "Dataset_$($Item)").Value | Measure-Object).Count)"
           }
 
-        # Get ObjectTypeID
-          $Temp_Object.ObjectTypeID = ($Dataset_SMS_DistributionPoint | Where-Object -Property "PackageID" -eq $Item.PackageID).ObjectTypeID
-
-        # Get ObjectType
-          $Temp_Object.ObjectType = $Hashtable_Content_ObjectTypeID."$($Temp_Object.ObjectTypeID)".FriendlyName
-
-        # Cleanup PkgServer String
-          $Pattern    = '\\\\(.*?)\\'
-          $Temp_Object.PkgServer = [regex]::Match($Item.PkgServer, $Pattern).Groups[1].Value
-
-        # Add To Result Dataset
-          $Dataset_Redistribute_Results += $Temp_Object
-      }
-      Write-Host "        Count: $($Dataset_Redistribute_Results.Count)"
-      Write-Host "        Status: Success"
-    }
-    catch {
-      Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
-    }
-
-	# Get Package Names
-    Write-Host "    - Get Package Names"
-
-    try {
-      foreach ($Item in $Dataset_Redistribute_Results) {
-        switch ($Item.ObjectTypeID) {
-          2 {
-            # Get Application ID
-              $Item.ModelName = "N/A"
-
-            # Get Name
-              $Item.Name = ($Dataset_SMS_Package | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).Name
-          }
-          14 {
-            # Get Application ID
-              $Item.ModelName = "N/A"
-
-            # Get Name
-              $Item.Name = ($Dataset_SMS_OperatingSystemInstallPackage | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).Name
-          }
-          18 {
-            # Get Application ID
-              $Item.ModelName = "N/A"
-
-            # Get Name
-              $Item.Name = ($Dataset_SMS_ImagePackage | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).Name
-          }
-          19 {
-            # Get Application ID
-              $Item.ModelName = "N/A"
-
-            # Get Name
-              $Item.Name = ($Dataset_SMS_BootImagePackage | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).Name
-          }
-          23 {
-            # Get Application ID
-              $Item.ModelName = "N/A"
-
-            # Get Name
-              $Item.Name = ($Dataset_SMS_DriverPackage | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).Name
-          }
-          24 {
-            # Get Application ID
-              $Item.ModelName = "N/A"
-
-            # Get Name
-              $Item.Name = ($Dataset_SMS_SoftwareUpdatesPackage | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).Name
-          }
-          31 {
-            # Get Application ID
-              $Item.ModelName = ($Dataset_SMS_DistributionPoint | Where-Object -Property "PackageID" -eq $Item.PackageID | Select-Object -First 1).SecureObjectID
-
-            # Get Name
-              $Temp_Application_Object = ($Dataset_SMS_Application | Where-Object -Property "ModelName" -eq $Item.ModelName | Select-Object -First 1)
-              $Item.Name = "$($Temp_Application_Object.Manufacturer) - $($Temp_Application_Object.LocalizedDisplayName) - $($Temp_Application_Object.SoftwareVersion)"
-          }
-          Default {$Temp_Object.ObjectType = "Unknown"}
+          Write-Host "        Status: Success"
         }
-      }
+        catch {
+          Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
+        }
 
-      Write-Host "        Status: Success"
-    }
-    catch {
-      Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
+      # Create Result Dataset
+        Write-Host "    - Create Result Dataset"
+
+        try {
+          foreach ($Item in $Dataset_SMS_ObjectContentInfo) {
+            # Construct Temporarary Object
+              $Temp_Object = [PSCustomObject]@{
+                "PackageID"     = $Item.PackageID
+                "ObjectTypeID"  = $Item.ObjectTypeID
+                "ObjectType"    = $Hashtable_Content_ObjectTypeID."$($Item.ObjectTypeID)"
+                "Name"          = $Item.SoftwareName
+                "Success"       = $Item.NumberSuccess
+                "Errors"        = $Item.NumberErrors
+                "InProgress"    = $Item.NumberInProgress
+                "Unknown"       = $Item.NumberUnknown
+                "Total"         = $Item.Targeted
+                "ObjectID"      = $Item.ObjectID
+                "PkgServers"    = $null
+                "Status"        = $Item.Status
+                "Result"        = "Not Started"
+              }
+
+            # Get Package Servers
+              $Temp_Object.PkgServers = ($Dataset_SMS_DistributionDPStatus | Where-Object -Property PackageID -eq $Item.PackageID).Name
+
+            # Add To Result Dataset
+              $Dataset_Redistribute_Results += $Temp_Object
+          }
+          Write-Host "        Count: $($Dataset_Redistribute_Results.Count)"
+          Write-Host "        Status: Success"
+        }
+        catch {
+          Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
+        }
     }
 
   Write-Host "    - Complete"
@@ -580,73 +454,85 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 
 	Write-Host "  Execution"
 
-	# Redistribute Content
-		Write-Host "    - Redistribute Content"
+  # Continue Processing Based on Logic
+    if ($Control_Skip_Execution -eq $true) {
+      Write-Host "    - Skip Maintenance Task Execution"
 
-		foreach ($Item in $Dataset_Redistribute_Results) {
-      $Temp_Expression = $null
+      # Determine Script Result
+        $Meta_Script_Result = $true,"Skipped"
+    }
+    else {
+      # Redistribute Content
+        Write-Host "    - Redistribute Content"
 
-			Write-Host "        $($Item.Name)"
-      Write-Host "          Target DP: $($Item.PkgServer)"
+        foreach ($Item in $Dataset_Redistribute_Results) {
+          $Temp_Expression = $null
+          Write-Host "        $($Item.Name)"
+          Write-Host "          Errors: $($Item.Errors)"
 
-			try {
-        switch ($Item.ObjectTypeID) {
-          2  {
-            $Temp_Expression = "Get-CMPackage -Id $($Item.PackageID) -Fast | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
+          foreach ($SubItem in $Item.PkgServers) {
+            Write-Host "          DP: $($SubItem)"
+
+            try {
+              switch ($Item.ObjectTypeID) {
+                2  {
+                  $Temp_Expression = "Get-CMPackage -Id $($Item.ObjectID) -Fast | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                14 {
+                  $Temp_Expression = "Get-CMOperatingSystemInstaller -Id $($Item.ObjectID) | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                18 {
+                  $Temp_Expression = "Get-CMOperatingSystemImage -Id $($Item.ObjectID) | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                19 {
+                  $Temp_Expression = "Get-CMBootImage -Id $($Item.ObjectID) | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                21 {
+                  # Unknown
+                  $Item.Result = "Unknown"
+                }
+                23 {
+                  $Temp_Expression = "Get-CMDriverPackage -Id $($Item.ObjectID) -Fast | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                24 {
+                  $Temp_Expression = "Get-CMSoftwareUpdateDeploymentPackage -Id $($Item.ObjectID) | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                31 {
+                  $Temp_Expression = "Get-CMApplication -ModelName $($Item.ObjectID) -Fast | Invoke-CMContentRedistribution -DistributionPointName $($SubItem)"
+                  $Item.Result = "Pending"
+                }
+                Default { $Item.Result = "Uknown ObjectTypeID" }
+              }
+
+              # Execute the Expression
+                if ($Temp_Expression) {
+                  $Temp_Result = Invoke-Expression -Command $Temp_Expression
+                  $Item.Result = "Started"
+                  Write-Host "            Status: Started"
+                }
+                else {
+                  $Item.Result = "Skipped"
+                  Write-Host "            Status: Skipped. Operation unknown for this object type."
+                }
+
+              # # Sleep So MECM Can Process Content Distribution Request
+              #   Start-Sleep -Seconds 3
+            }
+            catch {
+              Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
+            }
           }
-          14 {
-            $Temp_Expression = "Get-CMOperatingSystemInstaller -Id $($Item.PackageID) | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
-          }
-          18 {
-            $Temp_Expression = "Get-CMOperatingSystemImage -Id $($Item.PackageID) | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
-          }
-          19 {
-            $Temp_Expression = "Get-CMBootImage -Id $($Item.PackageID) | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
-          }
-          21 {
-            # Unknown
-            $Item.Result = "Unknown"
-          }
-          23 {
-            $Temp_Expression = "Get-CMDriverPackage -Id $($Item.PackageID) -Fast | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
-          }
-          24 {
-            $Temp_Expression = "Get-CMSoftwareUpdateDeploymentPackage -Id $($Item.PackageID) | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
-          }
-          31 {
-            $Temp_Expression = "Get-CMApplication -ModelName $($Item.ModelName) -Fast | Invoke-CMContentRedistribution -DistributionPointName $($Item.PkgServer)"
-            $Item.Result = "Pending"
-          }
-          Default { $Item.Result = "Uknown ObjectTypeID" }
         }
 
-        # Execute the Expression
-          if ($Temp_Expression) {
-            $Temp_Result = Invoke-Expression -Command $Temp_Expression
-            $Item.Result = "Started"
-            Write-Host "          Status: Started"
-          }
-          else {
-            $Item.Result = "Skipped"
-            Write-Host "          Status: Skipped. Operation unknown for this object type."
-          }
-
-        # # Sleep So MECM Can Process Content Distribution Request
-        #   Start-Sleep -Seconds 3
-			}
-			catch {
-				Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
-			}
-		}
-
-	# Determine Script Result
-		$Meta_Script_Result = $true,"Success"
+      # Determine Script Result
+        $Meta_Script_Result = $true,"Success"
+    }
 
 	Write-Host "    - Complete"
 	Write-Host ""
@@ -667,7 +553,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 		Write-Host "    - Output Results (Console)"
 
 		try {
-      $Dataset_Redistribute_Results | Format-Table -Property PackageID,Name,Result
+      $Dataset_Redistribute_Results | Format-Table -Property PackageID,Name,PkgServers,Result
 			Write-Host "        Status: Success"
 		}
 		catch {
