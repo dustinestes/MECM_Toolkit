@@ -970,92 +970,92 @@ Snippet
 ----------------------------------------------------------------------------------------------------------------------------- #>
 
 # Get Each User Profile SID and Path to the Profile
-    $User_Profiles = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*" | Where-Object {$_.PSChildName -match "S-1-5-21-(\d+-?){4}$"} | Select-Object @{Name="SID"; Expression={$_.PSChildName}}, @{Name="Hive"; Expression={"$($_.ProfileImagePath)\NTuser.dat"}}
+  $User_Profiles = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*" | Where-Object {$_.PSChildName -match "S-1-5-21-(\d+-?){4}$"} | Select-Object @{Name="SID"; Expression={$_.PSChildName}}, @{Name="Hive"; Expression={"$($_.ProfileImagePath)\NTuser.dat"}}
 
 # Add the .DEFAULT User Profile
-    [array]$User_Profiles += [pscustomobject] @{
-        SID = "USERTEMPLATE"
-        Hive = "C:\Users\Default\NTUSER.dat"
-    }
+  [array]$User_Profiles += [pscustomobject] @{
+    SID = "USERTEMPLATE"
+    Hive = "C:\Users\Default\NTUSER.dat"
+  }
 
 # Loop Through Each Profile on the Machine
-    foreach ($Profile in $User_Profiles) {
-        # Load if Not Already Loaded
-            if (($Hive_Loaded = Test-Path -Path "Registry::HKEY_USERS\$($Profile.SID)") -eq $false) {
-                Start-Process -FilePath "cmd.exe" -ArgumentList "/c reg.exe load HKU\$($Profile.SID) $($Profile.Hive)" -Wait -WindowStyle Hidden
+  foreach ($Profile in $User_Profiles) {
+    # Load if Not Already Loaded
+      if (($Hive_Loaded = Test-Path -Path "Registry::HKEY_USERS\$($Profile.SID)") -eq $false) {
+        Start-Process -FilePath "cmd.exe" -ArgumentList "/c reg.exe load HKU\$($Profile.SID) $($Profile.Hive)" -Wait -WindowStyle Hidden
+      }
+
+    <# -----------------------------------------------------------------------------------------------------------------------------
+      Add Per-User Registry Changes Here
+    --------------------------------------------------------------------------------------------------------------------------------
+      Use the below variable declaration to create a variable with the correct path for the currently loaded user hive in the
+      array of profiles in $User_Profiles
+        $UserKey = "Registry::HKEY_Users\$($Profile.SID)\"
+    ----------------------------------------------------------------------------------------------------------------------------- #>
+      #Region
+
+      # Define the UserKey Variable to the Currently Loaded Profile
+        $UserKey = "Registry::HKEY_Users\$($Profile.SID)"
+
+      # Create Hashtable of Property Value Sets
+        $Hash_PropertyValueSets = @{
+          01 = @{
+            "Name"  = "License"
+            "Value" = "Subscription"
+            "Path"  = "$($UserKey)\SOFTWARE\VividRock\PrecipicePS"
+            "PropertyType" = "String"
+          }
+          02 = @{
+            "Name"  = "Version"
+            "Value" = "1"
+            "Path"  = "$($UserKey)\SOFTWARE\VividRock\PrecipicePS"
+            "PropertyType" = "Dword"
+          }
+        }
+
+      # Iterate Through Property Value Sets
+        foreach ($item in $Hash_PropertyValueSets.GetEnumerator()) {
+          # Set Cmdlet Parameters
+            $Hash_Parameters = @{
+              Path  = $($item.value.Path)
+              Name  = $($item.value.Name)
+              Value = $($item.value.Value)
+              Force = $true
+              WhatIf = $false
+              ErrorAction = "Continue"
             }
 
-            <# -----------------------------------------------------------------------------------------------------------------------------
-                Add Per-User Registry Changes Here
-            --------------------------------------------------------------------------------------------------------------------------------
-                Use the below variable declaration to create a variable with the correct path for the currently loaded user hive in the
-                array of profiles in $User_Profiles
-                    $UserKey = "Registry::HKEY_Users\$($Profile.SID)\"
-            ----------------------------------------------------------------------------------------------------------------------------- #>
-                #Region
+          # Check for Path and Create if Not Exist
+            if (!(Test-Path -Path $Hash_Parameters.Path)) {
+              $Registry_NewItem = New-Item -Path $Hash_Parameters.Path -Force
+            }
 
-                # Define the UserKey Variable to the Currently Loaded Profile
-                    $UserKey = "Registry::HKEY_Users\$($Profile.SID)"
+          # Check for Property and Create or Modify Value Based on Existence
+            if (!(Get-ItemProperty -Path $Hash_Parameters.Path -Name $Hash_Parameters.Name -ErrorAction SilentlyContinue)) {
+              $Registry_NewItemProperty = New-ItemProperty @Hash_Parameters -PropertyType $($item.Value.PropertyType)
+            }
+            else {
+              $Registry_SetItemProperty = Set-ItemProperty @Hash_Parameters
+            }
+        }
 
-                # Create Hashtable of Property Value Sets
-                    $Hash_PropertyValueSets = @{
-                        01 = @{
-                            "Name"  = "License"
-                            "Value" = "Subscription"
-                            "Path"  = "$($UserKey)\SOFTWARE\VividRock\PrecipicePS"
-                            "PropertyType" = "String"
-                        }
-                        02 = @{
-                            "Name"  = "Version"
-                            "Value" = "1"
-                            "Path"  = "$($UserKey)\SOFTWARE\VividRock\PrecipicePS"
-                            "PropertyType" = "Dword"
-                        }
-                    }
+    <# -----------------------------------------------------------------------------------------------------------------------------
+        #EndRegion
+    ----------------------------------------------------------------------------------------------------------------------------- #>
 
-                # Iterate Through Property Value Sets
-                    foreach ($item in $Hash_PropertyValueSets.GetEnumerator()) {
-                        # Set Cmdlet Parameters
-                            $Hash_Parameters = @{
-                                Path  = $($item.value.Path)
-                                Name  = $($item.value.Name)
-                                Value = $($item.value.Value)
-                                Force = $true
-                                WhatIf = $false
-                                ErrorAction = "Continue"
-                            }
+    # Unload NTuser.dat
+      if ($Hive_Loaded -eq $false) {
+        # Remove the Variables that Store the Registry Operations (Resolves Access Denied Issue on Unload)
+          Remove-Variable -Name 'Registry_NewItem' -Force -ErrorAction SilentlyContinue
+          Remove-Variable -Name 'Registry_SetItemProperty' -Force -ErrorAction SilentlyContinue
+          Remove-Variable -Name 'Registry_NewItemProperty' -Force -ErrorAction SilentlyContinue
+          [gc]::Collect()
+          Start-Sleep -Seconds 5
 
-                        # Check for Path and Create if Not Exist
-                            if (!(Test-Path -Path $Hash_Parameters.Path)) {
-                                $Registry_NewItem = New-Item -Path $Hash_Parameters.Path -Force
-                            }
-
-                        # Check for Property and Create or Modify Value Based on Existence
-                            if (!(Get-ItemProperty -Path $Hash_Parameters.Path -Name $Hash_Parameters.Name -ErrorAction SilentlyContinue)) {
-                                $Registry_NewItemProperty = New-ItemProperty @Hash_Parameters -PropertyType $($item.Value.PropertyType)
-                            }
-                            else {
-                                $Registry_SetItemProperty = Set-ItemProperty @Hash_Parameters
-                            }
-                    }
-
-            <# -----------------------------------------------------------------------------------------------------------------------------
-                #EndRegion
-            ----------------------------------------------------------------------------------------------------------------------------- #>
-
-            # Unload NTuser.dat
-                if ($Hive_Loaded -eq $false) {
-                    # Remove the Variables that Store the Registry Operations (Resolves Access Denied Issue on Unload)
-                        Remove-Variable -Name 'Registry_NewItem' -Force -ErrorAction SilentlyContinue
-                        Remove-Variable -Name 'Registry_SetItemProperty' -Force -ErrorAction SilentlyContinue
-                        Remove-Variable -Name 'Registry_NewItemProperty' -Force -ErrorAction SilentlyContinue
-                        [gc]::Collect()
-                        Start-Sleep -Seconds 5
-
-                    # Unload the Hive
-                        Start-Process -FilePath "cmd.exe" -ArgumentList "/c reg.exe unload HKU\$($Profile.SID)" -Wait -WindowStyle Hidden | Out-Null
-                }
-    }
+        # Unload the Hive
+          Start-Process -FilePath "cmd.exe" -ArgumentList "/c reg.exe unload HKU\$($Profile.SID)" -Wait -WindowStyle Hidden | Out-Null
+      }
+  }
 ```
 
 &nbsp;
