@@ -243,9 +243,9 @@ Snippet:
     # Variables
       Out-File -InputObject "        Variables" @Params_Logging
 
-      $App_Win32Reg_Publisher         = "Inkscape"
-      $App_Win32Reg_DisplayName       = "Inkscape"
-      $App_Win32Reg_DisplayVersion    = "1.2.2"
+      $App_Win32Reg_Publisher         = "Dell Inc."
+      $App_Win32Reg_DisplayName       = "Dell Command | Update"
+      $App_Win32Reg_DisplayVersion    = "5.4.0"
 
       switch ($App_Win32Reg_DisplayVersion) {
         {$App_Win32Reg_DisplayVersion -match "^[\d\.]+$"} { $App_Win32Reg_VersionDataType = "Integer" }
@@ -258,13 +258,26 @@ Snippet:
         "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
       )
 
-      $Dataset_App_Win32Reg_Applications = $null
-      foreach ($Item in $App_Win32Reg_RegistryPaths) {
-        $Dataset_App_Win32Reg_Applications += Get-ChildItem $Item
-      }
-
       foreach ($Item in (Get-Variable -Name "App_Win32Reg_*")) {
         Out-File -InputObject "            $(($Item.Name) -replace 'App_Win32Reg_',''): $($Item.Value)" @Params_Logging
+      }
+
+    # Get Data
+      Out-File -InputObject "        Get Data" @Params_Logging
+
+      $Dataset_App_Win32Reg_Applications = $null
+      foreach ($Item in $App_Win32Reg_RegistryPaths) {
+        Out-File -InputObject "            $($Item)" @Params_Logging
+
+        if (Test-Path -Path $Item) {
+          Out-File -InputObject "                Status: Exists" @Params_Logging
+          $Dataset_App_Win32Reg_Applications += Get-ChildItem $Item
+          Out-File -InputObject "                Data Gather: Success" @Params_Logging
+        }
+        else {
+          Out-File -InputObject "                Status: Not Exists" @Params_Logging
+          Out-File -InputObject "                Data Gather: Skipped" @Params_Logging
+        }
       }
 
     # Detection
