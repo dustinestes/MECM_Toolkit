@@ -72,7 +72,7 @@ The following snippets are used when creating applications within MECM.
 Snippet
 
 ```powershell
-Powershell.exe -ExecutionPolicy Bypass -File "[scriptname].psl"
+Powershell.exe -ExecutionPolicy Bypass -File "[scriptname].ps1"
 ```
 
 &nbsp;
@@ -80,7 +80,7 @@ Powershell.exe -ExecutionPolicy Bypass -File "[scriptname].psl"
 Example
 
 ```powershell
-Powershell.exe -ExecutionPolicy Bypass -File "Manufacturer_Product_Version_Install.psl"
+Powershell.exe -ExecutionPolicy Bypass -File "Manufacturer_Product_Version_Install.ps1"
 ```
 
 &nbsp;
