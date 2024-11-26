@@ -554,18 +554,18 @@ param (
 
       try {
         if ((Get-WindowsFeature -Name $Item.Value).Installed -eq $true) {
-          Write-Host "        Status: Already Installed"
+          Write-Host "          Status: Already Installed"
         }
         else {
           $Temp_Result_Install = Install-WindowsFeature -Name $Item.Value
 
           if ($Temp_Result_Install.Success -eq $true) {
-            Write-Host "        Status: Installed"
-            Write-Host "        Feature Result: $($Temp_Result_Install.FeatureResult)"
-            Write-Host "        Restart Needed: $($Temp_Result_Install.RestartNeeded)"
+            Write-Host "          Status: Installed"
+            Write-Host "          Feature Result: $($Temp_Result_Install.FeatureResult)"
+            Write-Host "          Restart Needed: $($Temp_Result_Install.RestartNeeded)"
           }
           else {
-            Write-Host "        Status: Error Installing Role. Try installing manually before proceeding."
+            Write-Host "          Status: Error Installing Role. Try installing manually before proceeding."
             Pause
           }
         }
