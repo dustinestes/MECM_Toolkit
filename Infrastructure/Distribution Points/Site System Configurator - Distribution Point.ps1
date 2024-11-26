@@ -150,8 +150,8 @@ param (
     foreach ($Item in (Get-Variable -Name "Param_*")) {
       Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
     }
-    Write-Host "    - Paths"
-    foreach ($Item in (Get-Variable -Name "Path_*")) {
+    Write-Host "    - Names"
+    foreach ($Item in (Get-Variable -Name "Name_*")) {
       Write-Host "        $(($Item.Name) -replace 'Path_',''): $($Item.Value)"
     }
     Write-Host "    - Filters"
