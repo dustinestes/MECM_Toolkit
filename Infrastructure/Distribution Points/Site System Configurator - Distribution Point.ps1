@@ -423,7 +423,7 @@ param (
     foreach ($Item in $Param_AdminGroupMembers) {
       try {
         Write-Host "      Member: $($Item)"
-        if ($Item -in $Temp_Group_Aministrators_Members) {
+        if ($Temp_Group_Aministrators_Members.Name -match $Item) {
           Write-Host "        Status: Already Exists"
         }
         else {
@@ -434,6 +434,17 @@ param (
       catch {
         Write-vr_ErrorCode -Code 1701 -Exit $false -Object $PSItem
       }
+    }
+
+	# Start UI for Validation
+    Write-Host "    - Start UI for Validation"
+
+    try {
+      Start-Process -FilePath compmgmt.msc
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
     }
 
   #------------------------------------------------------------------------------------------
@@ -451,7 +462,7 @@ param (
 			Write-Host "        Status: Success"
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 1703 -Exit $true -Object $PSItem
 		}
 
   # Add NO_SMS_ON_DRIVE.sms File
@@ -472,7 +483,7 @@ param (
 			Write-Host "        Status: Success"
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1703 -Exit $false -Object $PSItem
+			Write-vr_ErrorCode -Code 1704 -Exit $false -Object $PSItem
 		}
 
 	# Start UI for Validation
@@ -483,7 +494,7 @@ param (
       Write-Host "        Status: Success"
     }
     catch {
-      Write-vr_ErrorCode -Code 1704 -Exit $true -Object $PSItem
+      Write-vr_ErrorCode -Code 1705 -Exit $true -Object $PSItem
     }
 
   #------------------------------------------------------------------------------------------
@@ -504,7 +515,7 @@ param (
         Write-Host "          Expires:  "$Temp_Result_Enroll.Certificate.NotAfter
 			}
 			catch {
-				Write-vr_ErrorCode -Code 1705 -Exit $true -Object $PSItem
+				Write-vr_ErrorCode -Code 1706 -Exit $true -Object $PSItem
 			}
 
     # IIS Certificate
@@ -520,7 +531,7 @@ param (
         Write-Host "          Expires:  "$Temp_Result_Enroll.Certificate.NotAfter
       }
       catch {
-        Write-vr_ErrorCode -Code 1706 -Exit $true -Object $PSItem
+        Write-vr_ErrorCode -Code 1707 -Exit $true -Object $PSItem
       }
 
 
@@ -532,7 +543,7 @@ param (
       Write-Host "        Status: Success"
     }
     catch {
-      Write-vr_ErrorCode -Code 1707 -Exit $true -Object $PSItem
+      Write-vr_ErrorCode -Code 1708 -Exit $true -Object $PSItem
     }
 
   #------------------------------------------------------------------------------------------
@@ -565,7 +576,7 @@ param (
           Start-Sleep -Seconds 10
       }
       catch {
-        Write-vr_ErrorCode -Code 1708 -Exit $true -Object $PSItem
+        Write-vr_ErrorCode -Code 1709 -Exit $true -Object $PSItem
       }
     }
 
@@ -577,7 +588,7 @@ param (
       Write-Host "        Status: Success"
     }
     catch {
-      Write-vr_ErrorCode -Code 1709 -Exit $true -Object $PSItem
+      Write-vr_ErrorCode -Code 1710 -Exit $true -Object $PSItem
     }
 
   #------------------------------------------------------------------------------------------
@@ -594,7 +605,7 @@ param (
         Write-Host "          Thumbprint: $($Temp_Result_Certificate.Thumbprint)"
       }
       catch {
-        Write-vr_ErrorCode -Code 1710 -Exit $true -Object $PSItem
+        Write-vr_ErrorCode -Code 1711 -Exit $true -Object $PSItem
       }
 
     # Create SSL Binding Using Certificate
@@ -608,7 +619,7 @@ param (
         Write-Host "          Status: Success"
       }
       catch {
-        Write-vr_ErrorCode -Code 1711 -Exit $true -Object $PSItem
+        Write-vr_ErrorCode -Code 1712 -Exit $true -Object $PSItem
       }
 
 	# Start UI for Validation
@@ -619,7 +630,7 @@ param (
       Write-Host "        Status: Success"
     }
     catch {
-      Write-vr_ErrorCode -Code 1712 -Exit $true -Object $PSItem
+      Write-vr_ErrorCode -Code 1713 -Exit $true -Object $PSItem
     }
 
   #------------------------------------------------------------------------------------------
@@ -640,7 +651,7 @@ param (
       Write-Host "        Status: Success"
     }
     catch {
-      Write-vr_ErrorCode -Code 1713 -Exit $true -Object $PSItem
+      Write-vr_ErrorCode -Code 1714 -Exit $true -Object $PSItem
     }
 
 	# Add Server to Hierarchy
@@ -654,7 +665,7 @@ param (
         Start-Sleep -Seconds 30
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1714 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 1715 -Exit $true -Object $PSItem
 		}
 
 	# Add Distribution Point Role
@@ -677,7 +688,7 @@ param (
       Write-Host "        Status: Success"
     }
     catch {
-      Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+      Write-vr_ErrorCode -Code 1716 -Exit $true -Object $PSItem
     }
 
 	# Determine Script Result
