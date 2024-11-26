@@ -402,17 +402,6 @@ param (
       Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
     }
 
-	# [StepName]
-		Write-Host "    - [StepName]"
-
-		try {
-
-			Write-Host "        Status: Success"
-		}
-		catch {
-			Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
-		}
-
 	Write-Host "    - Complete"
 	Write-Host ""
 
