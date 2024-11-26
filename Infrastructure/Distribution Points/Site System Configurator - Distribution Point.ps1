@@ -454,7 +454,7 @@ param (
 
 		try {
       Write-Host "        Letter: $($Temp_DiskDrives_Target.DriveLetter)"
-      Write-Host "        Capacity (GB): $([math]::Round($Temp_DiskDrives_Target.Capacity / 1mb, 2))"
+      Write-Host "        Capacity (GB): $([math]::Round($Temp_DiskDrives_Target.Capacity / 1gb, 2))"
       Write-Host "        New Label: $($Param_DiskDriveLabel)"
 
       Set-CimInstance -InputObject $Temp_DiskDrives_Target -Property @{Label = "$($Param_DiskDriveLabel)"}
