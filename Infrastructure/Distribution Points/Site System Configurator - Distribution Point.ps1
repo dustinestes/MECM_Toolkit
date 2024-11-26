@@ -3,21 +3,19 @@
 #--------------------------------------------------------------------------------------------
 
 param (
-  [string]$SiteCode,                  # 'ABC'
-  [string]$SMSProvider,               # '[ServerFQDN]'
-  [array]$AdminGroupMembers="",          # ('GroupName','UserName')
-	[string]$DiskDriveLetter="E:",           # 'E:'
-  [int]$DiskDriveSizeMinMB="300",      # '300'
-	[string]$DiskDriveLabel="Distribution Point Content",            # 'MECM Distribution Point Content'
-	[string]$CertTemplateAuth="",          # ('Computer Authentication')
-  [string]$CertTemplateIIS="",          # ('IIS Server')
-	[string]$CertTargetStore="",           # 'cert:\LocalMachine\My'
-	[string]$ParamName,                 # '[ExampleInputValues]'
-	[string]$ParamName2                  # '[ExampleInputValues]'
+  [string]$SiteCode,                          # 'ABC'
+  [string]$SMSProvider,                       # '[ServerFQDN]'
+  [array]$AdminGroupMembers,                  # ('GroupName','UserName')
+	[string]$DiskDriveLetter,                   # 'E:'
+  [int]$DiskDriveSizeMinMB,                   # '300'
+	[string]$DiskDriveLabel,                    # 'MECM Distribution Point Content'
+	[string]$CertTemplateAuth,                  # 'Computer Authentication'
+  [string]$CertTemplateIIS,                   # 'IIS Server'
+	[string]$CertTargetStore                    # 'cert:\LocalMachine\My'
 )
 
 #--------------------------------------------------------------------------------------------
-# Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Site System Configuration\DistributionPoint.log" -ErrorAction SilentlyContinue
+  Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Site System Configuration\DistributionPoint.log" -ErrorAction SilentlyContinue
 
 #--------------------------------------------------------------------------------------------
 # Header
@@ -252,52 +250,52 @@ param (
 	# 		Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
 	# 	}
 
-	# # Connect to MECM Infrastructure
-	# 	Write-Host "    - Connect to MECM Infrastructure"
+	# Connect to MECM Infrastructure
+		Write-Host "    - Connect to MECM Infrastructure"
 
-	# 	try {
-	# 		if (Test-Connection -ComputerName $Param_SMSProvider -Count 2 -Quiet) {
-	# 			# Import the PowerShell Module
-	# 				Write-Host "        Import the PowerShell Module"
+		try {
+			if (Test-Connection -ComputerName $Param_SMSProvider -Count 2 -Quiet) {
+				# Import the PowerShell Module
+					Write-Host "        Import the PowerShell Module"
 
-	# 				if((Get-Module ConfigurationManager) -in $null,"") {
-	# 					Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
-	# 					Write-Host "            Status: Success"
-	# 				}
-	# 				else {
-	# 					Write-Host "            Status: Already Imported"
-	# 				}
+					if((Get-Module ConfigurationManager) -in $null,"") {
+						Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+						Write-Host "            Status: Success"
+					}
+					else {
+						Write-Host "            Status: Already Imported"
+					}
 
-	# 			# Create the Site Drive
-	# 				Write-Host "        Create the Site Drive"
+				# Create the Site Drive
+					Write-Host "        Create the Site Drive"
 
-	# 				if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
-	# 					New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
-	# 					Write-Host "            Status: Success"
-	# 				}
-	# 				else {
-	# 					Write-Host "            Status: Already Exists"
-	# 				}
+					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
+						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
+						Write-Host "            Status: Success"
+					}
+					else {
+						Write-Host "            Status: Already Exists"
+					}
 
-	# 			# # Set the Location
-	# 			# 	Write-Host "        Set the Location"
+				# # Set the Location
+				# 	Write-Host "        Set the Location"
 
-	# 			# 	if ((Get-Location).Path -ne "$($Param_SiteCode):\") {
-	# 			# 		Set-Location "$($Param_SiteCode):\"
-	# 			# 		Write-Host "            Status: Success"
-	# 			# 	}
-	# 			# 	else {
-	# 			# 		Write-Host "            Status: Already Set"
-	# 			# 	}
-	# 		}
-	# 		else {
-	# 			Write-Host "        Status: MECM Server Unreachable"
-	# 			Throw "Status: MECM Server Unreachable"
-	# 		}
-	# 	}
-	# 	catch {
-	# 		Write-vr_ErrorCode -Code 1403 -Exit $true -Object $PSItem
-	# 	}
+				# 	if ((Get-Location).Path -ne "$($Param_SiteCode):\") {
+				# 		Set-Location "$($Param_SiteCode):\"
+				# 		Write-Host "            Status: Success"
+				# 	}
+				# 	else {
+				# 		Write-Host "            Status: Already Set"
+				# 	}
+			}
+			else {
+				Write-Host "        Status: MECM Server Unreachable"
+				Throw "Status: MECM Server Unreachable"
+			}
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1403 -Exit $true -Object $PSItem
+		}
 
 	Write-Host "    - Complete"
 	Write-Host ""
@@ -413,19 +411,6 @@ param (
 		}
 		catch {
 			Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
-		}
-
-	# [StepName]
-		foreach ($Item in (Get-Variable -Name "Path_*")) {
-			Write-Host "    - $($Item.Name)"
-
-			try {
-
-				Write-Host "        Status: Success"
-			}
-			catch {
-				Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
-			}
 		}
 
 	Write-Host "    - Complete"
