@@ -1,541 +1,809 @@
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    MECM Toolkit - Site System Configurator - Distribution Point
----------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------
+# Parameters
+#--------------------------------------------------------------------------------------------
 
-    Author:     Dustin Estes
-    Copyright:  VividRock LLC | All rights reserved
-                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-    Created:    2016-02-18
-    Version:    1.0
+param (
+  [string]$SiteCode,                  # 'ABC'
+  [string]$SMSProvider,               # '[ServerFQDN]'
+  [array]$AdminGroupMembers="",          # ('GroupName','UserName')
+	[string]$DiskDriveLetter="E:",           # 'E:'
+  [int]$DiskDriveSizeMinMB="300",      # '300'
+	[string]$DiskDriveLabel="Distribution Point Content",            # 'MECM Distribution Point Content'
+	[string]$CertTemplateAuth="",          # ('Computer Authentication')
+  [string]$CertTemplateIIS="",          # ('IIS Server')
+	[string]$CertTargetStore="",           # 'cert:\LocalMachine\My'
+	[string]$ParamName,                 # '[ExampleInputValues]'
+	[string]$ParamName2                  # '[ExampleInputValues]'
+)
 
-    Description:
-        Script for configuring Distribution Points within an MECM site.
+#--------------------------------------------------------------------------------------------
+# Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Site System Configuration\DistributionPoint.log" -ErrorAction SilentlyContinue
 
-    Note:
-        This has not been tested from a remote device or console; only from the Local Server.
+#--------------------------------------------------------------------------------------------
+# Header
+#--------------------------------------------------------------------------------------------
+#Region Header
 
-    Prerequisites:
-        None
+  Write-Host "------------------------------------------------------------------------------"
+  Write-Host "  MECM Toolkit - Infrastructure - Site System Configuration - Distribution Point"
+  Write-Host "------------------------------------------------------------------------------"
+  Write-Host "    Author:     Dustin Estes"
+  Write-Host "    Company:    VividRock"
+  Write-Host "    Date:       2016-02-18"
+  Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
+  Write-Host "    Purpose:    Automatically configure a server as a Site System Server with"
+	Write-Host "								the prerequisites and role for Distribution Points."
+  Write-Host "    Links:      None"
+  Write-Host "    Template:   1.1"
+  Write-Host "------------------------------------------------------------------------------"
+  Write-Host ""
 
-    How to Use:
-        Perform the following functions:
-            1. Log on to the Site System Server
-            2. Open PowerShell ISE in an Administrative context
-            3. Paste the contents of this script into the script pane
-            4. Execute this script in its entirety
-            5. Follow the prompts in the console window providing feedback where necessary
-            6. Perform the manual steps provided (if prompted)
-            7. Confirm everything is completed so the script can cleanup
+<#
+	How to Use:
+		1. Log on to the Site System Server
+		2. Open PowerShell ISE in an Administrative context
+		3. Paste the contents of this script into the script pane
+		4. Execute this script in its entirety
+		5. Follow the prompts in the console window providing feedback where necessary
+		6. Perform the manual steps provided (if prompted)
+		7. Confirm everything is completed so the script can cleanup
 
-    Operation:
-        The script functions as follows:
-            -
+  To Do:
+    - Item
+    - Item
+#>
 
-    Exit Codes:
-        Provide a table of the exit codes that are in the script so the reader can quickly identify the code to its
-        reason for termination.
-            0           The script processed successfully
-
-    Future Features:
-        1.
-
-    Snippets
-        # Step Name
-            Write-Host "  - <step name>: " -NoNewline
-            if (<analysis logic>) {
-                Write-Host " Failure" -ForegroundColor Red
-                Return
-            }
-            else {
-                Write-Host " Success" -ForegroundColor Green
-            }
-
-        # Step Name
-            Write-Host "  - <step name>: " -NoNewline
-            try {
-                <cmdlet action> -ErrorAction Stop | Out-Null
-                Write-Host " Success" -ForegroundColor Green
-            }
-            catch {
-                Write-Host " Failure  >  $($Error[0].Exception.Message)" -ForegroundColor Red
-                $PSCmdlet.ThrowTerminatingError($PSItem)
-            }
-
------------------------------------------------------------------------------------------------------------------------------------------- #>
-Clear-Host
+#EndRegion Header
+#--------------------------------------------------------------------------------------------
 
 
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Initialize
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for initializing the script
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
+#--------------------------------------------------------------------------------------------
+# Variables
+#   Error Range: 1200 - 1299
+#--------------------------------------------------------------------------------------------
+#Region Variables
 
-    # Script Information
-        $Script_Publisher           = "VividRock"
-        $Script_Product             = "MECM Toolkit"
-        $Script_Product_Module      = "Site System Configurator"
-        $Script_Name                = "Distribution Point"
-        $Script_Version             = "1.0"
-        $Script_Exec_Timestamp      = $($(Get-Date).ToUniversalTime().ToString("yyyy-MM-dd_HHmmssZ"))
+  Write-Host "  Variables"
 
-    # User Information
-        $User_SecurityObject         = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+  # Parameters
+    $Param_SiteCode         		= $SiteCode
+    $Param_SMSProvider      		= $SMSProvider
+		$Param_AdminGroupMembers		= $AdminGroupMembers
+		$Param_DiskDriveLetter			= $DiskDriveLetter
+    $Param_DiskDriveSizeMinMB   = $DiskDriveSizeMinMB
+		$Param_DiskDriveLabel				= $DiskDriveLabel
+		$Param_CertTemplateAuth 		= $CertTemplateAuth
+    $Param_CertTemplateIIS  		= $CertTemplateIIS
+		$Param_CertTargetStore			= $CertTargetStore
 
-    # Paths
-        $Path_OutputFolder       = "$env:USERPROFILE\Downloads\$Script_Publisher\$Script_Product\$Script_Product_Module\$Script_Name\$Script_Exec_Timestamp\"
+  # Metadata
+    $Meta_Script_Start_DateTime     = Get-Date
+    $Meta_Script_Complete_DateTime  = $null
+    $Meta_Script_Complete_TimeSpan  = $null
+    $Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $Meta_Script_Result 						= $false,"Failure"
 
-    # Logging
-        $Path_TranscriptLogFile = $Path_OutputFolder + "\VividRock_ExecutionTranscript.log"
-        Start-Transcript -Path $Path_TranscriptLogFile -Force
+  # Preferences
+    $ErrorActionPreference        = "Stop"
+    $CMPSSuppressFastNotUsedCheck = $true
 
-#EndRegion Initialize
+  # Names
+    $Name_Server_DNS    = $env:COMPUTERNAME
+    $Name_Server_FQDN   = $Name_Server_DNS + "." + $env:USERDNSDOMAIN
+
+  # Paths
+    # $Path_AdminService_ODataRoute = "https://$($Param_SMSProvider)/AdminService/v1.0/"
+    # $Path_AdminService_WMIRoute   = "https://$($Param_SMSProvider)/AdminService/wmi/"
+
+  # Files
+
+  # Hashtables
+    $Hashtable_RolesFeatures = [ordered] @{
+      # Role Service = Name
+
+      # Add .NET Framework
+          ".Net Framework 4.6" = "NET-Framework-45-Core"
+          ".Net TCP Port Sharing" = "NET-WCF-TCP-PortSharing45"
+
+      # Add Remote Differential
+          "Remote Differential Compression" = "RDC"
+
+      # Install File Server
+          "File and Storage Services" = "FS-FileServer"
+
+      # Install Windows Deployment Services
+          "Windows Deployment Services" = "WDS"
+          "WDS Deployment Server" = "WDS-Deployment"
+          "WDS Transport Server" = "WDS-Transport"
+          "WDS RSAT Tools" = "WDS-AdminPack"
+
+      # Install Background Intelligent Transfer Service (BITS)
+          "Background Intelligent Tranfser Service" = "BITS"
+          "BITS IIS Server Extensions" = "BITS-IIS-Ext"
+          "BITS RSAT Tools" = "RSAT-Bits-Server"
+
+      # Add IIS Features
+          "Web Server (IIS) Security" = "Web-Security"
+          "Web Server (IIS) Request Filtering" = "Web-Filtering"
+          "Web Server (IIS) Windows Authentication" = "Web-Windows-Auth"
+          "Web Server (IIS) IIS 6 WMI Compatibility" = "Web-WMI"
+          "Web Server (IIS) IIS 6 Metabase Compatibility" = "Web-Metabase"
+          "Web Server (IIS) IIS Management Scripts and Tools" = "Web-Scripting-Tools"
+          "Web Server (IIS) ISAPI Extensions" = "Web-ISAPI-Ext"
+    }
+
+  # Arrays
+
+  # Registry
+
+  # WMI
+
+  # Datasets
+
+	# Filters
+		$Filter_DiskDrive_VolumeSizeMB = $Param_DiskDriveSizeMinMB
+		$Filter_DiskDrive_VolumeDriveLetter = $Param_DiskDriveLetter,"",$null
+		$Filter_DiskDrive_VolumeDriveType = 3
+
+  # Temporary
+
+  # Output to Log
+    Write-Host "    - Parameters"
+    foreach ($Item in (Get-Variable -Name "Param_*")) {
+      Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
+    }
+    Write-Host "    - Paths"
+    foreach ($Item in (Get-Variable -Name "Path_*")) {
+      Write-Host "        $(($Item.Name) -replace 'Path_',''): $($Item.Value)"
+    }
+    Write-Host "    - Filters"
+    foreach ($Item in (Get-Variable -Name "Filter_*")) {
+      Write-Host "        $(($Item.Name) -replace 'Filter_',''): $($Item.Value)"
+    }
+    Write-Host "    - Roles & Features"
+    foreach ($Item in $Hashtable_RolesFeatures.GetEnumerator()) {
+      Write-Host "        $($Item.Key): $($Item.Value)"
+    }
+
+  Write-Host "    - Complete"
+  Write-Host ""
+
+#EndRegion Variables
+#--------------------------------------------------------------------------------------------
 
 
+#--------------------------------------------------------------------------------------------
+# Functions
+#   Error Range: 1300 - 1399
+#--------------------------------------------------------------------------------------------
+#Region Functions
 
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Set Variables
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for providing input prior to execution
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
+  Write-Host "  Functions"
 
-    Write-Host "  Set Variables"
+  # Write Error Codes
+    Write-Host "    - Write-vr_ErrorCode"
+    function Write-vr_ErrorCode ($Code,$Exit,$Object) {
+      # Code: XXXX   4-digit code to identify where in script the operation failed
+      # Exit: Boolean option to define if  exits or not
+      # Object: The error object created when the script encounters an error ($Error[0], $PSItem, etc.)
 
-    # Security Rights
-        $Group_DesiredMembers = "VividRock\GRP.CM.SiteAdmins","VividRock\GRP.CM.SiteServers"
+      begin {
 
-    # Prepare Disk Drives
-        $Volume_DesiredDriveLetter = "E:"
-        $Volume_DesiredDriveLabel = "Distribution Point Content"
-        $FilterCriteria_VolumeSize = 300
-        $FilterCritera_VolumeDriveLetter = $Volume_DesiredDriveLetter,"",$null
-        $FilterCriteria_VolumeDriveType = 3
+      }
 
-    # Certificate Information
-	    $TemplateNames = @(
-		    ""
-            ""
-	    )
-	    $Certificate_TargetStore    = "cert:\LocalMachine\My"
-	    $Server_Name                = $env:COMPUTERNAME
-	    $Server_FQDN                = $env:COMPUTERNAME + "." + $ENV:USERDNSDOMAIN
-        $Certificate_IISTemplate    = ""
+      process {
+        Write-Host "        Error: $($Object.Exception.ErrorId)"
+        Write-Host "        Command Name: $($Object.CategoryInfo.Activity)"
+        Write-Host "        Message: $($Object.Exception.Message)"
+        Write-Host "        Line/Position: $($Object.Exception.Line)/$($Object.Exception.Offset)"
+      }
 
-    Write-Host "    - Complete"
-    Write-Host ""
+      end {
+        switch ($Exit) {
+          $true {
+            Write-Host "        Exit: $($Code)"
+            Stop-Transcript -ErrorAction SilentlyContinue
+            Exit $Code
+          }
+          $false {
+            Write-Host "        Continue Processing..."
+          }
+          Default {
+            Write-Host "        Unknown Exit option in Write-vr_ErrorCode parameter"
+          }
+        }
+      }
+    }
 
-#EndRegion Set Variables
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
+  Write-Host "    - Complete"
+  Write-Host ""
+
+#EndRegion Functions
+#--------------------------------------------------------------------------------------------
 
 
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Configure Security
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for performing security configurations
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
+#--------------------------------------------------------------------------------------------
+# Environment
+#   Error Range: 1400 - 1499
+#--------------------------------------------------------------------------------------------
+#Region Environment
 
-    Write-Host "Configure Security"
+	Write-Host "  Environment"
 
-    # Get Group Members
-        $Group_ActualMembers = Get-LocalGroupMember -Name "Administrators"
+	# # Create Client COM Object
+	# 	Write-Host "    - Create Client COM Object"
 
-    # Evaluate Memberships
-        Write-Host "    - Add Identities to Local Administrator Group"
+	# 	try {
+	# 		$Object_MECM_Client = New-Object -ComObject Microsoft.SMS.Client
+	# 		Write-Host "        Status: Success"
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
+	# 	}
 
-        foreach ($DesiredMember in $Group_DesiredMembers) {
-            Write-Host "        $($DesiredMember): " -NoNewLine
+	# # Create TSEnvironment COM Object
+	# 	Write-Host "    - Create TSEnvironment COM Object"
 
-            if ($Group_ActualMembers.Name -contains $DesiredMember) {
-                Write-Host "Already Exists" -ForegroundColor DarkGray
-            }
-            else {
-                try {
-                    Add-LocalGroupMember -Group "Administrators" -Member $DesiredMember -ErrorAction Stop
-                    Write-Host "Member Added Successfully" -ForegroundColor Green
-                }
-                catch {
-                    Write-Host "Failed to Add Member" -ForegroundColor Red
-                }
-            }
+	# 	try {
+	# 		$Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment
+	# 		Write-Host "        Status: Success"
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
+	# 	}
+
+	# # Connect to MECM Infrastructure
+	# 	Write-Host "    - Connect to MECM Infrastructure"
+
+	# 	try {
+	# 		if (Test-Connection -ComputerName $Param_SMSProvider -Count 2 -Quiet) {
+	# 			# Import the PowerShell Module
+	# 				Write-Host "        Import the PowerShell Module"
+
+	# 				if((Get-Module ConfigurationManager) -in $null,"") {
+	# 					Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+	# 					Write-Host "            Status: Success"
+	# 				}
+	# 				else {
+	# 					Write-Host "            Status: Already Imported"
+	# 				}
+
+	# 			# Create the Site Drive
+	# 				Write-Host "        Create the Site Drive"
+
+	# 				if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
+	# 					New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
+	# 					Write-Host "            Status: Success"
+	# 				}
+	# 				else {
+	# 					Write-Host "            Status: Already Exists"
+	# 				}
+
+	# 			# # Set the Location
+	# 			# 	Write-Host "        Set the Location"
+
+	# 			# 	if ((Get-Location).Path -ne "$($Param_SiteCode):\") {
+	# 			# 		Set-Location "$($Param_SiteCode):\"
+	# 			# 		Write-Host "            Status: Success"
+	# 			# 	}
+	# 			# 	else {
+	# 			# 		Write-Host "            Status: Already Set"
+	# 			# 	}
+	# 		}
+	# 		else {
+	# 			Write-Host "        Status: MECM Server Unreachable"
+	# 			Throw "Status: MECM Server Unreachable"
+	# 		}
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1403 -Exit $true -Object $PSItem
+	# 	}
+
+	Write-Host "    - Complete"
+	Write-Host ""
+
+#EndRegion Environment
+#--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Validation
+#   Error Range: 1500 - 1599
+#--------------------------------------------------------------------------------------------
+#Region Validation
+
+	Write-Host "  Validation"
+
+  # # API Routes
+	# 	Write-Host "    - API Routes"
+
+	# 	try {
+	# 		foreach ($Item in (Get-Variable -Name "Path_AdminService_*")) {
+	# 			Write-Host "        Route: $($Item.Value)"
+
+	# 			$Temp_API_Result = Invoke-RestMethod -Uri $Item.Value -Method Get -ContentType "Application/Json" -UseDefaultCredentials
+	# 			if ($Temp_API_Result) {
+	# 				Write-Host "            Status: Success"
+	# 			}
+	# 			else {
+	# 				Write-Host "            Status: Error"
+	# 				Throw
+	# 			}
+	# 		}
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
+	# 	}
+
+
+	# Disk Drives
+    Write-Host "    - Disk Drives"
+
+    try {
+      $Temp_DiskDrives_Target = Get-CimInstance -ClassName Win32_Volume | Where-Object -Property DriveLetter -eq $Param_DiskDriveLetter
+
+      # Drive Exists
+        if ($Temp_DiskDrives_Target -notin "",$null) {
+          Write-Host "        Drive Exists ($($Param_DiskDriveLetter)): True"
+        }
+        else {
+          Write-Host "        Drive Exists ($($Param_DiskDriveLetter)): False"
+          Throw "A drive with the specified drive letter was not found."
         }
 
-#EndRegion Configure Security
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
-
-
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Prepare Disk Drives
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for configuring the disk drives
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
-
-    Write-Host ""
-    Write-host "Prepare Disk Drives"
-    Pause
-    Write-Host ""
-
-    # Get All Volumes
-        # $Volumes_All = Get-Volume | Where-Object -FilterScript {($_.DriveLetter -notin $FilterCritera_Volumes) -and ($_.DriveType -ne "CD-ROM")}
-        $Volumes_All = Get-CimInstance -ClassName Win32_Volume | Where-Object -Property DriveType -NE "5"
-
-    # Configure Data Drive:
-        Write-Host "    - Configure Data Drive"
-        foreach ($Volume in $Volumes_All) {
-                Write-Host "        Drive:   "$Volume.Caption
-                Write-Host "        Size >= $($FilterCriteria_VolumeSize) GB?: " -NoNewline
-
-            if ($($Volume.Capacity / 1gb) -ge $FilterCriteria_VolumeSize) {
-                Write-Host " True" -ForegroundColor Green
-
-                Write-Host "        Letter = $($Volume_DesiredDriveLetter)?: " -NoNewline
-                if ($($Volume.DriveLetter) -eq $Volume_DesiredDriveLetter) {
-                    Write-Host " True" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "False" -ForegroundColor Gray
-                    try {
-                        $Volume | Set-CimInstance -Property @{
-                            DriveLetter = "$($Volume_DesiredDriveLetter)";
-                            Label = "$($Volume_DesiredDriveLabel)"
-                        }
-                        Write-Host "        Drive Configured Successfully" -ForegroundColor Cyan
-                    }
-                    catch {
-                        Write-Host "        Failed to Add Member" -ForegroundColor Cyan
-                    }
-                }
-
-                Write-Host "        Label = $($Volume_DesiredDriveLabel)?: " -NoNewline
-                if ($($Volume.Label) -eq $Volume_DesiredDriveLabel) {
-                    Write-Host " True" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "False" -ForegroundColor Gray
-                    try {
-                        $Volume | Set-CimInstance -Property @{
-                            Label = "$($Volume_DesiredDriveLabel)"
-                        }
-                        Write-Host "        Configured Successfully" -ForegroundColor Cyan
-                    }
-                    catch {
-                        Write-Host "        Failed to Configure" -ForegroundColor Cyan
-                    }
-                }
-            }
-            else {
-                Write-Host " False" -ForegroundColor Red
-                Write-Host "        Status:  " -NoNewLine
-                Write-host " Not Applicable" -ForegroundColor DarkGray
-            }
-
-            Write-Host ""
+      # Drive Size Adequate
+        if ($Temp_DiskDrives_Target.Capacity -ge ($Param_DiskDriveSizeMinMB * 1kb)) {
+          Write-Host "        Drive Size Adequate ($($Param_DiskDriveSizeMinMB) MB): True"
+        }
+        else {
+          Write-Host "        Drive Size Adequate ($($Param_DiskDriveSizeMinMB)): False"
+          Throw "A drive with adequate capacity was not found ($($Param_DiskDriveSizeMinMB) MB or greater)."
         }
 
-    # Add NO_SMS_ON_DRIVE File
-        Write-Host "    - Add NO_SMS_ON_DRIVE.sms File to All Other Drives"
-        foreach ($Volume in $Volumes_All) {
-            if (($Volume.DriveLetter -notin $FilterCritera_VolumeDriveLetter) -and ($Volume.DriveType -eq $FilterCriteria_VolumeDriveType)) {
-                Write-Host "        $($Volume.DriveLetter)" -NoNewline
-                try {
-                    if (Test-Path -Path $($Volume.DriveLetter + "\NO_SMS_ON_DRIVE.sms") -PathType Leaf) {
-                        Write-Host " Already Exists" -ForegroundColor DarkGray
-                    }
-                    else {
-                        New-Item -Path $($Volume.DriveLetter + "\") -Name "NO_SMS_ON_DRIVE.sms" -ItemType File -Force -ErrorAction Stop | Out-Null
-                        Write-Host " Success" -ForegroundColor Green
-                    }
-                }
-                catch {
-                    Write-Host " Failure" -ForegroundColor Red
-                }
-            }
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1502 -Exit $true -Object $PSItem
+    }
+
+	Write-Host "    - Complete"
+	Write-Host ""
+
+#EndRegion Validation
+#--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Data Gather
+#   Error Range: 1600 - 1699
+#--------------------------------------------------------------------------------------------
+#Region Data Gather
+
+	Write-Host "  Data Gather"
+
+	# Administrators Group Membership
+    Write-Host "    - Administrators Group Membership"
+
+    try {
+      $Temp_Group_Aministrators_Members = Get-LocalGroupMember -Name "Administrators"
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1601 -Exit $true -Object $PSItem
+    }
+
+	# Target Disk Drive
+    Write-Host "    - Target Disk Drive"
+
+    try {
+      $Temp_DiskDrives_Target = Get-CimInstance -ClassName Win32_Volume | Where-Object -Property DriveLetter -eq $Param_DiskDriveLetter
+
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
+    }
+
+	# [StepName]
+		Write-Host "    - [StepName]"
+
+		try {
+
+			Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
+		}
+
+	# [StepName]
+		foreach ($Item in (Get-Variable -Name "Path_*")) {
+			Write-Host "    - $($Item.Name)"
+
+			try {
+
+				Write-Host "        Status: Success"
+			}
+			catch {
+				Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
+			}
+		}
+
+	Write-Host "    - Complete"
+	Write-Host ""
+
+#EndRegion Data Gather
+#--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Execution
+#   Error Range: 1700 - 1799
+#--------------------------------------------------------------------------------------------
+#Region Execution
+
+	Write-Host "  Execution"
+
+	# Local Administrators Group Membership
+		Write-Host "    - Local Administrators Group Membership"
+
+    foreach ($Item in $Param_AdminGroupMembers) {
+      try {
+        Write-Host "      Member: $($Item)"
+        if ($Item -in $Temp_Group_Aministrators_Members) {
+          Write-Host "        Status: Already Exists"
+        }
+        else {
+          Add-LocalGroupMember -Group "Administrators" -Member $Item
+          Write-Host "        Status: Added"
+        }
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1701 -Exit $false -Object $PSItem
+      }
+    }
+
+  #------------------------------------------------------------------------------------------
+
+	# Configure Data Drive
+		Write-Host "    - Configure Data Drive"
+
+		try {
+      Write-Host "        Letter: $($Temp_DiskDrives_Target.DriveLetter)"
+      Write-Host "        Capacity (GB): $([math]::Round($Temp_DiskDrives_Target.Capacity / 1mb, 2))"
+      Write-Host "        New Label: $($Param_DiskDriveLabel)"
+
+      Set-CimInstance -InputObject $Temp_DiskDrives_Target -Property @{Label = "$($Param_DiskDriveLabel)"}
+
+			Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+		}
+
+  # Add NO_SMS_ON_DRIVE.sms File
+		Write-Host "    - Add NO_SMS_ON_DRIVE.sms File"
+
+		try {
+      $Temp_Path_MECM_NoSMSFile = "$($Temp_DiskDrives_Target.DriveLetter)\NO_SMS_ON_DRIVE.sms"
+      Write-Host "        Path: $($Temp_Path_MECM_NoSMSFile)"
+
+      if (Test-Path -Path $Temp_Path_MECM_NoSMSFile -PathType Leaf) {
+        Write-Host "        Status: Already Exist"
+      }
+      else {
+          New-Item -Path $($Param_DiskDriveLetter + "\") -Name "NO_SMS_ON_DRIVE.sms" -ItemType File -Force | Out-Null
+          Write-Host " Success"
+      }
+
+			Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1703 -Exit $false -Object $PSItem
+		}
+
+	# Start UI for Validation
+    Write-Host "    - Start UI for Validation"
+
+    try {
+      Start-Process -FilePath explorer.exe
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1704 -Exit $true -Object $PSItem
+    }
+
+  #------------------------------------------------------------------------------------------
+
+  # Enroll in Certificates
+    Write-Host "    - Enroll in Certificates"
+
+    # Computer Authentication Certificate
+      Write-Host "        Template Name: $($Param_CertTemplateAuth)"
+
+			try {
+        $Temp_Result_Enroll = Get-Certificate -CertStoreLocation $Param_CertTargetStore -Template "$($Param_CertTemplateAuth)" -Url ldap:
+
+        Write-Host "          Status:   "$Temp_Result_Enroll.Status
+        Write-Host "          Subject:  "$Temp_Result_Enroll.Certificate.Subject
+        Write-Host "          Key Usage:"$Temp_Result_Enroll.Certificate.EnhancedKeyUsageList
+        Write-Host "          Issued:   "$Temp_Result_Enroll.Certificate.NotBefore
+        Write-Host "          Expires:  "$Temp_Result_Enroll.Certificate.NotAfter
+			}
+			catch {
+				Write-vr_ErrorCode -Code 1705 -Exit $true -Object $PSItem
+			}
+
+    # IIS Certificate
+      Write-Host "        Template Name: $($Param_CertTemplateIIS)"
+
+      try {
+        $Temp_Result_Enroll = Get-Certificate -SubjectName $("CN=" + $Name_Server_FQDN) -DnsName $Name_Server_DNS, $Name_Server_FQDN -CertStoreLocation $Param_CertTargetStore -Template "$($Param_CertTemplateIIS)" -Url ldap:
+
+        Write-Host "          Status:   "$Temp_Result_Enroll.Status
+        Write-Host "          Subject:  "$Temp_Result_Enroll.Certificate.Subject
+        Write-Host "          Key Usage:"$Temp_Result_Enroll.Certificate.EnhancedKeyUsageList
+        Write-Host "          Issued:   "$Temp_Result_Enroll.Certificate.NotBefore
+        Write-Host "          Expires:  "$Temp_Result_Enroll.Certificate.NotAfter
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1706 -Exit $true -Object $PSItem
+      }
+
+
+	# Start UI for Validation
+    Write-Host "    - Start UI for Validation"
+
+    try {
+      Start-Process -FilePath certlm.msc
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1707 -Exit $true -Object $PSItem
+    }
+
+  #------------------------------------------------------------------------------------------
+
+	# Install Roles and Features
+    Write-Host "    - Install Roles and Features"
+
+    foreach ($Item in $Hashtable_RolesFeatures.GetEnumerator()) {
+      Write-Host "        $($Item.Key)"
+
+      try {
+        if ((Get-WindowsFeature -Name $Item.Value).Installed -eq $true) {
+          Write-Host "        Status: Already Installed"
+        }
+        else {
+          $Temp_Result_Install = Install-WindowsFeature -Name $Item.Value
+
+          if ($Temp_Result_Install.Success -eq $true) {
+            Write-Host "        Status: Installed"
+            Write-Host "        Feature Result: $($Temp_Result_Install.FeatureResult)"
+            Write-Host "        Restart Needed: $($Temp_Result_Install.RestartNeeded)"
+          }
+          else {
+            Write-Host "        Status: Error Installing Role. Try installing manually before proceeding."
+            Pause
+          }
         }
 
-    # Start UI for Validation
-        Start-Process -FilePath explorer.exe
+        # Sleep to Allow for Changes to Take Effect
+          Start-Sleep -Seconds 10
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1708 -Exit $true -Object $PSItem
+      }
+    }
 
-#EndRegion Prepare Disk Drives
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
+	# Start UI for Validation
+    Write-Host "    - Start UI for Validation"
 
+    try {
+      Start-Process -FilePath ServerManager.exe -ArgumentList "-arw"
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1709 -Exit $true -Object $PSItem
+    }
 
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Enroll in Certificates
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for enrolling in PKI certificates
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
+  #------------------------------------------------------------------------------------------
 
-    Write-Host ""
-    Write-host "Enroll in Certificates"
-    Pause
-    Write-Host ""
-
-    # Enroll in Certificates
-	    foreach ($Template in $TemplateNames) {
-		    try {
-			    Write-Host "    - Certificate: "$Template
-
-			    if ($Template -eq $Certificate_IISTemplate) {
-				    $Enroll_Result = Get-Certificate -SubjectName $("CN=" + $Server_FQDN) -DnsName $Server_Name, $Server_FQDN -CertStoreLocation $Certificate_TargetStore -Template "$($Template)" -Url ldap: -ErrorAction Stop
-			    }
-			    else {
-				    $Enroll_Result = Get-Certificate -CertStoreLocation $Certificate_TargetStore -Template "$($Template)" -Url ldap: -ErrorAction Stop
-			    }
-
-			    Write-Host "        Status:   "$Enroll_Result.Status
-			    Write-Host "        Subject:  "$Enroll_Result.Certificate.Subject
-                Write-Host "        Key Usage:"$Enroll_Result.Certificate.EnhancedKeyUsageList
-			    Write-Host "        Issued:   "$Enroll_Result.Certificate.NotBefore
-			    Write-Host "        Expires:  "$Enroll_Result.Certificate.NotAfter
-			    Write-Host ""
-		    }
-		    catch {
-			    Write-Host "    An error occurred"
-			    $PSItem.Exception.Message
-		    }
-	    }
-
-    # Start UI for Validation
-        Start-Process -FilePath certlm.msc
-
-#EndRegion Enroll in Certificates
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
-
-
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Add Roles & Features
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for adding windows roles and features
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
-
-    Write-Host ""
-    Write-host "Add Roles & Features"
-    Pause
-    Write-Host ""
-
-    # Define Variables
-        $Array_RolesFeatures = [ordered] @{
-            # Role Service = Name
-
-            # Add .NET Framework
-                ".Net Framework 4.6" = "NET-Framework-45-Core"
-                ".Net TCP Port Sharing" = "NET-WCF-TCP-PortSharing45"
-
-            # Add Remote Differential
-                "Remote Differential Compression" = "RDC"
-
-            # Install File Server
-                "File and Storage Services" = "FS-FileServer"
-
-            # Install Windows Deployment Services
-                "Windows Deployment Services" = "WDS"
-                "WDS Deployment Server" = "WDS-Deployment"
-                "WDS Transport Server" = "WDS-Transport"
-                "WDS RSAT Tools" = "WDS-AdminPack"
-
-            # Install Background Intelligent Transfer Service (BITS)
-                "Background Intelligent Tranfser Service" = "BITS"
-                "BITS IIS Server Extensions" = "BITS-IIS-Ext"
-                "BITS RSAT Tools" = "RSAT-Bits-Server"
-
-            # Add IIS Features
-                "Web Server (IIS) Security" = "Web-Security"
-                "Web Server (IIS) Request Filtering" = "Web-Filtering"
-                "Web Server (IIS) Windows Authentication" = "Web-Windows-Auth"
-                "Web Server (IIS) IIS 6 WMI Compatibility" = "Web-WMI"
-                "Web Server (IIS) IIS 6 Metabase Compatibility" = "Web-Metabase"
-                "Web Server (IIS) IIS Management Scripts and Tools" = "Web-Scripting-Tools"
-                "Web Server (IIS) ISAPI Extensions" = "Web-ISAPI-Ext"
-        }
-
-    # Iterate Through Array
-        foreach ($Item in $Array_RolesFeatures.GetEnumerator()) {
-            Write-Host "    -"$Item.Key
-            Write-Host "          Name: "$Item.Value
-            Write-Host "          Status: " -NoNewLine
-
-            try {
-                if ($(Get-WindowsFeature -Name $Item.Value).Installed -eq $true) {
-                    Write-Host "Already Installed" -ForegroundColor DarkGray
-                }
-                else {
-                    $Install_Result = Install-WindowsFeature -Name $Item.Value -ErrorAction Stop
-                    if ($Install_Result.Success -eq $true) {
-                        Write-Host "Success" -ForegroundColor Green
-                    }
-                    else {
-                        Write-Host "Failure" -ForegroundColor Red
-                        Write-Host "------------------------------------"
-                        $Error[0].ErrorDetails.Message
-                        Write-Host "------------------------------------"
-                        Pause
-                    }
-
-                    Write-Host "          Feature Result: "$Install_Result.FeatureResult
-                    Write-Host "          Restart Needed: " -NoNewline
-                    if ($Install_Result.RestartNeeded -eq "No") {
-                        Write-Host "No"
-                    }
-                    else {
-                        Write-Host ""$Install_Result.RestartNeeded -ForegroundColor Red
-                        Pause
-                    }
-                }
-
-                Start-Sleep -Seconds 5
-            }
-            catch {
-                Write-Host "Failure" -ForegroundColor Red
-                Pause
-            }
-
-            Write-Host ""
-        }
-
-#EndRegion Add Roles & Features
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
-
-
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Configure IIS
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for configuring the IIS server role
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
-
-    Write-Host ""
-    Write-host "Configure IIS"
-    Pause
-    Write-Host ""
+	# Configure IIS Role
+    Write-Host "    - Configure IIS Role"
 
     # Get Certificate Information
-        Write-Host "    - Get Certificate Thumbprint"
-        Write-Host "          Template Name:"$Certificate_IISTemplate
-        Write-Host "          Thumbprint: " -NoNewline
+      Write-Host "        Get Certificate Information"
 
-        try {
-            $Certificate_Thumbprint = (Get-ChildItem $Certificate_TargetStore -ErrorAction Stop | Where-Object -FilterScript {($_.Extensions.Format(1)[0].split('(')[0] -replace "template=") -match $Certificate_IISTemplate}).Thumbprint
-            Write-Host ""$Certificate_Thumbprint
-            Write-Host "          Status: " -NoNewline
-            Write-Host "Success" -ForegroundColor Green
-        }
-        catch {
-            Write-Host "Error" -ForegroundColor Red
-            Pause
-        }
+      try {
+        Write-Host "          Name: $($Param_CertTemplateIIS)"
+        $Temp_Result_Certificate = Get-ChildItem $Param_CertTargetStore | Where-Object -FilterScript {($_.Extensions.Format(1)[0].split('(')[0] -replace "template=") -match $Param_CertTemplateIIS}
+        Write-Host "          Thumbprint: $($Temp_Result_Certificate.Thumbprint)"
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1710 -Exit $true -Object $PSItem
+      }
 
-	    Write-Host ""
+    # Create SSL Binding Using Certificate
+      Write-Host "        Create SSL Binding Using Certificate"
 
-    # Create IIS Binding Using Certificate
-        Write-Host "    - Create IIS Binding Using Certificate"
-        Write-Host "          Site Name:    Default Web Site"
+      try {
+        Write-Host "          Website Name: Default Web Site"
         Write-Host "          Port Binding: *:443"
-        Write-Host "          Protocol:     HTTPS"
-        Write-Host "          Status:       " -NoNewline
+        Write-Host "          Protocol: HTTPS"
+        $Temp_Result_IISConfigure = New-IISSiteBinding -Name "Default Web Site" -BindingInformation "*:443:" -CertificateThumbPrint $Temp_Result_Certificate.Thumbprint -CertStoreLocation $Param_CertTargetStore -Protocol https
+        Write-Host "          Status: Success"
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1711 -Exit $true -Object $PSItem
+      }
 
-        try {
-            New-IISSiteBinding -Name "Default Web Site" -BindingInformation "*:443:" -CertificateThumbPrint $Certificate_Thumbprint -CertStoreLocation $Certificate_TargetStore -Protocol https -ErrorAction Stop
-            Write-Host "Success" -ForegroundColor Green
-        }
-        catch {
-            Write-Host "Error" -ForegroundColor Red
-            Pause
-        }
+	# Start UI for Validation
+    Write-Host "    - Start UI for Validation"
 
-    # Start UI for Validation
-        Start-Process -FilePath inetmgr.exe
+    try {
+      Start-Process -FilePath inetmgr.exe
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1712 -Exit $true -Object $PSItem
+    }
 
-#EndRegion Configure IIS
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
+  #------------------------------------------------------------------------------------------
 
+  # Set the MECM Drive Location
+    Write-Host "    - Set the MECM Drive Location"
 
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Install MECM Roles
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for installing the MECM Site System Roles
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
+    try {
+      Write-Host "            Path: $($Param_SiteCode):\"
+      if ((Get-Location).Path -ne "$($Param_SiteCode):\") {
+        Set-Location "$($Param_SiteCode):\"
+        Write-Host "            Status: Success"
+      }
+      else {
+        Write-Host "            Status: Already Set"
+      }
 
-    Write-Host ""
-    Write-host "Install Site System Role"
-    Pause
-    Write-Host ""
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1713 -Exit $true -Object $PSItem
+    }
 
-    # Connect to MECM Environment
-    # IMPORTANT: Run from Primary Site Server
-    # Site configuration
-        $MECM_SiteCode = "[SiteCode]" # Site code
-        $MECM_ProviderMachineName = "[ServerFQDN]" # SMS Provider machine name
+	# Add Server to Hierarchy
+		Write-Host "    - Add Server to Hierarchy"
 
-    # Import the ConfigurationManager.psd1 module
-        if((Get-Module ConfigurationManager) -eq $null) {
-            Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
-        }
+		try {
+      New-CMSiteSystemServer -SiteSystemServerName $Name_Server_FQDN -SiteCode $Param_SiteCode
+			Write-Host "        Status: Success"
 
-    # Connect to the site's drive if it is not already present
-        if((Get-PSDrive -Name $MECM_SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -eq $null) {
-            New-PSDrive -Name $MECM_SiteCode -PSProvider CMSite -Root $MECM_ProviderMachineName
-        }
-
-    # Set the current location to be the site code.
-        Set-Location "$($MECM_SiteCode):\"
-
-    # Parameters
-        $MECM_SiteSystemServerName  = Read-Host -Prompt "Input Distribution Point name FQDN"
-
-    # Add the Server to the Hierarchy
-        New-CMSiteSystemServer -SiteSystemServerName $MECM_SiteSystemServerName -SiteCode $MECM_SiteCode
-
-    # Pause to Allow Change to Take Effect
+      # Pause to Allow Change to Take Effect
         Start-Sleep -Seconds 30
-        Pause
-        Write-Host ""
-        Write-host "Install Distribution Point Role"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1714 -Exit $true -Object $PSItem
+		}
 
-    # Add Roles to the New Server
-        $Date_CertExpiry = [DateTime]::Now.AddYears(30)
-        #$Object_SiteSystemServer = Get-CMSiteSystemServer -SiteSystemServerName $MECM_SiteSystemServerName
+	# Add Distribution Point Role
+    Write-Host "    - Add Distribution Point Role"
 
-        $Splat_AddDP = @{
-            ClientConnectionType = "Intranet"
-            EnableSsl = $true
-            MinimumFreeSpaceMB = 1024
-            PrimaryContentLibraryLocation = "E"
-            PrimaryPackageShareLocation = "E"
-            SiteCode = "[SiteCode]"
-        }
+    try {
+      $Temp_Params = @{
+          ClientConnectionType = "Intranet"
+          EnableSsl                     = $true
+          MinimumFreeSpaceMB            = 1024
+          PrimaryContentLibraryLocation = $Param_DiskDriveLetter -replace ":",""
+          PrimaryPackageShareLocation   = $Param_DiskDriveLetter -replace ":",""
+          SiteCode                      = $Param_SiteCode
+          SiteSystemServerName          = $Name_Server_FQDN
+          CertificateExpirationTimeUtc  = [DateTime]::Now.AddYears(30)
+      }
 
-        Add-CMDistributionPoint @Splat_AddDP -SiteSystemServerName $MECM_SiteSystemServerName -CertificateExpirationTimeUtc $Date_CertExpiry
+      Add-CMDistributionPoint @Temp_Params
+
+      Write-Host "        Status: Success"
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+    }
+
+	# Determine Script Result
+		$Meta_Script_Result = $true,"Success"
+
+	Write-Host "    - Complete"
+	Write-Host ""
+
+#EndRegion Execution
+#--------------------------------------------------------------------------------------------
 
 
-#EndRegion Name
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
+#--------------------------------------------------------------------------------------------
+# Output
+#   Error Range: 1800 - 1899
+#--------------------------------------------------------------------------------------------
+#Region Output
+
+	# Write-Host "  Output"
+
+	# # [StepName]
+	# 	Write-Host "    - [StepName]"
+
+	# 	try {
+
+	# 		Write-Host "        Status: Success"
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1801 -Exit $true -Object $PSItem
+	# 	}
+
+	# Write-Host "    - Complete"
+	# Write-Host ""
+
+#EndRegion Output
+#--------------------------------------------------------------------------------------------
 
 
-<# ------------------------------------------------------------------------------------------------------------------------------------------
-    Finalize
----------------------------------------------------------------------------------------------------------------------------------------------
-    Section for finalizing the script
------------------------------------------------------------------------------------------------------------------------------------------- #>
-#Region
+#--------------------------------------------------------------------------------------------
+# Cleanup
+#   Error Range: 1900 - 1999
+#--------------------------------------------------------------------------------------------
+#Region Cleanup
 
-    Write-Host ""
-    Write-host "Finalize"
-    Pause
-    Write-Host ""
-    Write-Host "  - Restart this VM (will automatically occur after you press enter)"
-    Write-Host "  - Install the MECM Role"
-    Write-Host "  - Validate Installation"
+	# Write-Host "  Cleanup"
 
-    Write-Host ""
-    Pause
+	# # Confirm Cleanup
+	# 	Write-Host "    - Confirm Cleanup"
 
-    Restart-Computer
+	# 	do {
+	# 		$Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o"
+	# 	} until (
+	# 		$Temp_Cleanup_UserInput -in "Y","Yes","N","No"
+	# 	)
 
-#EndRegion Finalize
-<# --------------------------------------------------------------------------------------------------------------------------------------- #>
+	# # [StepName]
+	# 	Write-Host "    - [StepName]"
+
+	# 	try {
+	# 		if ($Temp_Cleanup_UserInput -in "Y", "Yes") {
+
+	# 			Write-Host "        Status: Success"
+	# 		}
+	# 		else {
+	# 			Write-Host "            Status: Skipped"
+	# 		}
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
+	# 	}
+
+	# Write-Host "    - Complete"
+	# Write-Host ""
+
+#EndRegion Cleanup
+#--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Footer
+#--------------------------------------------------------------------------------------------
+#Region Footer
+
+	# Gather Data
+		$Meta_Script_Complete_DateTime  = Get-Date
+		$Meta_Script_Complete_TimeSpan  = New-TimeSpan -Start $Meta_Script_Start_DateTime -End $Meta_Script_Complete_DateTime
+
+	# Output
+		Write-Host ""
+		Write-Host "------------------------------------------------------------------------------"
+		Write-Host "  Script Result: $($Meta_Script_Result[1])"
+		Write-Host "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
+		Write-Host "  Script Completed: $($Meta_Script_Complete_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
+		Write-Host "  Total Time: $($Meta_Script_Complete_TimeSpan.Days) days, $($Meta_Script_Complete_TimeSpan.Hours) hours, $($Meta_Script_Complete_TimeSpan.Minutes) minutes, $($Meta_Script_Complete_TimeSpan.Seconds) seconds, $($Meta_Script_Complete_TimeSpan.Milliseconds) milliseconds"
+		Write-Host "------------------------------------------------------------------------------"
+		Write-Host "  End of Script"
+		Write-Host "------------------------------------------------------------------------------"
+
+#EndRegion Footer
+#--------------------------------------------------------------------------------------------
+
+Stop-Transcript -ErrorAction SilentlyContinue
+Return $Meta_Script_Result[0]
