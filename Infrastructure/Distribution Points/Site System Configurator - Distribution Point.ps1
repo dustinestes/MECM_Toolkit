@@ -499,7 +499,7 @@ param (
 
   # Enroll in Certificates
     Write-Host "    - Enroll in Certificates"
-
+# TODO: Create detection logic to determine if certificates from the specified templates already exist.
     # Computer Authentication Certificate
       Write-Host "        Template Name: $($Param_CertTemplateAuth)"
 
