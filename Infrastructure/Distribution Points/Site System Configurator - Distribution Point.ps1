@@ -476,11 +476,9 @@ param (
         Write-Host "        Status: Already Exist"
       }
       else {
-          New-Item -Path $($Param_DiskDriveLetter + "\") -Name "NO_SMS_ON_DRIVE.sms" -ItemType File -Force | Out-Null
-          Write-Host " Success"
+        New-Item -Path $($Param_DiskDriveLetter + "\") -Name "NO_SMS_ON_DRIVE.sms" -ItemType File -Force | Out-Null
+        Write-Host "        Status: Created"
       }
-
-			Write-Host "        Status: Success"
 		}
 		catch {
 			Write-vr_ErrorCode -Code 1704 -Exit $false -Object $PSItem
