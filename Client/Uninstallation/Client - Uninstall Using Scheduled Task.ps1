@@ -12,7 +12,7 @@
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
     <Date>2024-08-07T14:07:42.5386334</Date>
-    <Author>FLIGHTSAFETY</Author>
+    <Author>VividRock</Author>
     <Description>A task to remove the MECM client from devices after the imaging Task Sequence completes.</Description>
   </RegistrationInfo>
   <Triggers>
@@ -59,7 +59,7 @@
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
     <Date>2024-08-07T14:05:02.4183397</Date>
-    <Author>FLIGHTSAFETY</Author>
+    <Author>VividRock</Author>
     <Description>A task to remove the MECM client from devices after the imaging Task Sequence completes.</Description>
     <URI>\MECM Toolkit - Uninstall MECM Client</URI>
   </RegistrationInfo>
