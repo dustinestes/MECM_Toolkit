@@ -21,6 +21,8 @@ The following items are referenced in the code within this document. Familiarize
   - [Reinstall the Distribution Point Role](#reinstall-the-distribution-point-role)
     - [Process](#process)
     - [Snippets](#snippets)
+  - [Distribute OSD Certificate to All Distribution Points](#distribute-osd-certificate-to-all-distribution-points)
+    - [Snippets](#snippets-1)
   - [PXE](#pxe)
     - [Enable](#enable)
     - [Disable](#disable)
@@ -65,6 +67,44 @@ WHERE ServerName = '[ServerFQDN]'
 UPDATE DistributionPoints
 SET IsPullDPInstalled = '0', State = '0'
 WHERE ServerName = '[ServerFQDN]'
+```
+
+&nbsp;
+
+## Distribute OSD Certificate to All Distribution Points
+
+This snippet is used for both the initial push of the certificate to all DPs as well as each subsequent push when the certificate has to be renewed.
+
+### Snippets
+
+```powershell
+# Single Server
+  $DistributionPoint = Get-CMDistributionPoint | Where-Object { $_.NALType -ne "Windows Azure" }
+
+  $Params = @{
+      InputObject = $DistributionPoint
+      CertificatePath = "[PathToCertFile]"
+      CertificatePassword = $(ConvertTo-SecureString -String "[CertificatePassword]" -AsPlainText -Force)
+      Force = $true
+  }
+
+Set-CMDistributionPoint @Params
+
+# Multiple Servers
+  $DistributionPoints = Get-CMDistributionPoint | Where-Object { $_.NALType -ne "Windows Azure" }
+
+  foreach ($DistributionPoint in $DistributionPoints) {
+    $Params = @{
+      InputObject = $DistributionPoint
+      CertificatePath = "[PathToCertFile]"
+      CertificatePassword = $(ConvertTo-SecureString -String "[CertificatePassword]" -AsPlainText -Force)
+      Force = $true
+    }
+
+    Set-CMDistributionPoint @Params
+
+    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Certificate Added Successfully"
+  }
 ```
 
 &nbsp;
