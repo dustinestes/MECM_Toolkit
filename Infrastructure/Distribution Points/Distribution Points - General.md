@@ -22,6 +22,12 @@ The following items are referenced in the code within this document. Familiarize
     - [Process](#process)
     - [Snippets](#snippets)
   - [Distribute OSD Certificate to All Distribution Points](#distribute-osd-certificate-to-all-distribution-points)
+    - [Process](#process-1)
+      - [Request the MECM DP OSD Certificate](#request-the-mecm-dp-osd-certificate)
+      - [Renew the MECM DP OSD Certificate](#renew-the-mecm-dp-osd-certificate)
+    - [Export the Certificate](#export-the-certificate)
+      - [Distribute the Certificate to All Distribution Points](#distribute-the-certificate-to-all-distribution-points)
+      - [(Optional) Create a New ISO with the New Certificate](#optional-create-a-new-iso-with-the-new-certificate)
     - [Snippets](#snippets-1)
   - [PXE](#pxe)
     - [Enable](#enable)
@@ -74,6 +80,78 @@ WHERE ServerName = '[ServerFQDN]'
 ## Distribute OSD Certificate to All Distribution Points
 
 This snippet is used for both the initial push of the certificate to all DPs as well as each subsequent push when the certificate has to be renewed.
+
+### Process
+
+#### Request the MECM DP OSD Certificate
+Use this process if the Certificate already exists within the Certificate Store
+
+1. Logon to the Primary Site Server
+2. Open Manage Computer Certificates from the start menu
+3. Expand the Personal store
+4. Right Click Certificates container
+5. Mouse over All Tasks
+6. Click Request New Certificate...
+7. Click Next
+8. Click Next
+9. Check the box next to MECM DP OSD Certificate
+10. Click Enroll
+11. Click Finish
+
+#### Renew the MECM DP OSD Certificate
+Use this process if the Certificate already exists within the Certificate Store
+
+1. Logon to the Primary Site Server
+2. Open Manage Computer Certificates from the start menu
+3. Expand the Personal store
+4. Click Certificates container
+5. Right Click the Certificate issued from the MECM DP OSD Certificate template
+6. Mouse over All Tasks
+7. Click Request Certificate with New Key...
+8. Click Next
+9. Click Enroll
+10. Click Finish
+
+### Export the Certificate
+The certificate needs to be exported with its Private Key so this Certificate can be used to install supported certificates in Windows PE sessions created from PXE and ISO imaging.
+
+1. Right Click the Certificate issued from the MECM DP OSD Certificate template
+2. Mouse over All Tasks
+3. Click Export...
+4. Click Next
+5. Select Yes, export the private key radio button
+6. Click Next
+7. Use these Options
+   1. Type: Personal Information Exchange – PKCS #12 (.PFX)
+   2. Enable: Include all certificates in the certificate path if possible
+   3. Enable: Enable certificate privacy
+8. Click Next
+9.  Protect the Private Key using the following:
+   1. Password: Choose a strong password and save it somewhere safe
+   2. Encryption: TripleDES-SHA1
+10. Click Next
+11. Save the Certificate Export File in the Repo
+    1.  Path: \\[ShareAddress]\Repo\Backups\Certificates\MECM DP OSD Certificate_[ExpiryDate_YYYY-MM-DD].pfx
+12. Click Next
+13. Click Finish
+
+#### Distribute the Certificate to All Distribution Points
+The certificate now needs to be distributed to all DPs so it can be included with all PXE deployments
+
+1. Open the MECM Console
+2. Click the Blue Arrow dropdown in the top left corner
+3. Click Connect via Windows PowerShell ISE
+4. Run the Connection Script that opens
+   1. You can just highlight all and use the F8 run selection to avoid Execution Policy restrictions or having to change them
+5. Run the Snippet for Distributing Certificates below (updating the values where necessary)
+6. Validate Output shows all DPs Successful
+7. Done
+
+#### (Optional) Create a New ISO with the New Certificate
+If you are using ISOs for imaging, you will have to generate a new ISO with this certificate injected into it.
+
+> [This process will be done after updating the ADK as part of the High Availability scale up]
+
 
 ### Snippets
 
