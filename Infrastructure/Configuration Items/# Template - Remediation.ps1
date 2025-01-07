@@ -2,39 +2,56 @@
 # Input
 #--------------------------------------------------------------------------------------------
 #Region Input
-    # Environment Settings
-        $Environment_Settings_DeleteOtherRebootSchedules = $true
-        $Environment_Settings_DeleteOtherRebootSchedules_Pattern = "CI - Scheduled Reboot - *"
 
-    # Reboot Settings
-        $Reboot_Settings_TimeOfReboot       = "01:30"
-        $Reboot_Settings_TimeOfReboot_DayOffset = "0"
-            $Calculated_RebootTime_UTC      = [int64](Get-Date((Get-Date $Reboot_Settings_TimeOfReboot).AddDays($Reboot_Settings_TimeOfReboot_DayOffset)).ToUniversalTime() -UFormat %s)
+  # MECM Settings
+    $Name_ConfigurationItem = "CI - Template - Purpose"
+    $Path_Log_Directory     = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Remediation"
 
-    # Scheduled Task Data
-        $ScheduledTask_Name                 = "CI - Scheduled Reboot - Weekly Sunday at 0130 (Local Time) - Mandatory"
-        $ScheduledTask_Author               = "VividRock"
-        $ScheduledTask_Description          = "A scheduled weekly reboot created and enforced by MECM and performed by the Scheduled Task service."
-        $ScheduledTask_Path                 = "\VividRock\MECM Toolkit\Scheduled Reboots"
-        $ScheduledTask_Trigger_WeekInterval = "1"
-        $ScheduledTask_Trigger_DaysOfWeek   = "Sunday"
-        $ScheduledTask_Trigger_At           = Get-Date -Hour 00 -Minute 00 -Second 00 -Format "HH:mm:ss"
-        $ScheduledTask_Trigger_Expiration   = (Get-Date).AddYears(10).ToString('s')
-        $ScheduledTask_Action_Execute       = "Powershell.exe"
-        $ScheduledTask_ScriptBlock_Expanded = " New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'RebootBy' -Value $($Calculated_RebootTime_UTC) -PropertyType QWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'RebootValueInUTC' -Value 1 -PropertyType DWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'NotifyUI' -Value 1 -PropertyType DWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'HardReboot' -Value 1 -PropertyType DWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'OverrideRebootWindowTime' -Value 0 -PropertyType QWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'OverrideRebootWindow' -Value 0 -PropertyType DWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'PreferredRebootWindowTypes' -Value @('') -PropertyType MultiString -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'GraceStartTimeStamp' -Value '0' -PropertyType DWord -Force -ErrorAction SilentlyContinue ; New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\SMS\Mobile Client\Reboot Management\RebootData' -Name 'GraceSeconds' -Value '0' -PropertyType DWord -Force -ErrorAction SilentlyContinue ; Restart-Service -Name 'CcmExec' "
-            $ScheduledTask_ScriptBlock = [scriptblock]::Create($ScheduledTask_ScriptBlock_Expanded)
-        $ScheduledTask_Action_Argument      = "-NoProfile -NoLogo -WindowStyle Hidden -ExecutionPolicy Bypass -Command $([char](34) + "& " + $ScheduledTask_ScriptBlock + [char](34))"
-        # $ScheduledTask_Action_WorkingDir    = ""
-
-    # Metadata
-        $Meta_Remediation_Result    = $false
-
-    # Logging
-        $Path_Log_Directory = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Remediation"
-        $Name_Log_File      = $ScheduledTask_Name
-        $Path_Log_File      = $Path_Log_Directory + "\" + $ScheduledTask_Name + ".log"
+  # Configurations
+    # Registry
+      $Registry_01 = @{
+        "Path"          = "HKLM:\SOFTWARE\VividRock"
+        "Name"          = "Version"
+        "PropertyType"  = "String"
+        "Value"         = "1.0"
+      }
+      $Registry_02 = @{
+        "Path"          = "HKLM:\SOFTWARE\VividRock"
+        "Name"          = "Enabled"
+        "PropertyType"  = "Dword"
+        "Value"         = 1
+      }
 
 #EndRegion Input
+#--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Builtin (Do Not Edit)
+#--------------------------------------------------------------------------------------------
+#Region Builtin
+
+  # Metadata
+    $Meta_Script_Execution_Context  = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $Meta_Script_Start_DateTime     = Get-Date
+    $Meta_Script_Complete_DateTime  = $null
+    $Meta_Script_Complete_TimeSpan  = $null
+    $Meta_Result                    = $null
+    $Meta_Result_Successes          = 0
+    $Meta_Result_Failures           = 0
+
+  # Preferences
+    $ErrorActionPreference          = "Stop"
+
+  # Logging
+    if ($Meta_Script_Execution_Context.Name -eq "NT AUTHORITY\SYSTEM") {
+      $Path_Log_File      = $Path_Log_Directory + "\" + $Name_ConfigurationItem + ".log"
+    }
+    else {
+      $Path_Log_File      = $Path_Log_Directory + "\" + $Name_ConfigurationItem + "_" + $(($Meta_Script_Execution_Context.Name -split "\\")[1]) + ".log"
+    }
+
+#EndRegion Builtin
 #--------------------------------------------------------------------------------------------
 
 
@@ -43,228 +60,127 @@
 #--------------------------------------------------------------------------------------------
 #Region Header
 
-    # Write Log Header
-        $Temp_Log_Header    = @"
------------------------------------------------------------------------------------
-  $($Name_Log_File)
------------------------------------------------------------------------------------
-  Author:      Dustin Estes
-  Company:     VividRock
-  Date:        February 03, 2024
-  Copyright:   VividRock LLC - All Rights Reserved
-  Purpose:     Perform remediation of a Configuration Item and return boolean results.
------------------------------------------------------------------------------------
-  Script Name: $($MyInvocation.MyCommand.Name)
-  Script Path: $($PSScriptRoot)
-  Executed:    $((Get-Date).ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss"))
------------------------------------------------------------------------------------
-
-"@
-
-        Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Header -ErrorAction Stop
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File
+  Out-File -InputObject "  $($Name_ConfigurationItem)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Author:      Dustin Estes" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Company:     VividRock" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Date:        February 17, 2024" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Copyright:   VividRock LLC - All Rights Reserved" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Purpose:     Perform operations of a Configuration Item and return boolean results." -FilePath $Path_Log_File -Append
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Script Name: $($MyInvocation.MyCommand.Name)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Script Path: $($PSScriptRoot)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Execution Context: $($Meta_Script_Execution_Context.Name)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
 
 #EndRegion Header
 #--------------------------------------------------------------------------------------------
 
 
 #--------------------------------------------------------------------------------------------
-# Environment
-#   Error Range: 1100 - 1199
-#--------------------------------------------------------------------------------------------
-#Region Environment
-
-    # Cleanup Other Reboot Schedules
-        if ($Environment_Settings_DeleteOtherRebootSchedules -eq $false) {
-            $Temp_Log_Body    = @"
-
-  Cleanup Existing Reboot Tasks: Disabled
-  Status: Skipped
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-        }
-        else {
-            try {
-                # Get Matching Scheduled Tasks
-                    $Temp_ScheduledTasks_Existing = Get-ScheduledTask -TaskPath "$ScheduledTask_Path\*" | Where-Object -Property TaskName -like $Environment_Settings_DeleteOtherRebootSchedules_Pattern -ErrorAction Stop
-
-                    if (($Temp_ScheduledTasks_Existing | Measure-Object).Count -in "",$null,"0") {
-                        $Temp_Log_Body    = @"
-
-  Cleanup Existing Reboot Tasks: Enabled
-  Count: $(($Temp_ScheduledTasks_Existing | Measure-Object).Count)
-  Status: Not Applicable
-
------------------------------------------------------------------------------------
-"@
-
-                        Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-                    }
-                    else {
-                        $Temp_Log_Body    = @"
-  Cleanup Existing Reboot Tasks: Enabled
-  Count: $(($Temp_ScheduledTasks_Existing | Measure-Object).Count)
-
-"@
-
-                        Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-
-                        foreach ($Item in $Temp_ScheduledTasks_Existing) {
-                            Unregister-ScheduledTask -TaskName $Item.TaskName -TaskPath $Item.TaskPath -Confirm:$false -ErrorAction Stop
-
-                            $Temp_Log_Body    = @"
-  Task Name: $($Item.TaskName)
-  Task Path: $($item.TaskPath)
-  Status: Deleted
-
-"@
-
-                            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-                        }
-                    }
-            }
-            catch {
-                $Temp_Log_Error    = @"
-
-  Error ID: 1101
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            Exit 1101
-            }
-        }
-
-#EndRegion Environment
-#--------------------------------------------------------------------------------------------
-
-
-#--------------------------------------------------------------------------------------------
-# Remediation
+# Execution
 #   Error Range: 1200 - 1299
 #--------------------------------------------------------------------------------------------
-#Region Remediation
+#Region Execution
 
-    # Create Scheduled Task
-        try {
-            # Create Trigger
-                $Object_Task_Trigger = New-ScheduledTaskTrigger -Weekly -WeeksInterval $ScheduledTask_Trigger_WeekInterval -DaysOfWeek $ScheduledTask_Trigger_DaysOfWeek -At $ScheduledTask_Trigger_At -ErrorAction Stop
-                if ($ScheduledTask_Trigger_Expiration -notin "",$null) {
-                    $Object_Task_Trigger.EndBoundary = $ScheduledTask_Trigger_Expiration
+  # Registry
+    foreach ($Item in (Get-Variable -Name "Registry_*")) {
+      try {
+        Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
+
+        # Get Current State
+          $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
+          Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
+
+        # Process Based on Current State
+          if ($Temp_Registry_Current -in "",$null) {
+            # Create Path if Not Exist
+              if ((Test-Path -Path $Item.Value.Path) -in "",$false) {
+                $Temp_PathRecurse = $null
+
+                foreach ($Item_2 in ($Item.Value.Path -split "\\")) {
+                  $Temp_PathRecurse += $Item_2 + "\"
+                  if (Test-Path -Path $Temp_PathRecurse) {
+                  }
+                  else {
+                    New-Item -Path $Temp_PathRecurse | Out-Null
+                    Out-File -InputObject "      Created Path: $($Temp_PathRecurse)" -FilePath $Path_Log_File -Append
+                  }
                 }
+              }
 
-            # Create Action
-                $Object_Task_Action = New-ScheduledTaskAction -Execute $ScheduledTask_Action_Execute -Argument $ScheduledTask_Action_Argument -ErrorAction Stop # -WorkingDirectory $ScheduledTask_Action_WorkingDir
+            # Create Registry Item
+              New-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -PropertyType $Item.Value.PropertyType -Value $Item.Value.Value
 
-            # Configure Task Settings
-                # $Object_Task_Principal = New-ScheduledTaskPrincipal -GroupId "BUILTIN\Administrators" -RunLevel Limited
-                $Object_Task_Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DeleteExpiredTaskAfter (New-TimeSpan -Days 30) -DontStopIfGoingOnBatteries -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Minutes 30) -MultipleInstances IgnoreNew -WakeToRun -ErrorAction Stop
+            $Meta_Result_Successes ++
+            Out-File -InputObject "      Result: Success, Created Property/Value Pair" -FilePath $Path_Log_File -Append
+          }
+          elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
+            $Meta_Result_Successes ++
+            Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
+          }
+          else {
+            Set-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -Type $Item.Value.PropertyType -Value $Item.Value.Value
+            $Meta_Result_Successes ++
+            Out-File -InputObject "      Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
+          }
+      }
+      catch {
+        # Increment Failure Count
+          $Meta_Result_Failures ++
+          Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
+      }
+    }
 
-            # Create the Scheduled Task
-                # Creat COM object
-                    $Object_Schedule = New-Object -ComObject Schedule.Service -ErrorAction Stop
-
-                # Connect to COM object
-                    $Object_Schedule.connect()
-
-                # Get parent folder information
-                    $TaskScheduler_Folder_Root = $Object_Schedule.GetFolder("\")
-
-                # Check if the folder exists and if not then create the new folder
-                    try {
-                        $Object_Schedule.GetFolder($ScheduledTask_Path)
-                    }
-                    catch {
-                        [void]$TaskScheduler_Folder_Root.CreateFolder($ScheduledTask_Path)
-                    }
-
-                $Object_ScheduledTask = New-ScheduledTask -Description $ScheduledTask_Description -Action $Object_Task_Action -Trigger $Object_Task_Trigger -Settings $Object_Task_Settings -ErrorAction Stop # -Principal $Object_Task_Principal
-                $Object_ScheduledTask.Author = $ScheduledTask_Author
-                Register-ScheduledTask -TaskName $ScheduledTask_Name -InputObject $Object_ScheduledTask -User "System" -TaskPath $ScheduledTask_Path -ErrorAction Stop | Out-Null
-
-            # Check for Newly Created Task
-                $Temp_ScheduledTasks_Existing_Result = [bool](Get-ScheduledTask -TaskPath "$ScheduledTask_Path\*" | Where-Object -Property TaskName -like $ScheduledTask_Name -ErrorAction Stop)
-
-                if ($Temp_ScheduledTasks_Existing_Result -eq $true) {
-                    $Meta_Remediation_Result = "Success"
-                }
-                else {
-                    $Meta_Remediation_Result = "Failure"
-                }
-        }
-        catch {
-            $Temp_Log_Error    = @"
-
-  Error ID: 1201
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            Exit 1201
-        }
-
-#EndRegion Remediation
+#EndRegion Execution
 #--------------------------------------------------------------------------------------------
 
 
 #--------------------------------------------------------------------------------------------
-# Output
+# Evaluate
 #   Error Range: 1300 - 1399
 #--------------------------------------------------------------------------------------------
-#Region Output
+#Region Evaluate
 
-    # Write Log Footer
-        try {
-            $Temp_Log_Body    = @"
------------------------------------------------------------------------------------
+  # Determine Script Result
+    if (($Meta_Result_Successes -gt 0) -and ($Meta_Result_Failures -eq 0)) {
+      $Meta_Result = $true,"Success"
+    }
+    else {
+      $Meta_Result = $false,"Failure"
+    }
 
-  Name: $($ScheduledTask_Name)
-  Author: $($ScheduledTask_Author)
-  Description: $($ScheduledTask_Description)
-  Path: $($ScheduledTask_Path)
-  Week Interval: $($ScheduledTask_Trigger_WeekInterval)
-  Days of Week: $($ScheduledTask_Trigger_DaysOfWeek)
-  Time of Day: $($ScheduledTask_Trigger_At)
-  Expiration: $($ScheduledTask_Trigger_Expiration)
-  Execute: $($ScheduledTask_Action_Execute)
-  Argument: $($ScheduledTask_Action_Argument)
-
-  Remediation Result: $($Meta_Remediation_Result)
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-        }
-        catch {
-            $Temp_Log_Error    = @"
-
-  Error ID: 1301
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            Exit 1301
-        }
-
-    # Return Value to MECM
-        if ($Meta_Remediation_Result -eq "Success") {
-            Exit 0
-        }
-        else {
-            Exit 2000
-        }
-
-#EndRegion Output
+#EndRegion Evaluate
 #--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Footer
+#--------------------------------------------------------------------------------------------
+#Region Footer
+
+	# Gather Data
+    $Meta_Script_Complete_DateTime  = Get-Date
+    $Meta_Script_Complete_TimeSpan  = New-TimeSpan -Start $Meta_Script_Start_DateTime -End $Meta_Script_Complete_DateTime
+
+  # Output
+    Out-File -InputObject "" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Script Result: $($Meta_Result[1])" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Script Completed: $($Meta_Script_Complete_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Total Time: $($Meta_Script_Complete_TimeSpan.Days) days, $($Meta_Script_Complete_TimeSpan.Hours) hours, $($Meta_Script_Complete_TimeSpan.Minutes) minutes, $($Meta_Script_Complete_TimeSpan.Seconds) seconds, $($Meta_Script_Complete_TimeSpan.Milliseconds) milliseconds" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  End of Script" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+
+#EndRegion Footer
+#--------------------------------------------------------------------------------------------
+
+# Return Value to MECM
+  Return $Meta_Result[0]
