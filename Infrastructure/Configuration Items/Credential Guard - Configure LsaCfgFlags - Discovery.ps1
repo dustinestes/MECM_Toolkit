@@ -3,32 +3,49 @@
 #--------------------------------------------------------------------------------------------
 #Region Input
 
-<#
-Link: https://learn.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-deviceguard-unattend-lsacfgflags
+  # MECM Settings
+    $Name_ConfigurationItem = "CI - Credential Guard - Configure LsaCfgFlags"
+    $Path_Log_Directory     = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Discovery"
 
-#>
-    # Registry Data
-        $Registry_01 = @{
-            "Path"          = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"
-            "Name"          = "LsaCfgFlagsDefault"
-            "Value"         = 0
-            "PropertyType"  = "Dword"
-            "Force"         = $true
-            "ErrorAction"   = "Stop"
-        }
-
-    # Metadata
-        $Meta_Discovery_Result                  = $false
-        $Meta_Discovery_Desired                 = $true
-        $Meta_Discovery_Actual                  = $null
-        $Meta_Discovery_Actual_Failure_Count    = 0
-
-    # Logging
-        $Path_Log_Directory = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Discovery"
-        $Name_Log_File      = "CI - Credential Guard - Configure LsaCfgFlags"
-        $Path_Log_File      = $Path_Log_Directory + "\" + $Name_Log_File + ".log"
+  # Configurations
+    # Registry
+      $Registry_01 = @{
+        "Path"          = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"
+        "Name"          = "LsaCfgFlagsDefault"
+        "PropertyType"  = "String"
+        "Value"         = 0
+      }
 
 #EndRegion Input
+#--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Builtin (Do Not Edit)
+#--------------------------------------------------------------------------------------------
+#Region Builtin
+
+  # Metadata
+    $Meta_Script_Execution_Context  = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $Meta_Script_Start_DateTime     = Get-Date
+    $Meta_Script_Complete_DateTime  = $null
+    $Meta_Script_Complete_TimeSpan  = $null
+    $Meta_Result                    = $null
+    $Meta_Result_Successes          = 0
+    $Meta_Result_Failures           = 0
+
+  # Preferences
+    $ErrorActionPreference          = "Stop"
+
+  # Logging
+    if ($Meta_Script_Execution_Context.Name -eq "NT AUTHORITY\SYSTEM") {
+      $Path_Log_File      = $Path_Log_Directory + "\" + $Name_ConfigurationItem + ".log"
+    }
+    else {
+      $Path_Log_File      = $Path_Log_Directory + "\" + $Name_ConfigurationItem + "_" + $(($Meta_Script_Execution_Context.Name -split "\\")[1]) + ".log"
+    }
+
+#EndRegion Builtin
 #--------------------------------------------------------------------------------------------
 
 
@@ -37,188 +54,108 @@ Link: https://learn.microsoft.com/en-us/windows-hardware/customize/desktop/unatt
 #--------------------------------------------------------------------------------------------
 #Region Header
 
-    # Write Log Header
-        $Temp_Log_Header    = @"
------------------------------------------------------------------------------------
-  $($Name_Log_File)
------------------------------------------------------------------------------------
-  Author:      Dustin Estes
-  Company:     VividRock
-  Date:        April 01, 2024
-  Copyright:   VividRock LLC - All Rights Reserved
-  Purpose:     Perform discovery of a Configuration Item and return boolean results.
------------------------------------------------------------------------------------
-  Script Name: $($MyInvocation.MyCommand.Name)
-  Script Path: $($PSScriptRoot)
-  Executed:    $((Get-Date).ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss"))
------------------------------------------------------------------------------------
-
-"@
-
-        Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Header -ErrorAction Stop
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File
+  Out-File -InputObject "  $($Name_ConfigurationItem)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Author:      Dustin Estes" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Company:     VividRock" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Date:        February 17, 2024" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Copyright:   VividRock LLC - All Rights Reserved" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Purpose:     Perform operations of a Configuration Item and return boolean results." -FilePath $Path_Log_File -Append
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Script Name: $($MyInvocation.MyCommand.Name)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Script Path: $($PSScriptRoot)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "  Execution Context: $($Meta_Script_Execution_Context.Name)" -FilePath $Path_Log_File -Append
+  Out-File -InputObject "-----------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
 
 #EndRegion Header
 #--------------------------------------------------------------------------------------------
 
 
 #--------------------------------------------------------------------------------------------
-# Environment
-#   Error Range: 1100 - 1199
-#--------------------------------------------------------------------------------------------
-#Region Environment
-
-    # Create Drive for Registry Access
-        try {
-            if ((Test-Path -Path "HKLM:\" -ErrorAction Stop) -eq $false) {
-                New-PSDrive -Name HKLM -PSProvider Registry -Root HKEY_CLASSES_ROOT -ErrorAction Stop | Out-Null
-            }
-        }
-        catch {
-            $Temp_Log_Error    = @"
-
-  Error ID: 1101
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            Exit 1101
-        }
-
-#EndRegion Environment
-#--------------------------------------------------------------------------------------------
-
-
-#--------------------------------------------------------------------------------------------
-# Discovery
+# Execution
 #   Error Range: 1200 - 1299
 #--------------------------------------------------------------------------------------------
-#Region Discovery
+#Region Execution
 
-    # Get All Defined Variables
-        try {
-            $Temp_Registry_Entries = Get-Variable -Name "Registry_*" -ErrorAction Stop
-        }
-        catch {
-            $Temp_Log_Error    = @"
+  # Registry
+    foreach ($Item in (Get-Variable -Name "Registry_*")) {
+      try {
+        Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
 
-  Error ID: 1201
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
+        # Get Current State
+          $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
+          Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
 
------------------------------------------------------------------------------------
-"@
+        # Process Based on Current State
+          if ($Temp_Registry_Current -in "",$null) {
+            $Meta_Result_Failures ++
+            Out-File -InputObject "      Result: Failure, Object Not Found" -FilePath $Path_Log_File -Append
+          }
+          elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
+            $Meta_Result_Successes ++
+            Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
+          }
+          else {
+            $Meta_Result_Failures ++
+            Out-File -InputObject "      Result: Failure, Value Mismatch" -FilePath $Path_Log_File -Append
+          }
+      }
+      catch {
+        # Increment Failure Count
+          $Meta_Result_Failures ++
+          Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
+      }
+    }
 
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            Exit 1201
-        }
-
-    # Loop Through All Variables
-        foreach ($Item in $Temp_Registry_Entries) {
-
-            try {
-                $Temp_Registry_Entries_Return = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction $Item.Value.ErrorAction
-
-                if ($Temp_Registry_Entries_Return.$($Item.Value.Name) -eq $Item.Value.Value) {
-                    $Meta_Discovery_Actual = $true
-                }
-                else {
-                    $Meta_Discovery_Actual = $false
-                    $Meta_Discovery_Actual_Failure_Count ++
-                }
-
-                $Temp_Log_Body    = @"
-
-  Path: $($Item.Value.Path)
-  Property: $($Item.Value.Name)
-  Desired Value: $($Item.Value.Value)
-  Actual Value: $($Temp_Registry_Entries_Return.$($Item.Value.Name))
-
-  Discovery Result: $($Meta_Discovery_Actual)
-
------------------------------------------------------------------------------------
-"@
-
-                Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-            }
-            catch [System.Management.Automation.ItemNotFoundException],[System.Management.Automation.PSArgumentException] {
-                $Meta_Discovery_Actual_Failure_Count += 1
-
-                $Temp_Log_Error    = @"
-
-  Path: $($Item.Value.Path)
-  Property: $($Item.Value.Name)
-  Exists: False
-
-  Discovery Result: False
-
------------------------------------------------------------------------------------
-"@
-
-                Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            }
-            catch {
-                $Temp_Log_Error    = @"
-
-  Error ID: 1202
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
-
------------------------------------------------------------------------------------
-"@
-
-                Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-                Exit 1202
-            }
-        }
-
-    # Determine Discovery Result
-        if ($Meta_Discovery_Actual_Failure_Count -le 0) {
-            $Meta_Discovery_Result = $true,"Success"
-        }
-        else {
-            $Meta_Discovery_Result = $false,"Failure"
-        }
-
-#EndRegion Discovery
+#EndRegion Execution
 #--------------------------------------------------------------------------------------------
 
 
 #--------------------------------------------------------------------------------------------
-# Output
+# Evaluate
 #   Error Range: 1300 - 1399
 #--------------------------------------------------------------------------------------------
-#Region Output
+#Region Evaluate
 
-    # Write Log Footer
-        try {
-            $Temp_Log_Body    = @"
+  # Determine Script Result
+    if (($Meta_Result_Successes -gt 0) -and ($Meta_Result_Failures -eq 0)) {
+      $Meta_Result = $true,"Success"
+    }
+    else {
+      $Meta_Result = $false,"Failure"
+    }
 
-  Overall Discovery Result: $($Meta_Discovery_Result[1])
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Body -Append -ErrorAction Stop
-        }
-        catch {
-            $Temp_Log_Error    = @"
-
-  Error ID: 1301
-  Command:  $($PSItem.CategoryInfo.Activity)
-  Message:  $($PSItem.Exception.Message)
-
------------------------------------------------------------------------------------
-"@
-
-            Out-File -FilePath $Path_Log_File -InputObject $Temp_Log_Error -Append -ErrorAction Stop
-            Exit 1301
-        }
-
-    # Return Value to MECM
-        Return $Meta_Discovery_Result[0]
-
-#EndRegion Output
+#EndRegion Evaluate
 #--------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+# Footer
+#--------------------------------------------------------------------------------------------
+#Region Footer
+
+	# Gather Data
+    $Meta_Script_Complete_DateTime  = Get-Date
+    $Meta_Script_Complete_TimeSpan  = New-TimeSpan -Start $Meta_Script_Start_DateTime -End $Meta_Script_Complete_DateTime
+
+  # Output
+    Out-File -InputObject "" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Script Result: $($Meta_Result[1])" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Script Completed: $($Meta_Script_Complete_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  Total Time: $($Meta_Script_Complete_TimeSpan.Days) days, $($Meta_Script_Complete_TimeSpan.Hours) hours, $($Meta_Script_Complete_TimeSpan.Minutes) minutes, $($Meta_Script_Complete_TimeSpan.Seconds) seconds, $($Meta_Script_Complete_TimeSpan.Milliseconds) milliseconds" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "  End of Script" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "------------------------------------------------------------------------------" -FilePath $Path_Log_File -Append
+
+#EndRegion Footer
+#--------------------------------------------------------------------------------------------
+
+# Return Value to MECM
+  Return $Meta_Result[0]
