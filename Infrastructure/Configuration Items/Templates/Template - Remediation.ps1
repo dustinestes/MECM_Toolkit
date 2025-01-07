@@ -7,20 +7,7 @@
     $Name_ConfigurationItem = "CI - Template - Purpose"
     $Path_Log_Directory     = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Remediation"
 
-  # Configurations
-    # Registry
-      $Registry_01 = @{
-        "Path"          = "HKLM:\SOFTWARE\VividRock"
-        "Name"          = "Version"
-        "PropertyType"  = "String"
-        "Value"         = "1.0"
-      }
-      $Registry_02 = @{
-        "Path"          = "HKLM:\SOFTWARE\VividRock"
-        "Name"          = "Enabled"
-        "PropertyType"  = "Dword"
-        "Value"         = 1
-      }
+  # << Copy Module Input Code Here >>
 
 #EndRegion Input
 #--------------------------------------------------------------------------------------------
@@ -84,58 +71,7 @@
 #--------------------------------------------------------------------------------------------
 #Region Execution
 
-  # Registry
-    foreach ($Item in (Get-Variable -Name "Registry_*")) {
-      try {
-        Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
-
-        # Get Current State
-          $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
-          Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
-
-        # Process Based on Current State
-          if ($Temp_Registry_Current -in "",$null) {
-            # Create Path if Not Exist
-              if ((Test-Path -Path $Item.Value.Path) -in "",$false) {
-                $Temp_PathRecurse = $null
-
-                foreach ($Item_2 in ($Item.Value.Path -split "\\")) {
-                  $Temp_PathRecurse += $Item_2 + "\"
-                  if (Test-Path -Path $Temp_PathRecurse) {
-                  }
-                  else {
-                    New-Item -Path $Temp_PathRecurse | Out-Null
-                    Out-File -InputObject "      Created Path: $($Temp_PathRecurse)" -FilePath $Path_Log_File -Append
-                  }
-                }
-              }
-
-            # Create Registry Item
-              New-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -PropertyType $Item.Value.PropertyType -Value $Item.Value.Value
-
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Success, Created Property/Value Pair" -FilePath $Path_Log_File -Append
-          }
-          elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
-          }
-          else {
-            Set-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -Type $Item.Value.PropertyType -Value $Item.Value.Value
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
-          }
-      }
-      catch {
-        # Increment Failure Count
-          $Meta_Result_Failures ++
-          Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
-      }
-    }
+  # << Copy Module Execution Code Here >>
 
 #EndRegion Execution
 #--------------------------------------------------------------------------------------------

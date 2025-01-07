@@ -7,20 +7,7 @@
     $Name_ConfigurationItem = "CI - Template - Purpose"
     $Path_Log_Directory     = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Discovery"
 
-  # Configurations
-    # Registry
-      $Registry_01 = @{
-        "Path"          = "HKLM:\SOFTWARE\VividRock"
-        "Name"          = "Version"
-        "PropertyType"  = "String"
-        "Value"         = "1.0"
-      }
-      $Registry_02 = @{
-        "Path"          = "HKLM:\SOFTWARE\VividRock"
-        "Name"          = "Enabled"
-        "PropertyType"  = "Dword"
-        "Value"         = 1
-      }
+  # << Copy Module Input Code Here >>
 
 #EndRegion Input
 #--------------------------------------------------------------------------------------------
@@ -84,39 +71,7 @@
 #--------------------------------------------------------------------------------------------
 #Region Execution
 
-  # Registry
-    foreach ($Item in (Get-Variable -Name "Registry_*")) {
-      try {
-        Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
-        Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
-
-        # Get Current State
-          $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
-          Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
-
-        # Process Based on Current State
-          if ($Temp_Registry_Current -in "",$null) {
-            $Meta_Result_Failures ++
-            Out-File -InputObject "      Result: Failure, Object Not Found" -FilePath $Path_Log_File -Append
-          }
-          elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
-          }
-          else {
-            $Meta_Result_Failures ++
-            Out-File -InputObject "      Result: Failure, Value Mismatch" -FilePath $Path_Log_File -Append
-          }
-      }
-      catch {
-        # Increment Failure Count
-          $Meta_Result_Failures ++
-          Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
-      }
-    }
+  # << Copy Module Execution Code Here >>
 
 #EndRegion Execution
 #--------------------------------------------------------------------------------------------
