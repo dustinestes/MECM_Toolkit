@@ -156,7 +156,7 @@ Snippet
 
 ```powershell
 # Start Logging
-    Start-Transcript -Path "C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Install\[logname]_PS_Install.log"
+    Start-Transcript -Path "C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\[logname]_PS_Install.log"
 ```
 
 &nbsp;
@@ -165,7 +165,7 @@ Example
 
 ```powershell
 # Start Logging
-    Start-Transcript -Path "C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Install\VividRock_ApplciationName_1.5.0_PS_Install.log"
+    Start-Transcript -Path "C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\VividRock_ApplciationName_1.5.0_PS_Install.log"
 ```
 
 &nbsp;
@@ -232,7 +232,7 @@ Example (EXE)
 
 ```powershell
 # Install Application
-    Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Install.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Install\Manufacturer_Product_Version_Install.log" -Wait
+    Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Install.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
 &nbsp;
@@ -245,7 +245,7 @@ Example (MSI)
 
 ```powershell
 # Install Application
-    Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.msi","/qn","/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Install\Manufacturer_Product_Version_Install.log" -Wait
+    Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.msi","/qn","/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
 &nbsp;
@@ -284,7 +284,7 @@ Example (EXE)
 
 ```powershell
 # Uninstall Application
-    (Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Uninstall.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+    (Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Uninstall.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
 &nbsp;
@@ -297,8 +297,7 @@ Example (MSI)
 
 ```powershell
 # Uninstall Application
-    (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v
-C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+    (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
 &nbsp;
