@@ -9,15 +9,18 @@
   - [How to Use](#how-to-use)
     - [Best Practices](#best-practices)
   - [Modules](#modules)
-    - [Registry](#registry)
+    - [File \& Directory](#file--directory)
       - [Discovery](#discovery)
       - [Remediation](#remediation)
+    - [Registry](#registry)
+      - [Discovery](#discovery-1)
+      - [Remediation](#remediation-1)
 - [Appendices](#appendices)
   - [Apdx A: \[Name\]](#apdx-a-name)
   - [Apdx X: Templates](#apdx-x-templates)
     - [\[ModuleName\]](#modulename)
-      - [Discovery](#discovery-1)
-      - [Remediation](#remediation-1)
+      - [Discovery](#discovery-2)
+      - [Remediation](#remediation-2)
 
 <br>
 
@@ -43,9 +46,78 @@ These are some items to consider when utilizing these templates or customizing t
 
 This is a list of the developed modules thus far along with any variations to them that were identified
 
+
+### File & Directory
+
+TODO
+
+#### Discovery
+
+Copy this code, including comments, to the Input section of the Template
+
+```powershell
+  # File & Directory
+    $File_01 = @{
+      "Path" = "[PathToFile]"
+    }
+
+```
+
+Copy this code, including comments, to the Execution section of the Template
+
+```powershell
+  # File & Directory
+    Out-File -InputObject "File & Directory" -FilePath $Path_Log_File -Append
+    foreach ($Item in $(Get-Variable -Name "File_*")) {
+      try {
+        Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
+
+        # Get Current State
+          $Temp_File_Exists = Test-Path -Path $Item.Value.Path
+
+        # Process Based on Current State
+          if ($Temp_File_Exists -eq $false) {
+            $Meta_Result_Failures ++
+            Out-File -InputObject "      Result: Failure, File Not Exists" -FilePath $Path_Log_File -Append
+          }
+          elseif ($Temp_File_Exists -eq $true) {
+            $Meta_Result_Successes ++
+            Out-File -InputObject "      Result: Success, File Exists" -FilePath $Path_Log_File -Append
+          }
+          else {
+            $Meta_Result_Failures ++
+            Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
+          }
+      }
+      catch {
+        # Increment Failure Count
+          $Meta_Result_Failures ++
+          Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
+      }
+    }
+
+```
+
+#### Remediation
+
+Copy this code, including comments, to the Input section of the Template
+
+```powershell
+  # [ModuleName]
+
+```
+
+Copy this code, including comments, to the Execution section of the Template
+
+```powershell
+  # [ModuleName]
+
+```
+
 ### Registry
 
-[Description]
+TODO
 
 #### Discovery
 
@@ -71,6 +143,7 @@ Copy this code, including comments, to the Execution section of the Template
 
 ```powershell
   # Registry
+    Out-File -InputObject "Registry" -FilePath $Path_Log_File -Append
     foreach ($Item in (Get-Variable -Name "Registry_*")) {
       try {
         Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
@@ -131,6 +204,7 @@ Copy this code, including comments, to the Execution section of the Template
 
 ```powershell
   # Registry
+    Out-File -InputObject "Registry" -FilePath $Path_Log_File -Append
     foreach ($Item in (Get-Variable -Name "Registry_*")) {
       try {
         Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
