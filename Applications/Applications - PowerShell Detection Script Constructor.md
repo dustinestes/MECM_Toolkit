@@ -271,7 +271,7 @@ Snippet:
 
         if (Test-Path -Path $Item) {
           Out-File -InputObject "                Status: Exists" @Params_Logging
-          $Dataset_App_Win32Reg_Applications += Get-ChildItem $Item
+          $Dataset_App_Win32Reg_Applications += Get-ChildItem -Path $Item -ErrorAction SilentlyContinue
           Out-File -InputObject "                Data Gather: Success" @Params_Logging
         }
         else {
