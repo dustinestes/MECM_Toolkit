@@ -7,14 +7,19 @@
     $Name_ConfigurationItem = "CI - Credential Guard - Configure LsaCfgFlags"
     $Path_Log_Directory     = "$($env:vr_Directory_Logs)\ConfigurationBaselines\Discovery"
 
-  # Configurations
-    # Registry
-      $Registry_01 = @{
-        "Path"          = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"
-        "Name"          = "LsaCfgFlagsDefault"
-        "PropertyType"  = "String"
-        "Value"         = 0
-      }
+  # Registry
+    $Registry_01 = @{
+      "Path"          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard"
+      "Name"          = "LsaCfgFlags"
+      "PropertyType"  = "Dword"
+      "Value"         = 0
+    }
+    $Registry_02 = @{
+      "Path"          = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"
+      "Name"          = "LsaCfgFlags"
+      "PropertyType"  = "Dword"
+      "Value"         = 0
+    }
 
 #EndRegion Input
 #--------------------------------------------------------------------------------------------
