@@ -93,40 +93,51 @@ This utilizes the SMS_PackageStatus WMI class to gather Content Distribution Sta
 This example demonstrates how to cancel all pending content distributions using the Administration Service.
 
 ```powershell
-# PowerShell
+# Variables
   $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
   $Name_WMI_Class = "SMS_PackageStatus"
   $Odata_Filter_Expression = "?`$filter=Status eq 0 or Status eq 1"
   $URI_Method_Cancel = "$Path_AdminService_WMIRoute/SMS_DistributionPoint/AdminService.CancelDistribution"
 
-# Get all pending and sent distributions
+# Get Pending Distributions
   $Distributions_Pending = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Name_WMI_Class + $Odata_Filter_Expression)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+  $Packages = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)SMS_Package" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
 
 # Cancel each pending distribution
-Write-Host "Content Distribution - Cancelled Packages"
-foreach ($Distribution in $Distributions_Pending) {
-  Write-Host "  - $($Distribution.PackageID)"
-  Write-Host "      Target: $($Distribution.PkgServer)"
-  # Construct Body
-    $Body = @{
-        PackageID = $Distribution.PackageID
-        ServerNALPath = $Distribution.PkgServer
-    } | ConvertTo-Json
+  Write-Host "Content Distribution - Cancelled Packages"
 
-  # Run Method
-    Invoke-RestMethod -Uri $URI_Method_Cancel -Method Post -Body $Body -ContentType "Application/Json" -UseDefaultCredentials -ErrorAction Stop
+  foreach ($Distribution in $Distributions_Pending) {
+    try {
+      # Get Package Name
+        $Temp_PackageName = ($Packages | Where-Object { $_.PackageID -eq $Distribution.PackageID }).Name
+      Write-Host "  - $($Temp_PackageName)"
+      Write-Host "      PackageID: $($Distribution.PackageID)"
+      Write-Host "      Target: $($Distribution.PkgServer)"
+      # Construct Body
+        $Body = @{
+            PackageID = $Distribution.PackageID
+            ServerNALPath = $Distribution.PkgServer
+        } | ConvertTo-Json
 
-    Write-Host "      Status: Success"
-}
+      # Run Method
+        Invoke-RestMethod -Uri $URI_Method_Cancel -Method Post -Body $Body -ContentType "Application/Json" -UseDefaultCredentials -ErrorAction Stop
+
+      Write-Host "      Status: Success"
+    }
+    catch {
+      Write-Host "      Status: Error"
+    }
+  }
 ```
 
 #### Output
 
 ```
 Content Distribution - Cancelled Packages
-  - PKG00001
+  - [PackageName]
+      PackageID: [PackageID]
       Target: [ServerFQDN]
-      Status: Success
+      Status: [Status]
 ```
 
 
