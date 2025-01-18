@@ -1,0 +1,185 @@
+# MECM Toolkit - Infrastructure - Administration Service - General
+
+&nbsp;
+
+## Table of Contents
+
+- [MECM Toolkit - Infrastructure - Administration Service - General](#mecm-toolkit---infrastructure---administration-service---general)
+  - [Table of Contents](#table-of-contents)
+- [Content Management](#content-management)
+  - [Content Distribution Status](#content-distribution-status)
+    - [Get Failed Distributions](#get-failed-distributions)
+      - [Output](#output)
+    - [Cancel Pending Distributions](#cancel-pending-distributions)
+      - [Output](#output-1)
+- [\[Category\]](#category)
+  - [\[SubCategory\]](#subcategory)
+    - [\[Function\]](#function)
+      - [Output](#output-2)
+  - [\[SnippetTitle\]](#snippettitle)
+    - [Example](#example)
+    - [Snippets](#snippets)
+    - [Output](#output-3)
+
+&nbsp;
+
+# Content Management
+
+## Content Distribution Status
+
+### Get Failed Distributions
+
+This utilizes the SMS_PackageStatus WMI class to gather Content Distribution Status.
+
+| Value | Status         |
+|-------|----------------|
+| 0     | NONE           |
+| 1     | SENT           |
+| 2     | RECEIVED       |
+| 3     | INSTALLED      |
+| 4     | RETRY          |
+| 5     | FAILED         |
+| 6     | REMOVED        |
+| 7     | PENDING_REMOVE |
+
+```
+# Web Browser
+  https://[SMSProviderFQDN]/AdminService/wmi/SMS_PackageStatus?$filter=Status eq 5
+```
+
+```powershell
+# PowerShell
+  $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
+  $Name_WMI_Class = "SMS_PackageStatus"
+  $Odata_Filter_Expression = "?`$filter=Status eq 5"
+  $Output = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Name_WMI_Class + $Odata_Filter_Expression)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+```
+
+#### Output
+
+```json
+{
+  "@odata.etag": "VR100003;0;ServerFQDN.DOMAIN.COM;VR1;3;1",
+  "__LAZYPROPERTIES": [
+      "__QUALIFIER_SECURITYVERBS"
+  ],
+  "__QUALIFIER_SECURITYVERBS": null,
+  "Location": "",
+  "PackageID": "VR100003",
+  "Personality": 0,
+  "PkgServer": "ServerFQDN.DOMAIN.COM",
+  "ShareName": "",
+  "SiteCode": "VR1",
+  "Status": 5,
+  "Type": 1,
+  "UpdateTime": "2024-08-30T20:55:06Z",
+  "__GENUS": 2,
+  "__CLASS": "SMS_PackageStatus",
+  "__SUPERCLASS": "SMS_BaseClass",
+  "__DYNASTY": "SMS_BaseClass",
+  "__RELPATH": "SMS_PackageStatus.PackageID=\"VR100003\",Personality=0,PkgServer=\"ServerFQDN.DOMAIN.COM\",SiteCode=\"VR1\",Status=3,Type=1",
+  "__PROPERTY_COUNT": 9,
+  "__DERIVATION": [
+      "SMS_BaseClass"
+  ],
+  "__SERVER": "V0002WS0127",
+  "__NAMESPACE": "root\\sms\\site_VR1",
+  "__PATH": "\\\\V0002WS0127\\root\\sms\\site_VR1:SMS_PackageStatus.PackageID=\"VR100003\",Personality=0,PkgServer=\"ServerFQDN.DOMAIN.COM\",SiteCode=\"VR1\",Status=3,Type=1"
+}
+```
+
+### Cancel Pending Distributions
+
+This example demonstrates how to cancel all pending content distributions using the Administration Service.
+
+```powershell
+# PowerShell
+  $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
+  $Name_WMI_Class = "SMS_PackageStatus"
+  $Odata_Filter_Expression = "?`$filter=Status eq 0 or Status eq 1"
+  $URI_Method_Cancel = "$Path_AdminService_WMIRoute/SMS_DistributionPoint/AdminService.CancelDistribution"
+
+# Get all pending and sent distributions
+  $Distributions_Pending = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Name_WMI_Class + $Odata_Filter_Expression)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+
+# Cancel each pending distribution
+Write-Host "Content Distribution - Cancelled Packages"
+foreach ($Distribution in $Distributions_Pending) {
+  Write-Host "  - $($Distribution.PackageID)"
+  Write-Host "      Target: $($Distribution.PkgServer)"
+  # Construct Body
+    $Body = @{
+        PackageID = $Distribution.PackageID
+        ServerNALPath = $Distribution.PkgServer
+    } | ConvertTo-Json
+
+  # Run Method
+    Invoke-RestMethod -Uri $URI_Method_Cancel -Method Post -Body $Body -ContentType "Application/Json" -UseDefaultCredentials -ErrorAction Stop
+
+    Write-Host "      Status: Success"
+}
+```
+
+#### Output
+
+```
+Content Distribution - Cancelled Packages
+  - PKG00001
+      Target: [ServerFQDN]
+      Status: Success
+```
+
+
+# [Category]
+
+## [SubCategory]
+
+[Text]
+
+### [Function]
+
+[Text]
+
+```
+# Web Browser
+
+```
+
+```powershell
+# PowerShell
+
+```
+
+#### Output
+
+```json
+# Add Code Here
+```
+
+
+
+
+
+
+## [SnippetTitle]
+
+[Text]
+
+### Example
+
+[Text]
+
+### Snippets
+
+```powershell
+# Web Browser
+
+# PowerShell
+
+```
+
+### Output
+
+```powershell
+# Add Code Here
+```
