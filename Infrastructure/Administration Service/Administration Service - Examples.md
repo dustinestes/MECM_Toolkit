@@ -114,6 +114,7 @@ This example demonstrates how to cancel all pending content distributions using 
         Write-Host "  - $($Temp_PackageName)"
         Write-Host "      PackageID: $($Distribution.PackageID)"
         Write-Host "      Target: $($Temp_ServerName)"
+
       # Construct Body
         $Body = @{
             PackageID = $Distribution.PackageID
