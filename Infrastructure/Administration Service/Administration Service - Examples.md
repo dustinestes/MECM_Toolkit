@@ -108,11 +108,12 @@ This example demonstrates how to cancel all pending content distributions using 
 
   foreach ($Distribution in $Distributions_Pending) {
     try {
-      # Get Package Name
+      # Output Data
         $Temp_PackageName = ($Packages | Where-Object { $_.PackageID -eq $Distribution.PackageID }).Name
-      Write-Host "  - $($Temp_PackageName)"
-      Write-Host "      PackageID: $($Distribution.PackageID)"
-      Write-Host "      Target: $($Distribution.PkgServer)"
+        $Temp_ServerName  = [regex]::Match($Distribution.PkgServer, '\["Display=(.*?)"'.Groups[1].Value)
+        Write-Host "  - $($Temp_PackageName)"
+        Write-Host "      PackageID: $($Distribution.PackageID)"
+        Write-Host "      Target: $($Temp_ServerName)"
       # Construct Body
         $Body = @{
             PackageID = $Distribution.PackageID
