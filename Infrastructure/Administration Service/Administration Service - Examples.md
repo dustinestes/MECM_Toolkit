@@ -10,16 +10,18 @@
   - [Content Distribution Status](#content-distribution-status)
     - [Get Failed Distributions](#get-failed-distributions)
       - [Output](#output)
-    - [Cancel Pending Distributions](#cancel-pending-distributions)
+    - [Get Packages with No Distributions](#get-packages-with-no-distributions)
       - [Output](#output-1)
+    - [Cancel Pending Distributions](#cancel-pending-distributions)
+      - [Output](#output-2)
 - [\[Category\]](#category)
   - [\[SubCategory\]](#subcategory)
     - [\[Function\]](#function)
-      - [Output](#output-2)
+      - [Output](#output-3)
   - [\[SnippetTitle\]](#snippettitle)
     - [Example](#example)
     - [Snippets](#snippets)
-    - [Output](#output-3)
+    - [Output](#output-4)
 
 &nbsp;
 
@@ -88,6 +90,59 @@ This utilizes the SMS_PackageStatus WMI class to gather Content Distribution Sta
 }
 ```
 
+<br>
+
+### Get Packages with No Distributions
+
+This example shows how to identify packages that have no content distributed to any distribution point.
+
+```powershell
+# Variables
+  $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
+  $Name_WMI_Class = "SMS_PackageStatus"
+
+# Get all package status information and content info
+  $PackageStatus = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)$Name_WMI_Class" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+  $Package_ContentInfo = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)SMS_ObjectContentInfo" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+
+# Find packages with no distribution
+  $Packages_NoDistribution = $Package_ContentInfo | Where-Object {
+      $PackageID = $_.PackageID
+      -not ($PackageStatus | Where-Object { $_.PackageID -eq $PackageID })
+  }
+
+# Output results
+  Write-Host "Packages with No Distributions:"
+  foreach ($Package in $Packages_NoDistribution) {
+      Write-Host "  - $($Package.SoftwareName)"
+      Write-Host "      PackageID: $($Package.PackageID)"
+      Write-Host "      Package Type: $($Package.ObjectType)"
+}
+```
+
+#### Output
+
+```
+Packages with No Distributions:
+  - Application Name
+      PackageID: APP00001
+      Package Type: 7
+  - Package Name
+      PackageID: PKG00001
+      Package Type: 0
+```
+
+Note: The ObjectType values represent different types of content:
+- 0: Legacy Package
+- 3: Driver Package
+- 5: Software Update Package
+- 7: Application
+- 8: Boot Image
+- 257: Operating System Image
+- 258: Operating System Installer
+
+<br>
+
 ### Cancel Pending Distributions
 
 This example demonstrates how to cancel all pending content distributions using the Administration Service.
@@ -101,7 +156,7 @@ This example demonstrates how to cancel all pending content distributions using 
 
 # Get Pending Distributions
   $Distributions_Pending = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Name_WMI_Class + $Odata_Filter_Expression)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
-  $Packages = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)SMS_Package" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+  $Package_ContentInfo = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)SMS_ObjectContentInfo" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
 
 # Cancel each pending distribution
   Write-Host "Content Distribution - Cancelled Packages"
@@ -109,8 +164,8 @@ This example demonstrates how to cancel all pending content distributions using 
   foreach ($Distribution in $Distributions_Pending) {
     try {
       # Output Data
-        $Temp_PackageName = ($Packages | Where-Object { $_.PackageID -eq $Distribution.PackageID }).Name
-        $Temp_ServerName  = [regex]::Match($Distribution.PkgServer, '\["Display=(.*?)"'.Groups[1].Value)
+        $Temp_PackageName = ($Package_ContentInfo | Where-Object { $_.PackageID -eq $Distribution.PackageID }).SoftwareName
+        $Temp_ServerName  = [regex]::Match($Distribution.PkgServer, '\["Display=(.*?)"').Groups[1].Value
         Write-Host "  - $($Temp_PackageName)"
         Write-Host "      PackageID: $($Distribution.PackageID)"
         Write-Host "      Target: $($Temp_ServerName)"
