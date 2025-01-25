@@ -9,7 +9,8 @@
 # Computer Configuration\Administrative Templates\Windows Components\Widgets
 #   Setting: Allow widgets
 #   Description: Hides the news and weather widget icon on the leftside of the taskbar and disables the Settings fields for configuring this item.
-#   Options: Not Configured (Null), Enabled (1), Disabled (0)
+#   Options
+#     State: Not Configured (Null), Enabled (1), Disabled (0)
 #   URL: https://gpsearch.azurewebsites.net:/Default.aspx?PolicyID=15930
 #   ADMX: NewsAndInterests.admx
 # HKLM:\SOFTWARE\Policies\Microsoft\Dsh
@@ -20,7 +21,8 @@
 # Computer Configuration\Administrative Templates\Windows Components\Widgets
 #   Setting: Disable Widgets on Lock Screen
 #   Description: Hides the widget icons on the bottom middle of the lock screen
-#   Options: Not Configured (Null), Enabled (0), Disabled (1)
+#   Options
+#     State: Not Configured (Null), Enabled (0), Disabled (1)
 #   URL: None
 #   ADMX: NewsAndInterests.admx
 # HKLM:\SOFTWARE\Policies\Microsoft\Dsh
@@ -122,76 +124,76 @@
 #Region Execution
 
   # Registry
-  Out-File -InputObject "Registry" -FilePath $Path_Log_File -Append
+    Out-File -InputObject "Registry" -FilePath $Path_Log_File -Append
 
-  foreach ($Item in (Get-Variable -Name "Registry_*")) {
-    try {
-      Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
-      Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
-      Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
-      Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
-      Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
+    foreach ($Item in (Get-Variable -Name "Registry_*")) {
+      try {
+        Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
 
-      # Get Current State
-        $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
-        Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
+        # Get Current State
+          $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
+          Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
 
-      if ($Operation_Type -eq "Discovery") {
-        # Process Based on Current State
-          if ($Temp_Registry_Current -in "",$null) {
-            $Meta_Result_Failures ++
-            Out-File -InputObject "      Result: Failure, Object Not Found" -FilePath $Path_Log_File -Append
-          }
-          elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
-          }
-          else {
-            $Meta_Result_Failures ++
-            Out-File -InputObject "      Result: Failure, Value Mismatch" -FilePath $Path_Log_File -Append
-          }
-      }
-      elseif ($Operation_Type -eq "Remediation") {
-        # Process Based on Current State
-          if ($Temp_Registry_Current -in "",$null) {
-            # Create Path if Not Exist
-              if ((Test-Path -Path $Item.Value.Path) -in "",$false) {
-                $Temp_PathRecurse = $null
+        if ($Operation_Type -eq "Discovery") {
+          # Process Based on Current State
+            if ($Temp_Registry_Current -in "",$null) {
+              $Meta_Result_Failures ++
+              Out-File -InputObject "      Result: Failure, Object Not Found" -FilePath $Path_Log_File -Append
+            }
+            elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
+              $Meta_Result_Successes ++
+              Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
+            }
+            else {
+              $Meta_Result_Failures ++
+              Out-File -InputObject "      Result: Failure, Value Mismatch" -FilePath $Path_Log_File -Append
+            }
+        }
+        elseif ($Operation_Type -eq "Remediation") {
+          # Process Based on Current State
+            if ($Temp_Registry_Current -in "",$null) {
+              # Create Path if Not Exist
+                if ((Test-Path -Path $Item.Value.Path) -in "",$false) {
+                  $Temp_PathRecurse = $null
 
-                foreach ($Item_2 in ($Item.Value.Path -split "\\")) {
-                  $Temp_PathRecurse += $Item_2 + "\"
-                  if (Test-Path -Path $Temp_PathRecurse) {
-                  }
-                  else {
-                    New-Item -Path $Temp_PathRecurse | Out-Null
-                    Out-File -InputObject "      Created Path: $($Temp_PathRecurse)" -FilePath $Path_Log_File -Append
+                  foreach ($Item_2 in ($Item.Value.Path -split "\\")) {
+                    $Temp_PathRecurse += $Item_2 + "\"
+                    if (Test-Path -Path $Temp_PathRecurse) {
+                    }
+                    else {
+                      New-Item -Path $Temp_PathRecurse | Out-Null
+                      Out-File -InputObject "      Created Path: $($Temp_PathRecurse)" -FilePath $Path_Log_File -Append
+                    }
                   }
                 }
-              }
 
-            # Create Registry Item
-              New-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -PropertyType $Item.Value.PropertyType -Value $Item.Value.Value | Out-Null
+              # Create Registry Item
+                New-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -PropertyType $Item.Value.PropertyType -Value $Item.Value.Value | Out-Null
 
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Success, Created Property/Value Pair" -FilePath $Path_Log_File -Append
+              $Meta_Result_Successes ++
+              Out-File -InputObject "      Result: Success, Created Property/Value Pair" -FilePath $Path_Log_File -Append
+            }
+            elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
+              $Meta_Result_Successes ++
+              Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
+            }
+            else {
+              Set-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -Type $Item.Value.PropertyType -Value $Item.Value.Value | Out-Null
+              $Meta_Result_Successes ++
+              Out-File -InputObject "      Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
+            }
           }
-          elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
-          }
-          else {
-            Set-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -Type $Item.Value.PropertyType -Value $Item.Value.Value | Out-Null
-            $Meta_Result_Successes ++
-            Out-File -InputObject "      Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
-          }
-        }
+      }
+      catch {
+        # Increment Failure Count
+          $Meta_Result_Failures ++
+          Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
+      }
     }
-    catch {
-      # Increment Failure Count
-        $Meta_Result_Failures ++
-        Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
-    }
-  }
 
   # Refresh User Shell
     if ($Shell_User_Refresh -eq $true) {
