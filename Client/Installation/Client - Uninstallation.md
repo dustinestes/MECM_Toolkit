@@ -87,6 +87,9 @@ Use this uninstallation snippet if you have tried to perform client reinstallati
       }
   }
 
+# Remove WMI Namespace
+  Get-WmiObject -query "Select * From __Namespace Where Name='CCM'" -Namespace "root" -ComputerName COMPUTERNAME.DOMAIN | Remove-WmiObject
+
 # Set ACL on Files
   Start-Process -FilePath "Takeown" -ArgumentList "/f","C:\windows\CCM\PolicyBackup"
   Start-Process -FilePath "icacls" -ArgumentList "C:\windows\CCM\PolicyBackup","/grant","administrators:F"
