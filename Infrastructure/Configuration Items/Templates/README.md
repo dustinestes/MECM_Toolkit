@@ -268,7 +268,7 @@ Copy this code, including comments, to the Execution section of the Template
         foreach ($Item in (Get-Variable -Name "Registry_Offline_*")) {
           try {
             # Construct the Registry Path
-              $Item.Path = "Registry::HKEY_Users\$($Profile.SID)\$($Item.Path)"
+              $Item.Value.Path = "Registry::HKEY_Users\$($Profile.SID)\$($Item.Value.Path)"
 
             Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
             Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
