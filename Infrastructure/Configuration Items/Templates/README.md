@@ -260,6 +260,9 @@ Copy this code, including comments, to the Execution section of the Template
 
     # Loop Through Each Profile on the Machine
       foreach ($Profile in $User_Profiles) {
+        Out-File -InputObject "  - SID: $($Profile.SID)" -FilePath $Path_Log_File -Append
+        Out-File -InputObject "      Hive: $($Profile.Hive)" -FilePath $Path_Log_File -Append
+
         # Load if Not Already Loaded
           if ((Test-Path -Path "Registry::HKEY_USERS\$($Profile.SID)") -eq $false) {
             Start-Process -FilePath "cmd.exe" -ArgumentList "/c reg.exe load HKU\$($Profile.SID) $($Profile.Hive)" -Wait -WindowStyle Hidden
@@ -270,29 +273,29 @@ Copy this code, including comments, to the Execution section of the Template
             # Construct the Registry Path
               $Item.Value.Path = "Registry::HKEY_Users\$($Profile.SID)\$($Item.Value.Path)"
 
-            Out-File -InputObject "  - $($Item.Name)" -FilePath $Path_Log_File -Append
-            Out-File -InputObject "      Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
-            Out-File -InputObject "      Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
-            Out-File -InputObject "      Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
-            Out-File -InputObject "      Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
+            Out-File -InputObject "      $($Item.Name)" -FilePath $Path_Log_File -Append
+            Out-File -InputObject "        Path: $($Item.Value.Path)" -FilePath $Path_Log_File -Append
+            Out-File -InputObject "        Name: $($Item.Value.Name)" -FilePath $Path_Log_File -Append
+            Out-File -InputObject "        Type: $($Item.Value.PropertyType)" -FilePath $Path_Log_File -Append
+            Out-File -InputObject "        Desired Value: $($Item.Value.Value)" -FilePath $Path_Log_File -Append
 
             # Get Current State
               $Temp_Registry_Current = Get-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -ErrorAction SilentlyContinue
-              Out-File -InputObject "      Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
+              Out-File -InputObject "        Actual Value: $($Temp_Registry_Current.$($Item.Value.Name))" -FilePath $Path_Log_File -Append
 
             if ($Operation_Type -eq "Discovery") {
               # Process Based on Current State
                 if ($Temp_Registry_Current -in "",$null) {
                   $Meta_Result_Failures ++
-                  Out-File -InputObject "      Result: Failure, Object Not Found" -FilePath $Path_Log_File -Append
+                  Out-File -InputObject "        Result: Failure, Object Not Found" -FilePath $Path_Log_File -Append
                 }
                 elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
                   $Meta_Result_Successes ++
-                  Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
+                  Out-File -InputObject "        Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
                 }
                 else {
                   $Meta_Result_Failures ++
-                  Out-File -InputObject "      Result: Failure, Value Mismatch" -FilePath $Path_Log_File -Append
+                  Out-File -InputObject "        Result: Failure, Value Mismatch" -FilePath $Path_Log_File -Append
                 }
             }
             elseif ($Operation_Type -eq "Remediation") {
@@ -308,7 +311,7 @@ Copy this code, including comments, to the Execution section of the Template
                         }
                         else {
                           New-Item -Path $Temp_PathRecurse | Out-Null
-                          Out-File -InputObject "      Created Path: $($Temp_PathRecurse)" -FilePath $Path_Log_File -Append
+                          Out-File -InputObject "        Created Path: $($Temp_PathRecurse)" -FilePath $Path_Log_File -Append
                         }
                       }
                     }
@@ -317,29 +320,33 @@ Copy this code, including comments, to the Execution section of the Template
                     New-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -PropertyType $Item.Value.PropertyType -Value $Item.Value.Value | Out-Null
 
                   $Meta_Result_Successes ++
-                  Out-File -InputObject "      Result: Success, Created Property/Value Pair" -FilePath $Path_Log_File -Append
+                  Out-File -InputObject "        Result: Success, Created Property/Value Pair" -FilePath $Path_Log_File -Append
                 }
                 elseif ($Temp_Registry_Current.$($Item.Value.Name) -eq $Item.Value.Value) {
                   $Meta_Result_Successes ++
-                  Out-File -InputObject "      Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
+                  Out-File -InputObject "        Result: Skipped, Value Already Matches" -FilePath $Path_Log_File -Append
                 }
                 else {
                   Set-ItemProperty -Path $Item.Value.Path -Name $Item.Value.Name -Type $Item.Value.PropertyType -Value $Item.Value.Value | Out-Null
                   $Meta_Result_Successes ++
-                  Out-File -InputObject "      Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
+                  Out-File -InputObject "        Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
                 }
               }
+
+            # Clean the Registry Path
+              $Temp_CleanupString = [regex]::Escape("Registry::HKEY_Users\$($Profile.SID)\")
+              $Item.Value.Path = $Item.Value.Path -replace $Temp_CleanupString,""
           }
           catch {
             # Increment Failure Count
               $Meta_Result_Failures ++
-              Out-File -InputObject "      Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
+              Out-File -InputObject "        Result: Failure, Unknown Error" -FilePath $Path_Log_File -Append
           }
         }
 
         # Run Garbage Collector
           [gc]::Collect()
-          Start-Sleep -Seconds 5
+          Start-Sleep -Seconds 2
 
         # Unload Hive
           Start-Process -FilePath "cmd.exe" -ArgumentList "/c reg.exe unload HKU\$($Profile.SID)" -Wait -WindowStyle Hidden | Out-Null
