@@ -93,8 +93,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 
   # Output to Log
     Write-Host "    - Parameters"
-    foreach ($Item in (Get-Variable -Name "Param_*")) {
-      Write-Host "        $(($Item.Name) -replace 'Param_',''): $($Item.Value)"
+    foreach ($Item in $PSBoundParameters.GetEnumerator()) {
+      Write-Host "        $($Item.Key.PadRight(($PSBoundParameters.Keys | Measure-Object -Property Length -Maximum).Maximum + 1)): $($Item.Value)"
     }
     Write-Host "    - Paths"
     foreach ($Item in (Get-Variable -Name "Path_*")) {
@@ -232,7 +232,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 				# Import the PowerShell Module
 					Write-Host "        Import the PowerShell Module"
 
-					if((Get-Module ConfigurationManager) -in $null,"") {
+					if((Get-Module ConfigurationManager -ErrorAction SilentlyContinue) -in $null,"") {
 						Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
 						Write-Host "            Status: Success"
 					}
@@ -243,8 +243,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 				# Create the Site Drive
 					Write-Host "        Create the Site Drive"
 
-					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
-						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
+					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -in $null,"") {
+						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider | Out-Null
 						Write-Host "            Status: Success"
 					}
 					else {
