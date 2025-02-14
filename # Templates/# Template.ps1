@@ -364,28 +364,28 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
     }
 
 	# [StepName]
-		Write-Host "    - [StepName]"
+    Write-Host "    - [StepName]"
 
-		try {
-
+    try {
 			Write-Host "        Status: Success"
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 16XX -Exit $true -Object $PSItem
 		}
 
 	# [StepName]
+    Write-Host "    - [StepName]"
+
 		foreach ($Item in (Get-Variable -Name "Path_*")) {
-			Write-Host "    - $($Item.Name)"
-
 			try {
-
-				Write-Host "        Status: Success"
+		    Write-Host "        $($Item.Name)"
+				Write-Host "          Status: Success"
 			}
 			catch {
-				Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
+				Write-vr_ErrorCode -Code 16XX -Exit $true -Object $PSItem
 			}
 		}
+    Write-Host "        Status: Success"
 
 	Write-Host "    - Complete"
 	Write-Host ""
@@ -410,21 +410,22 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 			Write-Host "        Status: Success"
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 17XX -Exit $true -Object $PSItem
 		}
 
 	# [StepName]
+    Write-Host "    - [StepName]"
+
 		foreach ($Item in (Get-Variable -Name "Path_*")) {
-			Write-Host "    - $($Item.Name)"
-
 			try {
-
-				Write-Host "        Status: Success"
+		    Write-Host "        $($Item.Name)"
+				Write-Host "          Status: Success"
 			}
 			catch {
-				Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+				Write-vr_ErrorCode -Code 17XX -Exit $true -Object $PSItem
 			}
 		}
+    Write-Host "        Status: Success"
 
 	# Determine Script Result
 		$Meta_Script_Result = $true,"Success"
@@ -452,7 +453,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 			Write-Host "        Status: Success"
 		}
 		catch {
-			Write-vr_ErrorCode -Code 1801 -Exit $true -Object $PSItem
+			Write-vr_ErrorCode -Code 18XX -Exit $true -Object $PSItem
 		}
 
 	Write-Host "    - Complete"
@@ -512,7 +513,6 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 		$Meta_Script_Complete_TimeSpan  = New-TimeSpan -Start $Meta_Script_Start_DateTime -End $Meta_Script_Complete_DateTime
 
 	# Output
-		Write-Host ""
 		Write-Host "------------------------------------------------------------------------------"
 		Write-Host "  Script Result: $($Meta_Script_Result[0])"
 		Write-Host "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
@@ -526,4 +526,4 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
 #--------------------------------------------------------------------------------------------
 
 Stop-Transcript
-Return $Meta_Script_Result[1]
+Return $Meta_Script_Result[0]
