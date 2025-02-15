@@ -1,4 +1,4 @@
-# MECM Toolkit - Infrastructure - Administration Service - General
+# MECM Toolkit - Infrastructure - Administration Service
 
 <br>
 
@@ -11,13 +11,13 @@ The following items are referenced in the code within this document. Familiarize
 | What is the Administation Service | Documentation               | An overview of the service and general information.                                                               | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/develop/adminservice/overview) |
 | How to use the Admin Service      | Documentation               | Example queries and information on using PowerShell, PowerBI, and the web for getting data.                       | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/develop/adminservice/usage) |
 | MECM API Reference                | Documentation               | A full API reference for the various WMI routes and methods provided by the MECM solution.                        | [Microsoft Learn](https://learn.microsoft.com/en-us/mem/configmgr/develop/reference/configuration-manager-reference) |
-| Examples                          | Code                        | Code samples and use cases for performing the various REST methods and operations with the MECM Web API           | [MECM Toolkit Repo](https://github.com/dustinestes/MECM_Toolkit/tree/main/Infrastructure/Administration%20Service/README.md) |
+| Examples                          | Code                        | Code samples and use cases for performing the various REST methods and operations with the MECM Web API           | [MECM Toolkit Repo](https://github.com/dustinestes/MECM_Toolkit/blob/main/Infrastructure/Administration%20Service/Administration%20Service%20-%20Examples.md) |
 
 <br>
 
 ## Table of Contents
 
-- [MECM Toolkit - Infrastructure - Administration Service - General](#mecm-toolkit---infrastructure---administration-service---general)
+- [MECM Toolkit - Infrastructure - Administration Service](#mecm-toolkit---infrastructure---administration-service)
   - [References](#references)
   - [Table of Contents](#table-of-contents)
   - [About](#about)
