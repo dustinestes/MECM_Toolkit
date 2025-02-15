@@ -31,13 +31,13 @@ The following items are referenced in the code within this document. Familiarize
     - [PowerShell](#powershell)
     - [PowerBI](#powerbi)
     - [3rd Party Tools](#3rd-party-tools)
-  - [Troubleshooting](#troubleshooting)
+  - [Query Options](#query-options)
+- [Appendices](#appendices)
+  - [Apdx A: Troubleshooting](#apdx-a-troubleshooting)
     - [Invoke-RestMethod : The remote server returned an error: (401) Unauthorized](#invoke-restmethod--the-remote-server-returned-an-error-401-unauthorized)
       - [Message](#message)
       - [Reason](#reason)
       - [Resolution](#resolution)
-- [Appendices](#appendices)
-  - [Apdx A: \[Name\]](#apdx-a-name)
 
 <br>
 
@@ -60,7 +60,7 @@ One of the main benefits of using the Web API is that it is accessible without t
 It is important to know a couple of things before using the Administration Service:
 
 - It requiers HTTPS communication (supports Enhanced HTTP mode in MECM)
-- Based on the [OData v4](https://www.odata.org/documentation/)
+- Based on the [OData v4](https://www.odata.org/documentation/) protocol
 - To use with a CMG, you need a synchronized account in Azure AD (Hybrid-Identity)
 
 ## Accessing the API Information
@@ -260,7 +260,15 @@ You can use powerful business intelligency and analytics tools such as PowerBI i
 
 <br>
 
-## Troubleshooting
+## Query Options
+
+<br>
+
+# Appendices
+
+A collection of sections that provide detailed explanation or understanding to the above topic but are not necessary within the main body of the topic.
+
+## Apdx A: Troubleshooting
 
 ### Invoke-RestMethod : The remote server returned an error: (401) Unauthorized
 
@@ -288,11 +296,3 @@ This can happen for any of the following reasons:
 Add the *-UseDefaultCredentials* parameter to the line where you are executing the *Invoke-RestMethod* cmdlet
 
 <br>
-
-# Appendices
-
-A collection of sections that provide detailed explanation or understanding to the above topic but are not necessary within the main body of the topic.
-
-## Apdx A: [Name]
-
-[Text]
