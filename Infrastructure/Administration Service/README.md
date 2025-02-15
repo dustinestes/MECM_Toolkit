@@ -229,7 +229,7 @@ This tool is the main focus of this document as it is also the main focus of the
     $Path_AdminService_WMIRoute   = "https://$($SMSProvider)/AdminService/wmi/"
     $WebAPI_WMIClass       = "SMS_Collection"
     $WebAPI_Body = @{
-      Name                = $Item.CollectionName
+      Name                = "AM - Users - Microsoft Corporation - Microsoft Endpoint Configuration Manager Console"
       LimitToCollectionID = "SMS00004"
       Comment             = "Collection created using the REST API."
       CollectionType      = 1
