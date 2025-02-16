@@ -304,7 +304,6 @@ OData provides query optoins that allow clients to refine their requests, such a
 | [Expand](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.6.%20Expand%20System%20Query%20Option%20(%24expand)) | Indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline (i.e. eagerly loaded). For example, if you want to identify a category and its products, you could use two URIs (and execute two requests), one for /Categories(1) and one for /Categories(1)/Products. The '$expand' option allows you to identify related Entries with a single URI such that a graph of Entries could be retrieved with a single HTTP request. | TODO |
 | Search
 | [Format](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.7.%20Format%20System%20Query%20Option%20(%24format)) | Specifies that a response to the request MUST use the media type specified by the query option. If the $format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. | TODO |
-|
 
 <br>
 
