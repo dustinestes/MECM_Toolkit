@@ -31,7 +31,13 @@ The following items are referenced in the code within this document. Familiarize
     - [PowerShell](#powershell)
     - [PowerBI](#powerbi)
     - [3rd Party Tools](#3rd-party-tools)
+  - [Methods](#methods)
+  - [Service Operations](#service-operations)
   - [Query Options](#query-options)
+  - [Operators](#operators)
+    - [Logical Operators](#logical-operators)
+    - [Arithmetic Operators](#arithmetic-operators)
+    - [Grouping Operators](#grouping-operators)
 - [Appendices](#appendices)
   - [Apdx A: Troubleshooting](#apdx-a-troubleshooting)
     - [Invoke-RestMethod : The remote server returned an error: (401) Unauthorized](#invoke-restmethod--the-remote-server-returned-an-error-401-unauthorized)
@@ -260,7 +266,79 @@ You can use powerful business intelligency and analytics tools such as PowerBI i
 
 <br>
 
+## Methods
+
+Because the Admin Service is based on the OData (Open Data Protocol), it supports the standard HTTP methods for CRUD operations: GET, POST, PUT/PATCH, DELETE
+
+| Operation | Method | Description |
+|-|-|-|
+| Create | POST | Used to create a new resource. |
+| Retrieve (Read) | GET | Used to request data from a specific resource or a collection of resources. |
+| Update | PUT | Replaces the entire resource with the data in the request body. |
+| Update | PATCH | Applies partial updates to the resource. |
+| Delete | DELETE | Used to delete a specific resource. |
+
+<br>
+
+## Service Operations
+
+OData allows servers to expose custom operations (also known as service operations) that can be invoked through GET or POST.
+
+> Note: It is not known at this time if any service operations exist for the MECM Administration Service. This section is added here to identify that this is the current state and provide a location for documentation should that state change.
+
+<br>
+
 ## Query Options
+
+OData provides query optoins that allow clients to refine their requests, such as selecting specific properties, expanding related resources, sorting results, or filtering data.
+
+| Option | Description | Example |
+|-|-|-|
+| [Filter](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.5.%20Filter%20System%20Query%20Option%20(%24filter)) | Identifies a subset of the Entries from the Collection of Entries identified by the Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate expression specified by the query option. | ```https://$($SMSProvider)/AdminService/wmi/SMS_Collection?$filter=Name eq 'All Users'``` |
+| [Select](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.8.%20Select%20System%20Query%20Option%20(%24select)) | Identifies the same set of Entries as a URI without a $select query option; however, the value of $select specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a $select query option. | ```https://$($SMSProvider)/AdminService/wmi/SMS_Collection?$select=CollectionID,Name,LimitToCollectionName,MemberCount``` |
+| [Order By](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.2.%20Orderby%20System%20Query%20Option%20(%24orderby)) | Specifies an expression for determining what values are used to order the collection of Entries identified by the Resource Path section of the URI. This query option is only supported when the resource path identifies a Collection of Entries. | ```https://$($SMSProvider)/AdminService/wmi/SMS_Collection?$orderby=MemberCount``` |
+| [Top](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.3.%20Top%20System%20Query%20Option%20(%24top)) | Identifies a subset of the Entries in the Collection of Entries identified by the Resource Path section of the URI. This subset is formed by selecting only the first N items of the set, where N is an integer greater than or equal to zero specified by this query option. | ```https://$($SMSProvider)/AdminService/wmi/SMS_Collection?$top=5``` |
+| [Skip](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.4.%20Skip%20System%20Query%20Option%20(%24skip)) | Identifies a subset of the Entries in the Collection of Entries identified by the Resource Path section of the URI. That subset is defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1). | ```https://$($SMSProvider)/AdminService/wmi/SMS_Collection?$skip=5``` |
+| Count | Returns the number of records in a collection or, if the collection has a filter, the number of records matching the filter. | ```https://$($SMSProvider)/AdminService/wmi/SMS_Collection/$count``` |
+| [Inline Count](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.9.%20Inlinecount%20System%20Query%20Option%20(%24inlinecount)) | Specifies that the response to the request includes a count of the number of Entries in the Collection of Entries identified by the Resource Path section of the URI. The count must be calculated after applying any $filter System Query Options present in the URI. | This does not appear to be supported with the API |
+| [Expand](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.6.%20Expand%20System%20Query%20Option%20(%24expand)) | Indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline (i.e. eagerly loaded). For example, if you want to identify a category and its products, you could use two URIs (and execute two requests), one for /Categories(1) and one for /Categories(1)/Products. The '$expand' option allows you to identify related Entries with a single URI such that a graph of Entries could be retrieved with a single HTTP request. | TODO |
+| Search
+| [Format](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/#:~:text=4.7.%20Format%20System%20Query%20Option%20(%24format)) | Specifies that a response to the request MUST use the media type specified by the query option. If the $format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. | TODO |
+|
+
+<br>
+
+## Operators
+
+### Logical Operators
+
+| Operator             | Description           | Example                                            |
+|----------------------|-----------------------|----------------------------------------------------|
+| Eq                   | Equal                 | /Suppliers?$filter=Address/City eq 'Redmond'       |
+| Ne                   | Not equal             | /Suppliers?$filter=Address/City ne 'London'        |
+| Gt                   | Greater than          | /Products?$filter=Price gt 20                      |
+| Ge                   | Greater than or equal | /Products?$filter=Price ge 10                      |
+| Lt                   | Less than             | /Products?$filter=Price lt 20                      |
+| Le                   | Less than or equal    | /Products?$filter=Price le 100                     |
+| And                  | Logical and           | /Products?$filter=Price le 200 and Price gt 3.5    |
+| Or                   | Logical or            | /Products?$filter=Price le 3.5 or Price gt 200     |
+| Not                  | Logical negation      | /Products?$filter=not endswith(Description,'milk') |
+
+### Arithmetic Operators
+
+| Operator             | Description           | Example                                            |
+|----------------------|-----------------------|----------------------------------------------------|
+| Add                  | Addition              | /Products?$filter=Price add 5 gt 10                |
+| Sub                  | Subtraction           | /Products?$filter=Price sub 5 gt 10                |
+| Mul                  | Multiplication        | /Products?$filter=Price mul 2 gt 2000              |
+| Div                  | Division              | /Products?$filter=Price div 2 gt 4                 |
+| Mod                  | Modulo                | /Products?$filter=Price mod 2 eq 0                 |
+
+### Grouping Operators
+
+| Operator             | Description           | Example                                            |
+|----------------------|-----------------------|----------------------------------------------------|
+| ( )                  | Precedence grouping   | /Products?$filter=(Price sub 5) gt 10              |
 
 <br>
 
