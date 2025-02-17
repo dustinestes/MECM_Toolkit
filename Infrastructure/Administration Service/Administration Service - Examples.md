@@ -24,24 +24,28 @@
       - [Output](#output-3)
   - [Membership](#membership)
     - [TODO: Add Collection Membership Rule](#todo-add-collection-membership-rule)
+  - [Querying](#querying)
+    - [Get All Collections where Name Contains a String (No Wildcard)](#get-all-collections-where-name-contains-a-string-no-wildcard)
+      - [Snippet](#snippet-4)
+      - [Output](#output-4)
 - [Content Management](#content-management)
   - [Content Distribution Status](#content-distribution-status)
     - [Get Failed Distributions](#get-failed-distributions)
-      - [Output](#output-4)
-    - [Get Packages with No Distributions](#get-packages-with-no-distributions)
       - [Output](#output-5)
-    - [Cancel Pending Distributions](#cancel-pending-distributions)
+    - [Get Packages with No Distributions](#get-packages-with-no-distributions)
       - [Output](#output-6)
+    - [Cancel Pending Distributions](#cancel-pending-distributions)
+      - [Output](#output-7)
 - [\[Category\]](#category)
   - [\[SubCategory\]](#subcategory)
     - [\[Function\]](#function)
-      - [Output](#output-7)
+      - [Output](#output-8)
 - [Appendices](#appendices)
   - [Apdx A: \[Name\]](#apdx-a-name)
   - [Template](#template)
     - [\[StepName\]](#stepname)
-      - [Snippet](#snippet-4)
-      - [Output](#output-8)
+      - [Snippet](#snippet-5)
+      - [Output](#output-9)
 
 <br>
 
@@ -68,14 +72,14 @@ You can use this snippet to create a new Collection in MECM.
 ```powershell
 # Create Collection
     $Path_AdminService_WMIRoute = "https://[SMSProvider]/AdminService/wmi/"
-    $WebAPI_WMIClass = "SMS_Collection"
-    $WebAPI_Body = @{
+    $Odata_Class = "SMS_Collection"
+    $Odata_Body = @{
       Name                = "AM - Users - Microsoft Corporation - Microsoft Endpoint Configuration Manager Console"
       LimitToCollectionID = "SMS00004"
       Comment             = "Collection created using the REST API."
       CollectionType      = 1
     } | ConvertTo-Json
-    Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $WebAPI_WMIClass)" -Method Post -Body $WebAPI_Body -ContentType "application/json" -UseDefaultCredentials
+    Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class)" -Method Post -Body $Odata_Body -ContentType "application/json" -UseDefaultCredentials
 ```
 
 #### Output
@@ -153,9 +157,9 @@ You can use this snippet to delete an existing Collection in MECM.
 ```powershell
 # Create Collection
     $Path_AdminService_WMIRoute = "https://[SMSProvider]/AdminService/wmi/"
-    $WebAPI_WMIClass = "SMS_Collection"
+    $Odata_Class = "SMS_Collection"
     $CollectionID = "ABC00200"
-    Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $WebAPI_WMIClass)/$($CollectionID)" -Method Delete -ContentType "application/json" -UseDefaultCredentials
+    Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class)/$($CollectionID)" -Method Delete -ContentType "application/json" -UseDefaultCredentials
 ```
 
 #### Output
@@ -185,14 +189,14 @@ When working with a net-new Collection, such as a created object from the Create
 ```powershell
 # Comment
   $Path_AdminService_WMIRoute = "https://[SMSProvider]/AdminService/wmi/"
-  $WebAPI_WMIClass = "SMS_ObjectContainerItem"
-  $WebAPI_Body = @{
+  $Odata_Class = "SMS_ObjectContainerItem"
+  $Odata_Body = @{
     InstanceKey     = "ABC00200"
     ContainerNodeID = 16777201
     ObjectType      = 5001
   } | ConvertTo-Json
 
-  Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $WebAPI_WMIClass)" -Method Post -Body $WebAPI_Body -ContentType "application/json" -UseDefaultCredentials
+  Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class)" -Method Post -Body $Odata_Body -ContentType "application/json" -UseDefaultCredentials
 ```
 
 #### Output
@@ -239,15 +243,15 @@ This snippet uses the *[MoveMembers](https://learn.microsoft.com/en-us/mem/confi
 ```powershell
 # Comment
   $Path_AdminService_WMIRoute = "https://[SMSProvider]/AdminService/wmi/"
-  $WebAPI_WMIClass = "SMS_ObjectContainerItem.MoveMembers"
-  $WebAPI_Body = @{
+  $Odata_Class = "SMS_ObjectContainerItem.MoveMembers"
+  $Odata_Body = @{
     InstanceKeys          = @("ABC00200")
     ContainerNodeID       = 16777201
     TargetContainerNodeID = 16777202
     ObjectType            = 5001
   } | ConvertTo-Json
 
-  $Result = Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $WebAPI_WMIClass)" -Method Post -Body $WebAPI_Body -ContentType "application/json" -UseDefaultCredentials
+  $Result = Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class)" -Method Post -Body $Odata_Body -ContentType "application/json" -UseDefaultCredentials
 ```
 
 #### Output
@@ -265,6 +269,31 @@ https://[SMSProvider]/AdminService/wmi/$metadata#__PARAMETERS           0
 ## Membership
 
 ### TODO: Add Collection Membership Rule
+
+<br>
+
+## Querying
+
+### Get All Collections where Name Contains a String (No Wildcard)
+
+You can use this snippet to return all the Collections where the name contains the specified string.
+
+#### Snippet
+
+```powershell
+# Create Collection
+    $Path_AdminService_WMIRoute = "https://[SMSProvider]/AdminService/wmi/"
+    $Odata_Class = "SMS_Collection"
+    $Odata_Filter = "?`$filter=contains(Name,'AM - User')"
+    Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class + $Odata_Filter)" -Method Get -ContentType "application/json" -UseDefaultCredentials
+```
+
+#### Output
+
+```powershell
+# This returns all Collections that match the filter pattern
+# Results omitted for brevity
+```
 
 <br>
 
@@ -298,9 +327,9 @@ This utilizes the SMS_PackageStatus WMI class to gather Content Distribution Sta
 ```powershell
 # PowerShell
   $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
-  $Name_WMI_Class = "SMS_PackageStatus"
-  $Odata_Filter_Expression = "?`$filter=Status eq 5"
-  $Output = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Name_WMI_Class + $Odata_Filter_Expression)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+  $Odata_Class = "SMS_PackageStatus"
+  $Odata_Filter = "?`$filter=Status eq 5"
+  $Output = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class + $Odata_Filter)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
 ```
 
 #### Output
@@ -345,10 +374,10 @@ This example shows how to identify packages that have no content distributed to 
 ```powershell
 # Variables
   $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
-  $Name_WMI_Class = "SMS_PackageStatus"
+  $Odata_Class = "SMS_PackageStatus"
 
 # Get all package status information and content info
-  $PackageStatus = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)$Name_WMI_Class" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+  $PackageStatus = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)$Odata_Class" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
   $Package_ContentInfo = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)SMS_ObjectContentInfo" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
 
 # Find packages with no distribution
@@ -396,12 +425,12 @@ This example demonstrates how to cancel all pending content distributions using 
 ```powershell
 # Variables
   $Path_AdminService_WMIRoute = "https://[SMSProviderFQDN]/AdminService/wmi/"
-  $Name_WMI_Class = "SMS_PackageStatus"
-  $Odata_Filter_Expression = "?`$filter=Status eq 0 or Status eq 1"
+  $Odata_Class = "SMS_PackageStatus"
+  $Odata_Filter = "?`$filter=Status eq 0 or Status eq 1"
   $URI_Method_Cancel = "$Path_AdminService_WMIRoute/SMS_DistributionPoint/AdminService.CancelDistribution"
 
 # Get Pending Distributions
-  $Distributions_Pending = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Name_WMI_Class + $Odata_Filter_Expression)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
+  $Distributions_Pending = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Class + $Odata_Filter)" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
   $Package_ContentInfo = (Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute)SMS_ObjectContentInfo" -Method Get -ContentType "Application/Json" -UseDefaultCredentials).value
 
 # Cancel each pending distribution
