@@ -34,10 +34,15 @@ The following items are referenced in the code within this document. Familiarize
   - [Methods](#methods)
   - [Service Operations](#service-operations)
   - [Query Options](#query-options)
+  - [Query Functions](#query-functions)
   - [Operators](#operators)
+    - [Comparison Operators](#comparison-operators)
     - [Logical Operators](#logical-operators)
     - [Arithmetic Operators](#arithmetic-operators)
     - [Grouping Operators](#grouping-operators)
+  - [Characters](#characters)
+    - [URL encode special characters](#url-encode-special-characters)
+    - [Wildcard Characters](#wildcard-characters)
 - [Appendices](#appendices)
   - [Apdx A: Troubleshooting](#apdx-a-troubleshooting)
     - [Invoke-RestMethod : The remote server returned an error: (401) Unauthorized](#invoke-restmethod--the-remote-server-returned-an-error-401-unauthorized)
@@ -307,9 +312,21 @@ OData provides query optoins that allow clients to refine their requests, such a
 
 <br>
 
+## Query Functions
+
+The following table describes the OData query functions you can use to filter on string values:
+
+| Function   | Example                           |
+|------------|-----------------------------------|
+| contains   | $filter=contains(name,'(sample)') |
+| endswith   | $filter=endswith(name,'Inc.')     |
+| startswith | $filter=startswith(name,'a')      |
+
+<br>
+
 ## Operators
 
-### Logical Operators
+### Comparison Operators
 
 | Operator             | Description           | Example                                            |
 |----------------------|-----------------------|----------------------------------------------------|
@@ -319,6 +336,16 @@ OData provides query optoins that allow clients to refine their requests, such a
 | Ge                   | Greater than or equal | /Products?$filter=Price ge 10                      |
 | Lt                   | Less than             | /Products?$filter=Price lt 20                      |
 | Le                   | Less than or equal    | /Products?$filter=Price le 100                     |
+| Like**               | Like the pattern      | /Products?$filter=contains(Name,'milk')            |
+
+** This operator is not supported. However, you can achieve this type of comparison by using the query function *contains(property,value)*
+
+### Logical Operators
+
+
+
+| Operator             | Description           | Example                                            |
+|----------------------|-----------------------|----------------------------------------------------|
 | And                  | Logical and           | /Products?$filter=Price le 200 and Price gt 3.5    |
 | Or                   | Logical or            | /Products?$filter=Price le 3.5 or Price gt 200     |
 | Not                  | Logical negation      | /Products?$filter=not endswith(Description,'milk') |
@@ -338,6 +365,42 @@ OData provides query optoins that allow clients to refine their requests, such a
 | Operator             | Description           | Example                                            |
 |----------------------|-----------------------|----------------------------------------------------|
 | ( )                  | Precedence grouping   | /Products?$filter=(Price sub 5) gt 10              |
+
+<br>
+
+## Characters
+
+### URL encode special characters
+
+If the string you are using as a value in a filter function includes a special character, you need to URL encode it. For example, if you use this function: contains(name,'+123'), it will not work because + is a character that can't be included in a URL. If you URL encode the string, it will become contains(name,'%2B123') and you will get results where the column value contains +123.
+
+The following table shows the URL encoded values for common special characters.
+
+| Special Character    | URL Encoded Character    |
+|----------------------|--------------------------|
+| $                    | %24                      |
+| &                    | %26                      |
+| +                    | %2B                      |
+| ,                    | %2C                      |
+| /                    | %2F                      |
+| :                    | %3A                      |
+| ;                    | %3B                      |
+| =                    | %3D                      |
+| ?                    | %3F                      |
+| @                    | %40                      |
+
+### Wildcard Characters
+
+When composing filters using strings, you can apply the following wildcard characters:
+
+> Note: If attempting to filter for entities in a "like" or wildcard search scenario, use the query function *contains(property,value)*.
+
+| Characters | Description                                                                                                                 | T-SQL documentation and examples                                                                                                                                                                   |
+|------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| %          | Matches any string of zero or more characters. This wildcard character can be used as either a prefix or a suffix.          | [Percent character (Wildcard - Character(s) to Match) (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/percent-character-wildcard-character-s-to-match-transact-sql)  |
+| _          | Use the underscore character to match any single character in a string comparison operation that involves pattern matching. | [_ (Wildcard - Match One Character) (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/wildcard-match-one-character-transact-sql)                                       |
+| []         | Matches any single character within the specified range or set that is specified between brackets.                          | [[ ] (Wildcard - Character(s) to Match) (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/wildcard-character-s-to-match-transact-sql)                                  |
+| [^]        | Matches any single character that isn't within the range or set specified between the square brackets.                      | [[^] (Wildcard - Character(s) Not to Match) (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/wildcard-character-s-not-to-match-transact-sql)                          |
 
 <br>
 
