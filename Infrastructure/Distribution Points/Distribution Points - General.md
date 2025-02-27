@@ -157,7 +157,7 @@ If you are using ISOs for imaging, you will have to generate a new ISO with this
 
 ```powershell
 # Single Server
-  $DistributionPoint = Get-CMDistributionPoint | Where-Object { $_.NALType -ne "Windows Azure" }
+  $DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[ServerName]"
 
   $Params = @{
       InputObject = $DistributionPoint
