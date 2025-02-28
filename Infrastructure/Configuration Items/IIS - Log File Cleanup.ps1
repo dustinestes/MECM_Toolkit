@@ -143,7 +143,7 @@
         <Hidden>false</Hidden>
         <RunOnlyIfIdle>false</RunOnlyIfIdle>
         <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
-        <UseUnifiedSchedulingEngine>false</UseUnifiedSchedulingEngine>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
         <WakeToRun>false</WakeToRun>
         <ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
         <Priority>7</Priority>
