@@ -6,8 +6,9 @@ param (
   [string]$Namespace,               			# "root\VividRock\MECM"
   [string]$ClassName,                     # "vr_Certificates"
   [string]$ClassVersion,                  # "1.0"                   This is used to increment the version of your WMI Class when changes are made to its construct
-  [array]$CertificateStores,              # @("[Path]","[Path]")
+  [array]$CertificateStores,              # @("LocalMachine\My","CurrentUser\My")
   [switch]$Recurse,                       # [Switch]                Determines whether the search for certificates is recursive or not
+  [bool]$RemoveInvalid,                   # [boolean]               If true, the script will remove any WMI Instances that do not match the list of Certificate thumbprints. This can help cleanup deleted/uninstalled certificates from WMI. Warning: If you enable this setting and you run this script with different parameters, could remove instances found by a previous execution. It is recommended you only run one instance of this script on the device and use the parameters to be as inclusive as necessary to get all Certificates in one execution.
   [string]$OutputDir                      # "\\[PathToOutput]"      If blank, no output is performed
 )
 
@@ -31,12 +32,6 @@ param (
   Write-Host "    Links:      None"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host ""
-
-<#
-  To Do:
-    - Item
-    - Item
-#>
 
 #EndRegion Header
 #--------------------------------------------------------------------------------------------
@@ -178,17 +173,29 @@ param (
             $Class_Object.Properties.Add("AuthorityKeyIdentifier", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("FriendlyName", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("Issuer", [System.Management.CimType]::String, $false)
-            $Class_Object.Properties.Add("ValidFrom", [System.Management.CimType]::DateTime, $false)
-            $Class_Object.Properties.Add("ValidTo", [System.Management.CimType]::DateTime, $false)
+            $Class_Object.Properties.Add("IssuedBy", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("ValidFromUTC", [System.Management.CimType]::DateTime, $false)
+            $Class_Object.Properties.Add("ValidToUTC", [System.Management.CimType]::DateTime, $false)
+            $Class_Object.Properties.Add("ValidFromString", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("ValidToString", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("Archived", [System.Management.CimType]::Boolean, $false)
             $Class_Object.Properties.Add("KeyUsage", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("EnhancedKeyUsageList", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("CertificateTemplate", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("CertificateTemplateName", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("SerialNumber", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("Version", [System.Management.CimType]::SInt32, $false)
-            $Class_Object.Properties.Add("PublicKeyProviderName", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("SignatureAlgorithm", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("PrivateKeyKeyExchangeAlgorithm", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("PrivateKeyProviderName", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("PrivateKeyExportable", [System.Management.CimType]::Boolean, $false)
+            $Class_Object.Properties.Add("PrivateKeyHardwareDevice", [System.Management.CimType]::Boolean, $false)
+            $Class_Object.Properties.Add("PrivateKeySignatureAlgorithm", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("PrivateKeySize", [System.Management.CimType]::SInt32, $false)
             $Class_Object.Properties.Add("PublicKeyAlgorithm", [System.Management.CimType]::String, $false)
+            $Class_Object.Properties.Add("PublicKeyProviderName", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("PublicKeySize", [System.Management.CimType]::SInt32, $false)
+            $Class_Object.Properties.Add("PublicKeyString", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("StoreLocation", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("StoreName", [System.Management.CimType]::String, $false)
             $Class_Object.Properties.Add("StoreOwner", [System.Management.CimType]::String, $false)
@@ -351,29 +358,41 @@ param (
 
         # Create Custom Objects and Add to Array
           $Temp_Object = [PSCustomObject]@{
-            "Name"                    = $Item.Thumbprint
-            "Thumbprint"              = $Item.Thumbprint
-            "Subject"                 = $Item.Subject
-            "SubjectAlternativeName"  = $null # Value Set Below
-            "SubjectKeyIdentifier"    = $null # Value Set Below
-            "AuthorityKeyIdentifier"  = $null # Value Set Below
-            "FriendlyName"            = $Item.FriendlyName
-            "Issuer"                  = $Item.Issuer
-            "ValidFrom"               = $Item.NotBefore
-            "ValidTo"                 = $Item.NotAfter
-            "KeyUsage"                = $null # Value Set Below
-            "EnhancedKeyUsageList"    = (($Item.EnhancedKeyUsageList | Select-Object -ExpandProperty "FriendlyName") -join ",") # Necessary to Prevent Object[] Data Type
-            "CertificateTemplate"     = $null # Value Set Below
-            "SerialNumber"            = $Item.SerialNumber
-            "Version"                 = $Item.Version
-            "SignatureAlgorithm"      = $Item.SignatureAlgorithm.FriendlyName
-            "PublicKeyProviderName"   = $Item.PublicKey.Key.CspKeyContainerInfo.ProviderName
-            "PublicKeyAlgorithm"      = $item.PublicKey.Key.KeyExchangeAlgorithm
-            "PublicKeySize"           = $Item.PublicKey.Key.KeySize
-            "StoreLocation"           = if ($Item.PSPath -match "LocalMachine") {"LocalMachine"} elseif ($Item.PSPath -match "CurrentUser") {"CurrentUser"} else {"Unknown"}
-            "StoreName"               = ([regex]::Match($Item.PSPath, $Pattern_Certificates_StoreName)).Groups[1].Value
-            "StoreOwner"              = $Meta_Script_Execution_User.Name
-            "CIM_LastUpdatedUTC"      = (Get-Date).ToUniversalTime()
+            "Name"                            = $Item.Thumbprint
+            "Thumbprint"                      = $Item.Thumbprint
+            "Subject"                         = $Item.Subject
+            "SubjectAlternativeName"          = $null # Value Set Below
+            "SubjectKeyIdentifier"            = $null # Value Set Below
+            "AuthorityKeyIdentifier"          = $null # Value Set Below
+            "FriendlyName"                    = $Item.FriendlyName
+            "Issuer"                          = $Item.Issuer
+            "IssuedBy"                        = $Item.GetNameInfo("SimpleName", $true)
+            "ValidFromUTC"                    = $Item.NotBefore
+            "ValidToUTC"                      = $Item.NotAfter
+            "ValidFromString"                 = $Item.GetEffectiveDateString()
+            "ValidToString"                   = $Item.GetExpirationDateString()
+            "Archived"                        = $Item.Archived
+            "KeyUsage"                        = $null # Value Set Below
+            "EnhancedKeyUsageList"            = (($Item.EnhancedKeyUsageList | Select-Object -ExpandProperty "FriendlyName") -join ",") # Necessary to Prevent Object[] Data Type
+            "CertificateTemplate"             = $null # Value Set Below
+            "CertificateTemplateName"         = $null # Value Set Below
+            "SerialNumber"                    = $Item.SerialNumber
+            "Version"                         = $Item.Version
+            "SignatureAlgorithm"              = $Item.SignatureAlgorithm.FriendlyName
+            "PrivateKeyKeyExchangeAlgorithm"  = $Item.PrivateKey.KeyExchangeAlgorithm
+            "PrivateKeyProviderName"          = $Item.PrivateKey.CspKeyContainerInfo.ProviderName
+            "PrivateKeyExportable"            = $Item.PrivateKey.CspKeyContainerInfo.Exportable
+            "PrivateKeyHardwareDevice"        = $Item.PrivateKey.CspKeyContainerInfo.HardwareDevice
+            "PrivateKeySignatureAlgorithm"    = $Item.PrivateKey.SignatureAlgorithm
+            "PrivateKeySize"                  = $Item.PrivateKey.KeySize
+            "PublicKeyAlgorithm"              = $Item.PublicKey.Key.KeyExchangeAlgorithm
+            "PublicKeyProviderName"           = $null # Value Set Below # $Item.PublicKey.Key.CspKeyContainerInfo.ProviderName
+            "PublicKeySize"                   = $Item.PublicKey.Key.KeySize
+            "PublicKeyString"                 = $Item.GetPublicKeyString()
+            "StoreLocation"                   = if ($Item.PSPath -match "LocalMachine") {"LocalMachine"} elseif ($Item.PSPath -match "CurrentUser") {"CurrentUser"} else {"Unknown"}
+            "StoreName"                       = ([regex]::Match($Item.PSPath, $Pattern_Certificates_StoreName)).Groups[1].Value
+            "StoreOwner"                      = $Meta_Script_Execution_User.Name
+            "CIM_LastUpdatedUTC"              = (Get-Date).ToUniversalTime()
           }
 
         # Certificate Template Name
@@ -384,9 +403,9 @@ param (
               $Temp_Object.CertificateTemplate = $Temp_Object.CertificateTemplate.Format(1)
             }
 
-          # Extract Template Name if Necessary (Certificate Template Information)
+          # Extract Template Name (Certificate Template Information)
             if ($Temp_Object.CertificateTemplate -match $Pattern_Certificates_TemplateName ) {
-              $Temp_Object.CertificateTemplate = ([regex]::Match($Temp_Object.CertificateTemplate, $Pattern_Certificates_TemplateName)).Groups[1].Value
+              $Temp_Object.CertificateTemplateName = ([regex]::Match($Temp_Object.CertificateTemplate, $Pattern_Certificates_TemplateName)).Groups[1].Value
             }
 
         # Extension Data
@@ -399,12 +418,10 @@ param (
             }
           }
 
-        # Fill In Empty Values to Avoid Instance Creation Issues On Null Values
-          foreach ($Item_2 in $Temp_Object.psobject.Properties) {
-            if ($Item_2.Value -in "", $null) {
-              $Item_2.Value = "null"
-            }
-          }
+        # Public Key Provider Name
+        # For some reason you have to allow this property to write to the console before its sub properties are populated.
+          $Item.PublicKey | Select-Object -ExpandProperty Key
+          $Temp_Object.PublicKeyProviderName = $Item.PublicKey.Key.CspKeyContainerInfo.ProviderName
 
         # Add to Dataset
           $Dataset_Certificates += $Temp_Object
@@ -440,43 +457,48 @@ param (
         Write-Host "        $($Item.Thumbprint): $($Item.Subject)"
         $Temp_Exists = Get-CimInstance -Namespace $Namespace -ClassName $ClassName | Where-Object -Property "Thumbprint" -eq $Item.Thumbprint
 
-        $Temp_PropertyMap = @{
-          "Name"                    = $Item.Thumbprint
-          "Thumbprint"              = $Item.Thumbprint
-          "Subject"                 = $Item.Subject
-          "SubjectAlternativeName"  = $Item.SubjectAlternativeName
-          "SubjectKeyIdentifier"    = $Item.SubjectKeyIdentifier
-          "AuthorityKeyIdentifier"  = $Item.AuthorityKeyIdentifier
-          "FriendlyName"            = $Item.FriendlyName
-          "Issuer"                  = $Item.Issuer
-          "ValidFrom"               = $Item.ValidFrom
-          "ValidTo"                 = $Item.ValidTo
-          "KeyUsage"                = $Item.KeyUsage
-          "EnhancedKeyUsageList"    = $Item.EnhancedKeyUsageList
-          "CertificateTemplate"     = $Item.CertificateTemplate
-          "SerialNumber"            = $Item.SerialNumber
-          "Version"                 = $Item.Version
-          "SignatureAlgorithm"      = $Item.SignatureAlgorithm
-          "PublicKeyProviderName"   = $Item.PublicKeyProviderName
-          "PublicKeyAlgorithm"      = $Item.PublicKeyAlgorithm
-          "PublicKeySize"           = $Item.PublicKeySize
-          "StoreLocation"           = $Item.StoreLocation
-          "StoreName"               = $Item.StoreName
-          "StoreOwner"              = $Item.StoreOwner
-          "CIM_LastUpdatedUTC"      = $Item.CIM_LastUpdatedUTC
-        }
+        # Construct Property Hashtable Excluding Empty Values to Avoid CimType Validation Errors
+          $Temp_PropertyMap = @{}
+          $Item.psobject.Properties | Where-Object {$_.Value -notin "",$null} | ForEach-Object {$Temp_PropertyMap.Add($_.Name,$_.Value)}
 
-        if ($Temp_Exists -in "", $null) {
+        # Remove Existing Instance Since we Cant Write Empty Values and Updating Instance Would Not Nullify any Existing Values
+          if ($Temp_Exists) {
+            Get-CimInstance -Namespace $Namespace -ClassName $ClassName -Filter "Thumbprint = '$($Temp_PropertyMap.Thumbprint)'" | Remove-CimInstance
+            Write-Host "          Existing Instance: Removed"
+          }
+
+        # Create Instance
           New-CimInstance -Namespace $Namespace -ClassName $ClassName -Key "Thumbprint" -Property $Temp_PropertyMap | Out-Null
           Write-Host "          Status: Created"
-        }
-        else {
-          Set-CimInstance -InputObject $Temp_Exists -Property $Temp_PropertyMap | Out-Null
-          Write-Host "          Status: Updated"
-        }
       }
       catch {
         Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
+      }
+    }
+
+  # Remove Invalid Certificate WMI Instances
+    Write-Host "    - Remove Invalid Certificate WMI Instances"
+
+    foreach ($Item in (Get-CimInstance -Namespace $Namespace -ClassName $ClassName)) {
+      if ($RemoveInvalid) {
+        try {
+          Write-Host "        $($Item.Thumbprint): $($Item.Subject)"
+
+          # Does Not Match Newly Discovered Certificates
+            if ($Dataset_Certificates.Thumbprint -notcontains $Item.Thumbprint) {
+              Get-CimInstance -Namespace $Namespace -ClassName $ClassName -Filter "Thumbprint = '$($Item.Thumbprint)'" | Remove-CimInstance
+              Write-Host "          Status: Removed Invalid Instance"
+            }
+            else {
+              Write-Host "          Status: Valid Instance"
+            }
+        }
+        catch {
+          Write-vr_ErrorCode -Code 1702 -Exit $true -Object $PSItem
+        }
+      }
+      else {
+        Write-Host "        Status: Parameter Set to False"
       }
     }
 
