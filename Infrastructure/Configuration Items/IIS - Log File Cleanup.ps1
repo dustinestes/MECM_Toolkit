@@ -29,8 +29,6 @@
       Arguments   = '-NoProfile -NoLogo -WindowStyle Hidden -ExecutionPolicy Bypass -File "\\[Path]\Repo\Scripts\Maintenance Tasks\IIS\Maintenance Task - IIS - Log File Cleanup.ps1" -RetentionDays "30" -Criteria "CreationTimeUtc" -OutputDir "\\[Path]\Repo\Logging\Maintenance Tasks\IIS" -OutputName "Maintenance Task - IIS - Log File Cleanup"'
     }
 
-
-
 #EndRegion Input
 #--------------------------------------------------------------------------------------------
 
