@@ -112,6 +112,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
             "vr_Directory_MECM"                     = "%vr_Directory_RootDir%\MECM"                                 # The folder where all MECM related content will be created
             "vr_Directory_Cache"                    = "%vr_Directory_MECM%\Cache"                                   # A place to cache files needed for task sequences, scripts, or other files. The contents of this folder should only be items safe to delete once the operation is complete
                 "vr_Directory_Cache_Backgrounds"    = "%vr_Directory_Cache%\Backgrounds"                            # A place to cache backgrounds for configuring the device
+                "vr_Directory_Cache_Scripts"        = "%vr_Directory_Cache%\Scripts"                                # A place to cache script files that are run by configuration items, scheduled tasks, etc.
                 "vr_Directory_Cache_StartMenu"      = "%vr_Directory_Cache%\StartMenu"                              # A place to cache Start Menu customization files
                 "vr_Directory_Cache_Updates"        = "%vr_Directory_Cache%\Updates"                                # A place to cache files associated with a Windows Upgrade task sequence
             "vr_Directory_Logs"                     = "%vr_Directory_MECM%\Logs"                                    # A centralized log directory
