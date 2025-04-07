@@ -1,6 +1,6 @@
 # MECM Toolkit - Infrastructure - Distribution Points - General
 
-&nbsp;
+<br>
 
 ## References
 
@@ -10,7 +10,7 @@ The following items are referenced in the code within this document. Familiarize
 |------------|------------|----------------------------------------------------------------|------|
 | None | | | |
 
-&nbsp;
+<br>
 
 ## Table of Contents
 
@@ -30,6 +30,8 @@ The following items are referenced in the code within this document. Familiarize
         - [Snippets](#snippets-1)
       - [(Optional) Create a New ISO with the New Certificate](#optional-create-a-new-iso-with-the-new-certificate)
       - [Get Certificate Path of All Distribution Points](#get-certificate-path-of-all-distribution-points)
+  - [Pull DP](#pull-dp)
+    - [Get Pull DPs and Their Configuration](#get-pull-dps-and-their-configuration)
   - [PXE](#pxe)
     - [Enable](#enable)
     - [Disable](#disable)
@@ -41,7 +43,7 @@ The following items are referenced in the code within this document. Familiarize
 - [Appendices](#appendices)
   - [Apdx A: \[Name\]](#apdx-a-name)
 
-&nbsp;
+<br>
 
 # Basic Snippets
 
@@ -76,7 +78,7 @@ SET IsPullDPInstalled = '0', State = '0'
 WHERE ServerName = '[ServerFQDN]'
 ```
 
-&nbsp;
+<br>
 
 ## Distribute OSD Certificate to All Distribution Points
 
@@ -208,7 +210,47 @@ If you are using ISOs for imaging, you will have to generate a new ISO with this
 6. Analyze the output
 7. Done
 
-&nbsp;
+<br>
+
+## Pull DP
+
+The snippets below provide a method for getting and configuring the Pull DP settings on single or multiple DPs.
+
+### Get Pull DPs and Their Configuration
+
+```powershell
+# Get All DPs
+  $DistributionPoints = Get-CMDistributionPoint -SiteSystemServerName "*"
+
+# Create Dataset
+  $Dataset = @()
+
+# Iterate
+foreach ($Item in $DistributionPoints) {
+  # Construct Object
+  $Temp_Object = [PSCustomObject]@{
+    Name = $Item.NetworkOSPath
+    Type = $Item.NALType
+    IsPullDP = if (($Item.Props | Where-Object {$_.PropertyName -eq "IsPullDP"}).Value -eq 1) {$true} else {$false}
+    SourceDPs = @()
+    Count = 0
+  }
+
+  # Format SourceDPs
+  foreach ($SourceDP in ($Item.PropLists | Where-Object {$_.PropertyListName -eq "SourceDistributionPoints"}).Values) {
+    $Temp_Object.SourceDPs += [regex]::Match($SourceDP, '\["DISPLAY=(.*?)"').Groups[1].Value
+    $Temp_Object.Count ++
+  }
+
+  # Add Object to Dataset
+  $Dataset += $Temp_Object
+}
+
+# Output Dataset
+$Dataset | FT
+```
+
+<br>
 
 ## PXE
 
@@ -356,7 +398,7 @@ The snippets below provide a method for configuring the Content Validation setti
   }
 ```
 
-&nbsp;
+<br>
 
 # Advanced Functions
 
@@ -374,7 +416,7 @@ These are more advanced snippets and usages of the basic snippets above that pro
 # Add Code Here
 ```
 
-&nbsp;
+<br>
 
 # Appendices
 
