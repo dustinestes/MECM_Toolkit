@@ -25,10 +25,11 @@ The following items are referenced in the code within this document. Familiarize
     - [Process](#process-1)
       - [Request the MECM DP OSD Certificate](#request-the-mecm-dp-osd-certificate)
       - [Renew the MECM DP OSD Certificate](#renew-the-mecm-dp-osd-certificate)
-    - [Export the Certificate](#export-the-certificate)
+      - [Export the Certificate](#export-the-certificate)
       - [Distribute the Certificate to All Distribution Points](#distribute-the-certificate-to-all-distribution-points)
+        - [Snippets](#snippets-1)
       - [(Optional) Create a New ISO with the New Certificate](#optional-create-a-new-iso-with-the-new-certificate)
-    - [Snippets](#snippets-1)
+      - [Get Certificate Path of All Distribution Points](#get-certificate-path-of-all-distribution-points)
   - [PXE](#pxe)
     - [Enable](#enable)
     - [Disable](#disable)
@@ -112,7 +113,7 @@ Use this process if the Certificate already exists within the Certificate Store
 9. Click Enroll
 10. Click Finish
 
-### Export the Certificate
+#### Export the Certificate
 The certificate needs to be exported with its Private Key so this Certificate can be used to install supported certificates in Windows PE sessions created from PXE and ISO imaging.
 
 1. Right Click the Certificate issued from the MECM DP OSD Certificate template
@@ -143,47 +144,69 @@ The certificate now needs to be distributed to all DPs so it can be included wit
 3. Click Connect via Windows PowerShell ISE
 4. Run the Connection Script that opens
    1. You can just highlight all and use the F8 run selection to avoid Execution Policy restrictions or having to change them
-5. Run the Snippet for Distributing Certificates below (updating the values where necessary)
+5. Run one of the following snippets for single or multiple servers
+  ```powershell
+  # Single Server
+    $DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[ServerName]"
+
+    $Params = @{
+        InputObject = $DistributionPoint
+        CertificatePath = "[PathToCertFile]"
+        CertificatePassword = $(ConvertTo-SecureString -String "[CertificatePassword]" -AsPlainText -Force)
+        Force = $true
+    }
+
+  Set-CMDistributionPoint @Params
+
+  # Multiple Servers
+    $DistributionPoints = Get-CMDistributionPoint | Where-Object { $_.NALType -ne "Windows Azure" }
+
+    foreach ($DistributionPoint in $DistributionPoints) {
+      $Params = @{
+        InputObject = $DistributionPoint
+        CertificatePath = "[PathToCertFile]"
+        CertificatePassword = $(ConvertTo-SecureString -String "[CertificatePassword]" -AsPlainText -Force)
+        Force = $true
+      }
+
+      Set-CMDistributionPoint @Params
+
+      Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Certificate Added Successfully"
+    }
+  ```
 6. Validate Output shows all DPs Successful
 7. Done
+
+##### Snippets
+
 
 #### (Optional) Create a New ISO with the New Certificate
 If you are using ISOs for imaging, you will have to generate a new ISO with this certificate injected into it.
 
 > [This process will be done after updating the ADK as part of the High Availability scale up]
 
+#### Get Certificate Path of All Distribution Points
 
-### Snippets
+1. Open the MECM Console
+2. Click the Blue Arrow dropdown in the top left corner
+3. Click Connect via Windows PowerShell ISE
+4. Run the Connection Script that opens
+   1. You can just highlight all and use the F8 run selection to avoid Execution Policy restrictions or having to change them
+5. Run the following snippet
+  ```powershell
+  $DistributionPoints = Get-CMDistributionPoint | Where-Object {$_.NALType -ne "Windows Azure"}
 
-```powershell
-# Single Server
-  $DistributionPoint = Get-CMDistributionPoint -SiteSystemServerName "[ServerName]"
-
-  $Params = @{
-      InputObject = $DistributionPoint
-      CertificatePath = "[PathToCertFile]"
-      CertificatePassword = $(ConvertTo-SecureString -String "[CertificatePassword]" -AsPlainText -Force)
-      Force = $true
-  }
-
-Set-CMDistributionPoint @Params
-
-# Multiple Servers
-  $DistributionPoints = Get-CMDistributionPoint | Where-Object { $_.NALType -ne "Windows Azure" }
-
-  foreach ($DistributionPoint in $DistributionPoints) {
-    $Params = @{
-      InputObject = $DistributionPoint
-      CertificatePath = "[PathToCertFile]"
-      CertificatePassword = $(ConvertTo-SecureString -String "[CertificatePassword]" -AsPlainText -Force)
-      Force = $true
+  foreach ($DP in $DistributionPoints) {
+    Write-Host "$($DP.NetworkOSPath)"
+    foreach ($Property in $DP.Props) {
+      if ($Property.PropertyName -eq "CertificateFile") {
+          Write-Host "    FilePath: $($Property.Value1)"
+      }
     }
-
-    Set-CMDistributionPoint @Params
-
-    Write-Host "  - $($DistributionPoint.EmbeddedProperties."Server Remote Name".Value1): Certificate Added Successfully"
   }
-```
+  ```
+6. Analyze the output
+7. Done
 
 &nbsp;
 
