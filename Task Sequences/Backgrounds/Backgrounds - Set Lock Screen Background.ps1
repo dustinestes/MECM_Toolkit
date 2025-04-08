@@ -49,7 +49,7 @@ param (
     # Names
 
     # Paths
-        $Path_File_FilePath = $Param_Directory + "\" + $Param_Filename
+        $Path_Background_File = $Param_Directory + "\" + $Param_Filename
 
     # Files
 
@@ -61,7 +61,7 @@ param (
         $Registry_01 = @{
             "Path"          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
             "Name"          = "LockScreenImage"
-            "Value"         = $Path_File_FilePath
+            "Value"         = $Path_Background_File
             "PropertyType"  = "String"
             "Force"         = $true
             "ErrorAction"   = "Stop"
@@ -191,7 +191,7 @@ param (
         Write-Host "    - File Exists"
 
         try {
-            If (Test-Path -Path $Path_File_FilePath) {
+            If (Test-Path -Path $Path_Background_File) {
                 Write-Host "        Success"
             }
             Else {
