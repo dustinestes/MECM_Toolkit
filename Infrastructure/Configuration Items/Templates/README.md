@@ -17,15 +17,18 @@
       - [All Users](#all-users)
       - [Discovery](#discovery-1)
       - [Remediation](#remediation-1)
+    - [Scheduled Task](#scheduled-task)
+      - [Input Section](#input-section)
+      - [Execution Section](#execution-section)
     - [User Shell](#user-shell)
-      - [Discovery](#discovery-2)
-      - [Remediation](#remediation-2)
+      - [Input Section](#input-section-1)
+      - [Execution Section](#execution-section-1)
 - [Appendices](#appendices)
   - [Apdx A: \[Name\]](#apdx-a-name)
   - [Apdx X: Templates](#apdx-x-templates)
     - [\[ModuleName\]](#modulename)
-      - [Discovery](#discovery-3)
-      - [Remediation](#remediation-3)
+      - [Discovery](#discovery-2)
+      - [Remediation](#remediation-2)
 
 <br>
 
@@ -495,11 +498,42 @@ Copy this code, including comments, to the Execution section of the Template
 
 <br>
 
+### Scheduled Task
+
+Create a Configuration Item that will create a Scheduled Task and monitor it's XML content to ensure the Task maintains its desired configuration state. If it does not, the script will recreate the Scheduled Task.
+
+#### Input Section
+
+Copy this code, including comments, to the Input section of the Template
+
+```powershell
+# Scheduled Task
+  $ScheduledTask = @{
+    Name        = "[Function] - [Name]"
+    Path        = "\VividRock\MECM\[Function]\"
+    Author      = "VividRock"
+    Description = "A task that runs a PowerShell script [Description]."
+    Command     = "powershell.exe"
+    Arguments   = '-NoProfile -NoLogo -WindowStyle Hidden -ExecutionPolicy Bypass -File "$($env:vr_Directory_Cache)\Cache\Scripts\Maintenance Tasks\[Function]\Maintenance Task - [Function] - [Name].ps1" -RetentionDays "30" -Criteria "CreationTimeUtc" -OutputDir $Path_Log_Directory -OutputName "Maintenance Task - [Function] - [Name]"'
+  }
+```
+
+#### Execution Section
+
+Copy this code, including comments, to the Execution section of the Template
+
+```powershell
+  # Scheduled Task
+
+```
+
+<br>
+
 ### User Shell
 
 TODO
 
-#### Discovery
+#### Input Section
 
 Copy this code, including comments, to the Input section of the Template
 
@@ -508,6 +542,8 @@ Copy this code, including comments, to the Input section of the Template
     $Shell_User_Refresh = $true
 
 ```
+
+#### Execution Section
 
 Copy this code, including comments, to the Execution section of the Template
 
@@ -525,22 +561,6 @@ public class Wallpaper {
       Add-Type $code
       $Temp_Result = [Wallpaper]::SystemParametersInfo(0x0014, 0, $File_01.Path, 0x01 -bor 0x02)
     }
-```
-
-#### Remediation
-
-Copy this code, including comments, to the Input section of the Template
-
-```powershell
-  # [ModuleName]
-
-```
-
-Copy this code, including comments, to the Execution section of the Template
-
-```powershell
-  # [ModuleName]
-
 ```
 
 <br>
