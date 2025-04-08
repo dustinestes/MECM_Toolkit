@@ -10,7 +10,6 @@ for ($i = 1; $i -lt 1000; $i++) {
 
   # Execute Test
   $Measure = Measure-Command {
-      $Result = Invoke-RestMethod -Uri "$($Odata_Root + $Odata_Resource)" -Method Get -ContentType "application/json" -UseDefaultCredentials
     $Odata_Root   = "https://$($SMSProvider)/AdminService/wmi/"
     $Odata_Resource = "SMS_Site"
     Invoke-RestMethod -Uri "$($Odata_Root + $Odata_Resource)" -Method Get -ContentType "application/json" -UseDefaultCredentials
