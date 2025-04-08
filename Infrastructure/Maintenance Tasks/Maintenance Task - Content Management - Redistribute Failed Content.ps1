@@ -246,7 +246,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 				# Import the PowerShell Module
 					Write-Host "        Import the PowerShell Module"
 
-					if((Get-Module ConfigurationManager) -in $null,"") {
+					if((Get-Module ConfigurationManager -ErrorAction SilentlyContinue) -in $null,"") {
 						Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
 						Write-Host "            Status: Success"
 					}
@@ -257,8 +257,8 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
 				# Create the Site Drive
 					Write-Host "        Create the Site Drive"
 
-					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite) -in $null,"") {
-						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider
+					if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -in $null,"") {
+						New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider | Out-Null
 						Write-Host "            Status: Success"
 					}
 					else {
