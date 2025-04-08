@@ -46,7 +46,6 @@ Use this uninstallation snippet if you have tried to perform client reinstallati
 ### PowerShell
 
 ```powershell
-
 # Clear CCMSetup Log
   Clear-Content -Path "C:\Windows\ccmsetup\Logs\ccmsetup.log"
 
