@@ -168,7 +168,7 @@
             $Meta_Result_Successes ++
             Out-File -InputObject "      Result: Success, Updated Property/Value Pair" -FilePath $Path_Log_File -Append
           }
-        }
+      }
     }
     catch {
       # Increment Failure Count
