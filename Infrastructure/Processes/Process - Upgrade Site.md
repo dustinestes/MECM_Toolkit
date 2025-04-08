@@ -53,6 +53,7 @@ Before implementing this upgrade, it is recommended that you review the Microsof
 Download the following products:
 
 - [ ] [Windows ADK 10.1.26100.1 (May 2024)](https://go.microsoft.com/fwlink/?linkid=2271337)
+  - Site Servers
 - [ ] [Windows PE add-on for the Windows ADK 10.1.26100.1 (May 2024)](https://go.microsoft.com/fwlink/?linkid=2271338)
   - Site Servers
 - [ ] [Microsoft Visual C++ 2015-2019](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
