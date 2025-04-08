@@ -75,8 +75,8 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
   # WMI
 
   # Datasets
-    $Dataset_Applications   = @()
-    $Dataset_Revisions      = @()
+    $Dataset_Analysis     = @()
+    $Dataset_Execution    = @()
 
   # Temporary
 
@@ -242,20 +242,20 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
           Reasons                 = @()
         }
 
-        $Dataset_Applications += $Temp_Object
+        $Dataset_Analysis += $Temp_Object
 				Write-Host "          Status: Success"
 			}
 			catch {
 				Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
 			}
 		}
-    Write-Host "        Total: $(($Dataset_Applications | Measure-Object).Count)"
+    Write-Host "        Total: $(($Dataset_Analysis | Measure-Object).Count)"
     Write-Host "        Status: Success"
 
 	# Process Inclusion/Exclusion Rules
     Write-Host "    - Process Inclusion/Exclusion Rules"
 
-		foreach ($Item in $Dataset_Applications) {
+		foreach ($Item in $Dataset_Analysis) {
 			try {
         Write-Host "        $($Item.LocalizedDisplayName)"
 
@@ -310,15 +310,15 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
 				Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
 			}
 		}
-    Write-Host "        Included: $(($Dataset_Applications | Where-Object {$_.Included -eq $true} | Measure-Object).Count)"
-    Write-Host "        Excluded: $(($Dataset_Applications | Where-Object {$_.Included -eq $false} | Measure-Object).Count)"
-    Write-Host "        Total: $(($Dataset_Applications | Measure-Object).Count)"
+    Write-Host "        Included: $(($Dataset_Analysis | Where-Object {$_.Included -eq $true} | Measure-Object).Count)"
+    Write-Host "        Excluded: $(($Dataset_Analysis | Where-Object {$_.Included -eq $false} | Measure-Object).Count)"
+    Write-Host "        Total: $(($Dataset_Analysis | Measure-Object).Count)"
     Write-Host "        Status: Success"
 
   # Construct Revision Dataset
     Write-Host "    - Construct Revision Dataset"
 
-		foreach ($Item in ($Dataset_Applications | Where-Object {$_.Included -eq $true})) {
+		foreach ($Item in ($Dataset_Analysis | Where-Object {$_.Included -eq $true})) {
 			try {
         Write-Host "        $($Item.LocalizedDisplayName)"
         $Temp_Object = [PSCustomObject]@{
@@ -330,42 +330,15 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
           Status            = $null
         }
 
-        $Dataset_Revisions += $Temp_Object
+        $Dataset_Execution += $Temp_Object
 				Write-Host "          Status: Success"
 			}
 			catch {
 				Write-vr_ErrorCode -Code 1607 -Exit $true -Object $PSItem
 			}
 		}
-    Write-Host "        Total: $(($Dataset_Revisions | Measure-Object).Count)"
+    Write-Host "        Total: $(($Dataset_Execution | Measure-Object).Count)"
     Write-Host "        Status: Success"
-
-
-	# # [StepName]
-	# 	Write-Host "    - [StepName]"
-
-	# 	try {
-
-	# 		Write-Host "        Status: Success"
-	# 	}
-	# 	catch {
-	# 		Write-vr_ErrorCode -Code 160? -Exit $true -Object $PSItem
-	# 	}
-
-	# # [StepName]
-  #   Write-Host "    - [StepName]"
-
-	# 	foreach ($Item in (Get-Variable -Name "Path_*")) {
-	# 		Write-Host "        $($Item.Name)"
-
-	# 		try {
-
-	# 			Write-Host "          Status: Success"
-	# 		}
-	# 		catch {
-	# 			Write-vr_ErrorCode -Code 160? -Exit $true -Object $PSItem
-	# 		}
-	# 	}
 
 	Write-Host "    - Complete"
 	Write-Host ""
@@ -382,24 +355,24 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
 
 	Write-Host "  Execution"
 
-  if ($WhatIf -eq $true) {
-    Write-Host "    - Skipped Because WhatIf = True"
-  }
-  else {
-    # Remove Revisions
-      Write-Host "    - Remove Revisions"
+  # Remove Revisions
+    Write-Host "    - Remove Revisions"
 
-      foreach ($Item in $Dataset_Revisions) {
-        try {
-          Write-Host "        $($Item.Manufacturer) - $($Item.LocalizedDisplayName) - $($Item.SoftwareVersion)"
-          Write-Host "          Revision: $($Item.CIVersion)"
+    foreach ($Item in $Dataset_Execution) {
+      try {
+        Write-Host "        $($Item.Manufacturer) - $($Item.LocalizedDisplayName) - $($Item.SoftwareVersion)"
+        Write-Host "          Revision: $($Item.CIVersion)"
 
-          # Remove Entity
-          $Odata_Resource = "SMS_Application/$($Item.CI_ID)"
-          Write-Host "          Entity Path: $($Odata_Resource)"
-          $Odata_Body = @{
-          } | ConvertTo-Json
+        # Remove Entity
+        $Odata_Resource = "SMS_Application/$($Item.CI_ID)"
+        Write-Host "          Entity Path: $($Path_AdminService_WMIRoute + $Odata_Resource)"
+        $Odata_Body = @{
+        } | ConvertTo-Json
 
+        if ($WhatIf -eq $true) {
+          $Item.Status = "Skipped: WhatIf Enabled"
+        }
+        else {
           $Result = Invoke-RestMethod -Uri "$($Path_AdminService_WMIRoute + $Odata_Resource)" -Method Delete -Body $Odata_Body -ContentType "application/json" -UseDefaultCredentials
           if ($Result -eq "") {
             $Item.Status = "Success"
@@ -407,20 +380,21 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
           else {
             $Item.Status = "Error"
           }
+        }
 
-          Write-Host "          Status: Success"
-        }
-        catch {
-          $Item.Status = "Error: $($PSItem.Exception.Message)"
-          Write-Host "          Status: $($PSItem.Exception.Message)"
-          # Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
-        }
+        Write-Host "          Status: $($Item.Status)"
       }
-      Write-Host "        Success: $(($Dataset_Revisions | Where-Object {$_.Status -match "Success"} | Measure-Object).Count)"
-      Write-Host "        Error: $(($Dataset_Revisions | Where-Object {$_.Status -match "Error"} | Measure-Object).Count)"
-      Write-Host "        Total: $(($Dataset_Revisions | Measure-Object).Count)"
-      Write-Host "        Status: Success"
-  }
+      catch {
+        $Item.Status = "Error: $($PSItem.Exception.Message)"
+        Write-Host "          Status: $($PSItem.Exception.Message)"
+        # Write-vr_ErrorCode -Code 1701 -Exit $true -Object $PSItem
+      }
+    }
+    Write-Host "        Success: $(($Dataset_Execution | Where-Object {$_.Status -match "Success"} | Measure-Object).Count)"
+    Write-Host "        Error: $(($Dataset_Execution | Where-Object {$_.Status -match "Error"} | Measure-Object).Count)"
+    Write-Host "        Skipped: $(($Dataset_Execution | Where-Object {$_.Status -match "Skipped"} | Measure-Object).Count)"
+    Write-Host "        Total: $(($Dataset_Execution | Measure-Object).Count)"
+    Write-Host "        Status: Success"
 
 	# Determine Script Result
 		$Meta_Script_Result = $true,"Success"
