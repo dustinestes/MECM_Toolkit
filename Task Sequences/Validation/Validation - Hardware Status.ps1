@@ -469,35 +469,35 @@ param (
 #--------------------------------------------------------------------------------------------
 #Region Cleanup
 
-	Write-Host "  Cleanup"
+	# Write-Host "  Cleanup"
 
-	# Confirm Cleanup
-		Write-Host "    - Confirm Cleanup"
+	# # Confirm Cleanup
+	# 	Write-Host "    - Confirm Cleanup"
 
-		do {
-			$Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o"
-		} until (
-			$Temp_Cleanup_UserInput -in "Y","Yes","N","No"
-		)
+	# 	do {
+	# 		$Temp_Cleanup_UserInput = Read-Host -Prompt "        Do you want to automatically clean up the unecessary content from this script? [Y]es or [N]o"
+	# 	} until (
+	# 		$Temp_Cleanup_UserInput -in "Y","Yes","N","No"
+	# 	)
 
-	# [StepName]
-		Write-Host "    - [StepName]"
+	# # [StepName]
+	# 	Write-Host "    - [StepName]"
 
-		try {
-			if ($Temp_Cleanup_UserInput -in "Y", "Yes") {
+	# 	try {
+	# 		if ($Temp_Cleanup_UserInput -in "Y", "Yes") {
 
-				Write-Host "        Status: Success"
-			}
-			else {
-				Write-Host "            Status: Skipped"
-			}
-		}
-		catch {
-			Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
-		}
+	# 			Write-Host "        Status: Success"
+	# 		}
+	# 		else {
+	# 			Write-Host "            Status: Skipped"
+	# 		}
+	# 	}
+	# 	catch {
+	# 		Write-vr_ErrorCode -Code 1901 -Exit $true -Object $PSItem
+	# 	}
 
-	Write-Host "    - Complete"
-	Write-Host ""
+	# Write-Host "    - Complete"
+	# Write-Host ""
 
 #EndRegion Cleanup
 #--------------------------------------------------------------------------------------------
