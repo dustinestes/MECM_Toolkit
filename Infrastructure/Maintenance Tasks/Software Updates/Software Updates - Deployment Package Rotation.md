@@ -355,7 +355,7 @@ Start-Transcript -Path "$($LogDir)\$($ADRName)\$(Get-Date -Format "yyyy-MM-dd") 
         # Create the Site Drive
           Write-Host "        Create the Site Drive"
 
-          if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction Stop) -in $null,"") {
+          if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -in $null,"") {
             New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider -ErrorAction Stop
             Write-Host "            Status: Success"
           }
