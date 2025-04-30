@@ -84,7 +84,7 @@ Start-Transcript -Path "Filesystem::$($OutputDir)\$($OutputName).log" -ErrorActi
     Write-Host "    - Parameters"
     $Temp_Padding = ($PSBoundParameters.Keys | Measure-Object -Property Length -Maximum).Maximum + 1
     foreach ($Item in $PSBoundParameters.GetEnumerator()) {
-      Write-Host "        $($Item.Key.PadRight($Padding)): $($Item.Value)"
+      Write-Host "        $($Item.Key.PadRight($Temp_Padding)): $($Item.Value)"
     }
 
   Write-Host "    - Complete"
