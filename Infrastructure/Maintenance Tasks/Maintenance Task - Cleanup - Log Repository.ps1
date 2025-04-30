@@ -513,7 +513,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
       else {
         foreach ($Item in ($Dataset_Logging_Directories_Results | Where-Object -Property Remove -eq $true)) {
           Write-Host "        $($Item.Path)"
-          Remove-Item -Path $Item.Path -Force
+          Remove-Item -Path $Item.Path -Recurse -Force
           $Item.Status = "Removed"
         }
         Write-Host "        Space Recovered (GB): $([System.Math]::Round(($Dataset_Logging_Directories_Results | Where-Object -Property "Remove" -eq $true | Measure-Object -Sum "Size(MB)").Sum / 1GB, 2))"
