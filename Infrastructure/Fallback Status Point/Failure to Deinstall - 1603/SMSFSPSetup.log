@@ -1,0 +1,319 @@
+<Fri Dec  9 11:25:00 2022> ====================================================================
+﻿<Fri Dec  9 11:25:00 2022> SMSFSP Setup Started....
+﻿<Fri Dec  9 11:25:00 2022> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /install /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Dec  9 11:25:00 2022> Installing Pre Reqs for SMSFSP
+﻿<Fri Dec  9 11:25:00 2022>         ======== Installing Pre Reqs for Role SMSFSP ========
+﻿<Fri Dec  9 11:25:00 2022> Found 1 Pre Reqs for Role SMSFSP
+﻿<Fri Dec  9 11:25:00 2022> Pre Req SqlNativeClient found.
+﻿<Fri Dec  9 11:25:00 2022> SqlNativeClient already installed (Product Code: {B9274744-8BAE-4874-8E59-2610919CD419}). Would not install again.
+﻿<Fri Dec  9 11:25:00 2022> Pre Req SqlNativeClient is already installed. Skipping it.
+﻿<Fri Dec  9 11:25:00 2022>         ======== Completed Installation of Pre Reqs for Role SMSFSP ========
+﻿<Fri Dec  9 11:25:00 2022> Installing the SMSFSP
+﻿<Fri Dec  9 11:25:00 2022> Passed OS version check.
+﻿<Fri Dec  9 11:25:00 2022> IIS Service is installed.
+﻿<Fri Dec  9 11:25:00 2022> No versions of SMSFSP are installed.  Installing new SMSFSP.
+﻿<Fri Dec  9 11:25:00 2022> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Dec  9 11:25:00 2022> Installing D:\Program Files\Microsoft Configuration Manager\bin\x64\fsp.msi CCMINSTALLDIR="D:\Program Files\SMS_CCM" USESMSPORTS=TRUE SMSPORTS=80 FSPENABLELOGGING=TRUE FSPLOGLEVEL=1 FSPLOGMAXSIZE=1000000 FSPLOGMAXHISTORY=1
+﻿<Fri Dec  9 11:25:10 2022> fsp.msi exited with return code: 0
+﻿<Fri Dec  9 11:25:10 2022> Installation was successful.
+﻿<Fri Dec  9 11:25:10 2022> ~RoleSetup().
+﻿<Thu Dec 22 18:11:33 2022> ====================================================================
+﻿<Thu Dec 22 18:11:33 2022> SMSFSP Setup Started....
+﻿<Thu Dec 22 18:11:33 2022> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /install /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Thu Dec 22 18:11:33 2022> Installing Pre Reqs for SMSFSP
+﻿<Thu Dec 22 18:11:33 2022>         ======== Installing Pre Reqs for Role SMSFSP ========
+﻿<Thu Dec 22 18:11:33 2022> Found 1 Pre Reqs for Role SMSFSP
+﻿<Thu Dec 22 18:11:33 2022> Pre Req SqlNativeClient found.
+﻿<Thu Dec 22 18:11:33 2022> SqlNativeClient already installed (Product Code: {B9274744-8BAE-4874-8E59-2610919CD419}). Would not install again.
+﻿<Thu Dec 22 18:11:33 2022> Pre Req SqlNativeClient is already installed. Skipping it.
+﻿<Thu Dec 22 18:11:33 2022>         ======== Completed Installation of Pre Reqs for Role SMSFSP ========
+﻿<Thu Dec 22 18:11:33 2022> Installing the SMSFSP
+﻿<Thu Dec 22 18:11:33 2022> Passed OS version check.
+﻿<Thu Dec 22 18:11:33 2022> IIS Service is installed.
+﻿<Thu Dec 22 18:11:33 2022> SMSFSP already installed (Product Code: {BC005634-DB83-4191-8354-DBCC64D55C26}).  Upgrading/Reinstalling SMSFSP
+﻿<Thu Dec 22 18:11:33 2022> New SMSFSP is a new product code {{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}}.  This is a major upgrade.
+﻿<Thu Dec 22 18:11:33 2022> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Thu Dec 22 18:11:33 2022> Installing D:\Program Files\Microsoft Configuration Manager\bin\x64\fsp.msi REINSTALLMODE=vmaus CCMINSTALLDIR="D:\Program Files\SMS_CCM" USESMSPORTS=TRUE SMSPORTS=80 FSPENABLELOGGING=TRUE FSPLOGLEVEL=1 FSPLOGMAXSIZE=1000000 FSPLOGMAXHISTORY=1
+﻿<Thu Dec 22 18:11:47 2022> fsp.msi exited with return code: 0
+﻿<Thu Dec 22 18:11:47 2022> Installation was successful.
+﻿<Thu Dec 22 18:11:47 2022> ~RoleSetup().
+﻿<Fri Jan 13 14:05:08 2023> ====================================================================
+﻿<Fri Jan 13 14:05:08 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 14:05:08 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 14:05:08 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 14:05:08 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 14:05:08 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 14:05:16 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 14:05:16 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 14:05:16 2023> Removing FSP Registry.
+﻿<Fri Jan 13 14:05:16 2023> ~RoleSetup().
+﻿<Fri Jan 13 14:12:48 2023> ====================================================================
+﻿<Fri Jan 13 14:12:48 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 14:12:48 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 14:12:48 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 14:12:48 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 14:12:48 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 14:12:57 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 14:12:57 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 14:12:57 2023> Removing FSP Registry.
+﻿<Fri Jan 13 14:12:57 2023> ~RoleSetup().
+﻿<Fri Jan 13 15:13:32 2023> ====================================================================
+﻿<Fri Jan 13 15:13:32 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 15:13:32 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 15:13:32 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 15:13:32 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 15:13:32 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 15:13:41 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 15:13:41 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 15:13:41 2023> Removing FSP Registry.
+﻿<Fri Jan 13 15:13:41 2023> ~RoleSetup().
+﻿<Fri Jan 13 16:13:50 2023> ====================================================================
+﻿<Fri Jan 13 16:13:50 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 16:13:50 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 16:13:50 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 16:13:50 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 16:13:50 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 16:13:59 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 16:13:59 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 16:13:59 2023> Removing FSP Registry.
+﻿<Fri Jan 13 16:13:59 2023> ~RoleSetup().
+﻿<Fri Jan 13 17:14:08 2023> ====================================================================
+﻿<Fri Jan 13 17:14:08 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 17:14:08 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 17:14:08 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 17:14:08 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 17:14:08 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 17:14:18 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 17:14:18 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 17:14:18 2023> Removing FSP Registry.
+﻿<Fri Jan 13 17:14:18 2023> ~RoleSetup().
+﻿<Fri Jan 13 18:14:27 2023> ====================================================================
+﻿<Fri Jan 13 18:14:27 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 18:14:27 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 18:14:27 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 18:14:27 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 18:14:27 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 18:14:36 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 18:14:36 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 18:14:36 2023> Removing FSP Registry.
+﻿<Fri Jan 13 18:14:36 2023> ~RoleSetup().
+﻿<Fri Jan 13 19:14:45 2023> ====================================================================
+﻿<Fri Jan 13 19:14:45 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 19:14:45 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 19:14:45 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 19:14:45 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 19:14:45 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 19:14:54 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 19:14:54 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 19:14:54 2023> Removing FSP Registry.
+﻿<Fri Jan 13 19:14:54 2023> ~RoleSetup().
+﻿<Fri Jan 13 20:15:03 2023> ====================================================================
+﻿<Fri Jan 13 20:15:03 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 20:15:03 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 20:15:03 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 20:15:03 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 20:15:03 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 20:15:13 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 20:15:13 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 20:15:13 2023> Removing FSP Registry.
+﻿<Fri Jan 13 20:15:13 2023> ~RoleSetup().
+﻿<Fri Jan 13 21:15:21 2023> ====================================================================
+﻿<Fri Jan 13 21:15:21 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 21:15:21 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 21:15:21 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 21:15:21 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 21:15:21 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 21:15:31 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 21:15:31 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 21:15:31 2023> Removing FSP Registry.
+﻿<Fri Jan 13 21:15:31 2023> ~RoleSetup().
+﻿<Fri Jan 13 22:15:40 2023> ====================================================================
+﻿<Fri Jan 13 22:15:40 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 22:15:40 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 22:15:40 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 22:15:40 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 22:15:40 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 22:15:49 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 22:15:49 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 22:15:49 2023> Removing FSP Registry.
+﻿<Fri Jan 13 22:15:49 2023> ~RoleSetup().
+﻿<Fri Jan 13 23:15:59 2023> ====================================================================
+﻿<Fri Jan 13 23:15:59 2023> SMSFSP Setup Started....
+﻿<Fri Jan 13 23:15:59 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Fri Jan 13 23:15:59 2023> Deinstalling the SMSFSP
+﻿<Fri Jan 13 23:15:59 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Fri Jan 13 23:15:59 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Fri Jan 13 23:16:08 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Fri Jan 13 23:16:08 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Fri Jan 13 23:16:08 2023> Removing FSP Registry.
+﻿<Fri Jan 13 23:16:08 2023> ~RoleSetup().
+﻿<Sat Jan 14 00:00:20 2023> ====================================================================
+﻿<Sat Jan 14 00:00:20 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 00:00:20 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 00:00:20 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 00:00:20 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 00:00:20 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 00:00:30 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 00:00:30 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 00:00:30 2023> Removing FSP Registry.
+﻿<Sat Jan 14 00:00:30 2023> ~RoleSetup().
+﻿<Sat Jan 14 00:16:17 2023> ====================================================================
+﻿<Sat Jan 14 00:16:17 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 00:16:17 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 00:16:17 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 00:16:17 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 00:16:17 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 00:16:26 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 00:16:26 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 00:16:26 2023> Removing FSP Registry.
+﻿<Sat Jan 14 00:16:26 2023> ~RoleSetup().
+﻿<Sat Jan 14 01:16:35 2023> ====================================================================
+﻿<Sat Jan 14 01:16:35 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 01:16:35 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 01:16:35 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 01:16:35 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 01:16:35 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 01:16:45 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 01:16:45 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 01:16:45 2023> Removing FSP Registry.
+﻿<Sat Jan 14 01:16:45 2023> ~RoleSetup().
+﻿<Sat Jan 14 02:16:54 2023> ====================================================================
+﻿<Sat Jan 14 02:16:54 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 02:16:54 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 02:16:54 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 02:16:54 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 02:16:54 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 02:17:04 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 02:17:04 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 02:17:04 2023> Removing FSP Registry.
+﻿<Sat Jan 14 02:17:04 2023> ~RoleSetup().
+﻿<Sat Jan 14 03:17:13 2023> ====================================================================
+﻿<Sat Jan 14 03:17:13 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 03:17:13 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 03:17:13 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 03:17:13 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 03:17:13 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 03:17:22 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 03:17:22 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 03:17:22 2023> Removing FSP Registry.
+﻿<Sat Jan 14 03:17:22 2023> ~RoleSetup().
+﻿<Sat Jan 14 04:17:31 2023> ====================================================================
+﻿<Sat Jan 14 04:17:31 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 04:17:31 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 04:17:31 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 04:17:31 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 04:17:31 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 04:17:40 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 04:17:40 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 04:17:40 2023> Removing FSP Registry.
+﻿<Sat Jan 14 04:17:40 2023> ~RoleSetup().
+﻿<Sat Jan 14 05:17:50 2023> ====================================================================
+﻿<Sat Jan 14 05:17:50 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 05:17:50 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 05:17:50 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 05:17:50 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 05:17:50 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 05:17:59 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 05:17:59 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 05:17:59 2023> Removing FSP Registry.
+﻿<Sat Jan 14 05:17:59 2023> ~RoleSetup().
+﻿<Sat Jan 14 06:18:08 2023> ====================================================================
+﻿<Sat Jan 14 06:18:08 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 06:18:08 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 06:18:08 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 06:18:08 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 06:18:08 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 06:18:18 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 06:18:18 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 06:18:18 2023> Removing FSP Registry.
+﻿<Sat Jan 14 06:18:18 2023> ~RoleSetup().
+﻿<Sat Jan 14 07:18:27 2023> ====================================================================
+﻿<Sat Jan 14 07:18:27 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 07:18:27 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 07:18:27 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 07:18:27 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 07:18:27 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 07:18:37 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 07:18:37 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 07:18:37 2023> Removing FSP Registry.
+﻿<Sat Jan 14 07:18:37 2023> ~RoleSetup().
+﻿<Sat Jan 14 08:18:46 2023> ====================================================================
+﻿<Sat Jan 14 08:18:46 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 08:18:46 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 08:18:46 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 08:18:46 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 08:18:46 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 08:18:56 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 08:18:56 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 08:18:56 2023> Removing FSP Registry.
+﻿<Sat Jan 14 08:18:56 2023> ~RoleSetup().
+﻿<Sat Jan 14 09:19:05 2023> ====================================================================
+﻿<Sat Jan 14 09:19:05 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 09:19:05 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 09:19:05 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 09:19:05 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 09:19:05 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 09:19:14 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 09:19:14 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 09:19:14 2023> Removing FSP Registry.
+﻿<Sat Jan 14 09:19:14 2023> ~RoleSetup().
+﻿<Sat Jan 14 10:19:24 2023> ====================================================================
+﻿<Sat Jan 14 10:19:24 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 10:19:24 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 10:19:24 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 10:19:24 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 10:19:24 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 10:19:33 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 10:19:33 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 10:19:33 2023> Removing FSP Registry.
+﻿<Sat Jan 14 10:19:33 2023> ~RoleSetup().
+﻿<Sat Jan 14 11:19:42 2023> ====================================================================
+﻿<Sat Jan 14 11:19:42 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 11:19:42 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 11:19:42 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 11:19:42 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 11:19:42 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 11:19:52 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 11:19:52 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 11:19:52 2023> Removing FSP Registry.
+﻿<Sat Jan 14 11:19:52 2023> ~RoleSetup().
+﻿<Sat Jan 14 12:20:01 2023> ====================================================================
+﻿<Sat Jan 14 12:20:01 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 12:20:01 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 12:20:01 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 12:20:01 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 12:20:01 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 12:20:10 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 12:20:10 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 12:20:10 2023> Removing FSP Registry.
+﻿<Sat Jan 14 12:20:10 2023> ~RoleSetup().
+﻿<Sat Jan 14 13:20:19 2023> ====================================================================
+﻿<Sat Jan 14 13:20:19 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 13:20:19 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 13:20:19 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 13:20:19 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 13:20:19 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 13:20:29 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 13:20:29 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 13:20:29 2023> Removing FSP Registry.
+﻿<Sat Jan 14 13:20:29 2023> ~RoleSetup().
+﻿<Sat Jan 14 14:20:38 2023> ====================================================================
+﻿<Sat Jan 14 14:20:38 2023> SMSFSP Setup Started....
+﻿<Sat Jan 14 14:20:38 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Sat Jan 14 14:20:38 2023> Deinstalling the SMSFSP
+﻿<Sat Jan 14 14:20:38 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Sat Jan 14 14:20:38 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Sat Jan 14 14:20:47 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Sat Jan 14 14:20:47 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Sat Jan 14 14:20:47 2023> Removing FSP Registry.
+﻿<Sat Jan 14 14:20:48 2023> ~RoleSetup().
+﻿<Tue Jan 17 07:33:22 2023> ====================================================================
+﻿<Tue Jan 17 07:33:22 2023> SMSFSP Setup Started....
+﻿<Tue Jan 17 07:33:22 2023> Parameters: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe /deinstall /siteserver:VR-SRV-01 SMSFSP 0
+﻿<Tue Jan 17 07:33:22 2023> Deinstalling the SMSFSP
+﻿<Tue Jan 17 07:33:22 2023> Enabling MSI logging.  fsp.msi will log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+﻿<Tue Jan 17 07:33:22 2023> Deinstalling SMSFSP, with product code {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+﻿<Tue Jan 17 07:33:32 2023> SMSFSP deinstall exited with return code: 1603
+﻿<Tue Jan 17 07:33:32 2023> Backing up D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log to D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log.LastError
+﻿<Tue Jan 17 07:33:32 2023> Removing FSP Registry.
+﻿<Tue Jan 17 07:33:32 2023> ~RoleSetup().

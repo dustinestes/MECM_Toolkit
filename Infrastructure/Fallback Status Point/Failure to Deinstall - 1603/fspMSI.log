@@ -1,0 +1,1281 @@
+=== Verbose logging started: 1/17/2023  7:33:22  Build type: SHIP UNICODE 5.00.10011.00  Calling process: D:\Program Files\Microsoft Configuration Manager\bin\x64\rolesetup.exe ===
+MSI (c) (F8:00) [07:33:22:272]: Resetting cached policy values
+MSI (c) (F8:00) [07:33:22:272]: Machine policy value 'Debug' is 0
+MSI (c) (F8:00) [07:33:22:272]: ******* RunEngine:
+           ******* Product: {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+           ******* Action:
+           ******* CommandLine: **********
+MSI (c) (F8:00) [07:33:22:273]: Client-side and UI is none or basic: Running entire install on the server.
+MSI (c) (F8:00) [07:33:22:273]: Grabbed execution mutex.
+MSI (c) (F8:00) [07:33:22:623]: Cloaking enabled.
+MSI (c) (F8:00) [07:33:22:623]: Attempting to enable all disabled privileges before calling Install on Server
+MSI (c) (F8:00) [07:33:22:627]: Incrementing counter to disable shutdown. Counter after increment: 0
+MSI (s) (60:0C) [07:33:22:647]: Running installation inside multi-package transaction {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+MSI (s) (60:0C) [07:33:22:647]: Grabbed execution mutex.
+MSI (s) (60:70) [07:33:22:653]: Resetting cached policy values
+MSI (s) (60:70) [07:33:22:653]: Machine policy value 'Debug' is 0
+MSI (s) (60:70) [07:33:22:653]: ******* RunEngine:
+           ******* Product: {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+           ******* Action:
+           ******* CommandLine: **********
+MSI (s) (60:70) [07:33:22:653]: Machine policy value 'DisableUserInstalls' is 0
+MSI (s) (60:70) [07:33:22:656]: Note: 1: 2203 2: C:\Windows\Installer\inprogressinstallinfo.ipi 3: -2147287038
+MSI (s) (60:70) [07:33:22:658]: SRSetRestorePoint skipped for this transaction.
+MSI (s) (60:70) [07:33:22:659]: MSCOREE not loaded loading copy from system32
+MSI (s) (60:70) [07:33:22:678]: End dialog not enabled
+MSI (s) (60:70) [07:33:22:679]: Original package ==> C:\Windows\Installer\c9be22a.msi
+MSI (s) (60:70) [07:33:22:679]: Package we're running from ==> C:\Windows\Installer\c9be22a.msi
+MSI (s) (60:70) [07:33:22:680]: APPCOMPAT: Uninstall Flags override found.
+MSI (s) (60:70) [07:33:22:680]: APPCOMPAT: Uninstall VersionNT override found.
+MSI (s) (60:70) [07:33:22:680]: APPCOMPAT: Uninstall ServicePackLevel override found.
+MSI (s) (60:70) [07:33:22:681]: APPCOMPAT: looking for appcompat database entry with ProductCode '{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}'.
+MSI (s) (60:70) [07:33:22:681]: APPCOMPAT: no matching ProductCode found in database.
+MSI (s) (60:70) [07:33:22:693]: Note: 1: 2262 2: MsiFileHash 3: -2147287038
+MSI (s) (60:70) [07:33:22:694]: Machine policy value 'DisablePatch' is 0
+MSI (s) (60:70) [07:33:22:694]: Machine policy value 'AllowLockdownPatch' is 0
+MSI (s) (60:70) [07:33:22:694]: Machine policy value 'DisableLUAPatching' is 0
+MSI (s) (60:70) [07:33:22:694]: Machine policy value 'DisableFlyWeightPatching' is 0
+MSI (s) (60:70) [07:33:22:696]: APPCOMPAT: looking for appcompat database entry with ProductCode '{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}'.
+MSI (s) (60:70) [07:33:22:696]: APPCOMPAT: no matching ProductCode found in database.
+MSI (s) (60:70) [07:33:22:696]: Transforms are not secure.
+MSI (s) (60:70) [07:33:22:696]: PROPERTY CHANGE: Adding MsiLogFileLocation property. Its value is 'D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log'.
+MSI (s) (60:70) [07:33:22:696]: Command Line: REMOVE=ALL CURRENTDIRECTORY=C:\Windows\system32 CLIENTUILEVEL=3 MSICLIENTUSESEXTERNALUI=1 CLIENTPROCESSID=6136
+MSI (s) (60:70) [07:33:22:696]: Product Code passed to Engine.Initialize:           '{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}'
+MSI (s) (60:70) [07:33:22:696]: Product Code from property table before transforms: '{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}'
+MSI (s) (60:70) [07:33:22:696]: Product Code from property table after transforms:  '{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}'
+MSI (s) (60:70) [07:33:22:696]: Product registered: entering maintenance mode
+MSI (s) (60:70) [07:33:22:696]: Determined that existing product (either this product or the product being upgraded with a patch) is installed per-machine.
+MSI (s) (60:70) [07:33:22:697]: Product {3BB91993-AC06-4AC8-A26F-BC62E280DEAD} is admin assigned: LocalSystem owns the publish key.
+MSI (s) (60:70) [07:33:22:697]: Product {3BB91993-AC06-4AC8-A26F-BC62E280DEAD} is managed.
+MSI (s) (60:70) [07:33:22:697]: MSI_LUA: Credential prompt not required, user is an admin
+MSI (s) (60:70) [07:33:22:697]: PROPERTY CHANGE: Adding ProductState property. Its value is '5'.
+MSI (s) (60:70) [07:33:22:697]: PROPERTY CHANGE: Adding ProductToBeRegistered property. Its value is '1'.
+MSI (s) (60:70) [07:33:22:698]: Package name retrieved from configuration data: 'fsp.msi'
+MSI (s) (60:70) [07:33:22:700]: Note: 1: 2262 2: AdminProperties 3: -2147287038
+MSI (s) (60:70) [07:33:22:700]: Machine policy value 'DisableMsi' is 1
+MSI (s) (60:70) [07:33:22:700]: Machine policy value 'AlwaysInstallElevated' is 0
+MSI (s) (60:70) [07:33:22:700]: User policy value 'AlwaysInstallElevated' is 0
+MSI (s) (60:70) [07:33:22:700]: Product {3BB91993-AC06-4AC8-A26F-BC62E280DEAD} is admin assigned: LocalSystem owns the publish key.
+MSI (s) (60:70) [07:33:22:700]: Product {3BB91993-AC06-4AC8-A26F-BC62E280DEAD} is managed.
+MSI (s) (60:70) [07:33:22:700]: Running product '{3BB91993-AC06-4AC8-A26F-BC62E280DEAD}' with elevated privileges: Product is assigned.
+MSI (s) (60:70) [07:33:22:700]: PROPERTY CHANGE: Adding REMOVE property. Its value is 'ALL'.
+MSI (s) (60:70) [07:33:22:700]: PROPERTY CHANGE: Adding CURRENTDIRECTORY property. Its value is 'C:\Windows\system32'.
+MSI (s) (60:70) [07:33:22:701]: PROPERTY CHANGE: Adding CLIENTUILEVEL property. Its value is '3'.
+MSI (s) (60:70) [07:33:22:701]: PROPERTY CHANGE: Adding MSICLIENTUSESEXTERNALUI property. Its value is '1'.
+MSI (s) (60:70) [07:33:22:701]: PROPERTY CHANGE: Adding CLIENTPROCESSID property. Its value is '6136'.
+MSI (s) (60:70) [07:33:22:701]: Machine policy value 'DisableAutomaticApplicationShutdown' is 0
+MSI (s) (60:70) [07:33:22:706]: PROPERTY CHANGE: Adding MsiRestartManagerSessionKey property. Its value is '9fb02e4ff6bd724f97dcacae82250625'.
+MSI (s) (60:70) [07:33:22:706]: RESTART MANAGER: Session opened.
+MSI (s) (60:70) [07:33:22:706]: TRANSFORMS property is now:
+MSI (s) (60:70) [07:33:22:706]: PROPERTY CHANGE: Adding PRODUCTLANGUAGE property. Its value is '1033'.
+MSI (s) (60:70) [07:33:22:706]: PROPERTY CHANGE: Adding VersionDatabase property. Its value is '200'.
+MSI (s) (60:70) [07:33:22:710]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming
+MSI (s) (60:70) [07:33:22:713]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\Favorites
+MSI (s) (60:70) [07:33:22:716]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Network Shortcuts
+MSI (s) (60:70) [07:33:22:719]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\Documents
+MSI (s) (60:70) [07:33:22:722]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Printer Shortcuts
+MSI (s) (60:70) [07:33:22:725]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Recent
+MSI (s) (60:70) [07:33:22:728]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\SendTo
+MSI (s) (60:70) [07:33:22:731]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Templates
+MSI (s) (60:70) [07:33:22:731]: SHELL32::SHGetFolderPath returned: C:\ProgramData
+MSI (s) (60:70) [07:33:22:734]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Local
+MSI (s) (60:70) [07:33:22:737]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\Pictures
+MSI (s) (60:70) [07:33:22:743]: SHELL32::SHGetFolderPath returned: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools
+MSI (s) (60:70) [07:33:22:746]: SHELL32::SHGetFolderPath returned: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
+MSI (s) (60:70) [07:33:22:748]: SHELL32::SHGetFolderPath returned: C:\ProgramData\Microsoft\Windows\Start Menu\Programs
+MSI (s) (60:70) [07:33:22:751]: SHELL32::SHGetFolderPath returned: C:\ProgramData\Microsoft\Windows\Start Menu
+MSI (s) (60:70) [07:33:22:754]: SHELL32::SHGetFolderPath returned: C:\Users\Public\Desktop
+MSI (s) (60:70) [07:33:22:760]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Administrative Tools
+MSI (s) (60:70) [07:33:22:763]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+MSI (s) (60:70) [07:33:22:765]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+MSI (s) (60:70) [07:33:22:768]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Start Menu
+MSI (s) (60:70) [07:33:22:771]: SHELL32::SHGetFolderPath returned: C:\Users\VRUser\Desktop
+MSI (s) (60:70) [07:33:22:775]: SHELL32::SHGetFolderPath returned: C:\ProgramData\Microsoft\Windows\Templates
+MSI (s) (60:70) [07:33:22:776]: SHELL32::SHGetFolderPath returned: C:\Windows\Fonts
+MSI (s) (60:70) [07:33:22:776]: Note: 1: 2898 2: MS Sans Serif 3: MS Sans Serif 4: 0 5: 16
+MSI (s) (60:70) [07:33:22:786]: MSI_LUA: Setting AdminUser property to 1 because the product is already installed managed and per-machine
+MSI (s) (60:70) [07:33:22:786]: MSI_LUA: Setting MsiRunningElevated property to 1 because the install is already running elevated.
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding MsiRunningElevated property. Its value is '1'.
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding Privileged property. Its value is '1'.
+MSI (s) (60:70) [07:33:22:786]: Note: 1: 1402 2: HKEY_CURRENT_USER\Software\Microsoft\MS Setup (ACME)\User Info 3: 2
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding USERNAME property. Its value is 'VividRock'.
+MSI (s) (60:70) [07:33:22:786]: Note: 1: 1402 2: HKEY_CURRENT_USER\Software\Microsoft\MS Setup (ACME)\User Info 3: 2
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding COMPANYNAME property. Its value is 'VividRock'.
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding Installed property. Its value is '00:00:00'.
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding DATABASE property. Its value is 'C:\Windows\Installer\c9be22a.msi'.
+MSI (s) (60:70) [07:33:22:786]: PROPERTY CHANGE: Adding OriginalDatabase property. Its value is 'C:\Windows\Installer\c9be22a.msi'.
+MSI (s) (60:70) [07:33:22:786]: Machine policy value 'MsiDisableEmbeddedUI' is 0
+MSI (s) (60:70) [07:33:22:786]: EEUI - Disabling MsiEmbeddedUI due to existing external or embedded UI
+MSI (s) (60:70) [07:33:22:786]: EEUI - Disabling MsiEmbeddedUI for service because it's not a quiet/basic install
+MSI (s) (60:70) [07:33:22:787]: Note: 1: 2205 2:  3: PatchPackage
+MSI (s) (60:70) [07:33:22:787]: Machine policy value 'DisableRollback' is 0
+MSI (s) (60:70) [07:33:22:787]: User policy value 'DisableRollback' is 0
+MSI (s) (60:70) [07:33:22:787]: PROPERTY CHANGE: Adding UILevel property. Its value is '2'.
+=== Logging started: 1/17/2023  7:33:22 ===
+MSI (s) (60:70) [07:33:22:788]: Note: 1: 2203 2: C:\Windows\Installer\inprogressinstallinfo.ipi 3: -2147287038
+MSI (s) (60:70) [07:33:22:788]: PROPERTY CHANGE: Adding Preselected property. Its value is '1'.
+MSI (s) (60:70) [07:33:22:788]: APPCOMPAT: [DetectVersionLaunchCondition] Launch condition already passes.
+MSI (s) (60:70) [07:33:22:793]: PROPERTY CHANGE: Adding ACTION property. Its value is 'INSTALL'.
+MSI (s) (60:70) [07:33:22:793]: Doing action: INSTALL
+Action start 7:33:22: INSTALL.
+MSI (s) (60:70) [07:33:22:795]: Running ExecuteSequence
+MSI (s) (60:70) [07:33:22:795]: Doing action: SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933
+MSI (s) (60:70) [07:33:22:795]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933'
+MSI (s) (60:70) [07:33:22:796]: PROPERTY CHANGE: Adding SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933 property. Its value is 'C:\Windows\SysWOW64\'.
+Action start 7:33:22: SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933.
+MSI (s) (60:70) [07:33:22:796]: Doing action: System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933
+Action ended 7:33:22: SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933. Return value 1.
+MSI (s) (60:70) [07:33:22:797]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933'
+MSI (s) (60:70) [07:33:22:797]: PROPERTY CHANGE: Adding System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933 property. Its value is 'C:\Windows\system32\'.
+Action start 7:33:22: System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933.
+MSI (s) (60:70) [07:33:22:798]: Doing action: LaunchConditions
+Action ended 7:33:22: System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933. Return value 1.
+Action start 7:33:22: LaunchConditions.
+MSI (s) (60:70) [07:33:22:799]: Skipping action: CcmSwitchToRepairMode (condition is false)
+MSI (s) (60:70) [07:33:22:799]: Doing action: AppSearch
+Action ended 7:33:22: LaunchConditions. Return value 1.
+Action start 7:33:22: AppSearch.
+MSI (s) (60:70) [07:33:22:800]: Note: 1: 2262 2: Signature 3: -2147287038
+MSI (s) (60:70) [07:33:22:800]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE32\Software\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:22:800]: Note: 1: 2262 2: Signature 3: -2147287038
+MSI (s) (60:70) [07:33:22:801]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE32\Software\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:22:801]: Note: 1: 2262 2: Signature 3: -2147287038
+MSI (s) (60:70) [07:33:22:801]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE32\Software\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:22:801]: Note: 1: 2262 2: Signature 3: -2147287038
+MSI (s) (60:70) [07:33:22:801]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE32\Software\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:22:802]: Note: 1: 2262 2: Signature 3: -2147287038
+MSI (s) (60:70) [07:33:22:803]: PROPERTY CHANGE: Adding CCMINSTALLDIR property. Its value is 'C:\Windows\CCM\'.
+MSI (s) (60:70) [07:33:22:803]: Skipping action: CCPSearch (condition is false)
+MSI (s) (60:70) [07:33:22:803]: Skipping action: RMCCPSearch (condition is false)
+MSI (s) (60:70) [07:33:22:803]: Doing action: ValidateProductID
+Action ended 7:33:22: AppSearch. Return value 1.
+Action start 7:33:22: ValidateProductID.
+MSI (s) (60:70) [07:33:22:804]: Doing action: CcmSetInstallDir
+Action ended 7:33:22: ValidateProductID. Return value 1.
+MSI (s) (60:70) [07:33:22:805]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmSetInstallDir'
+MSI (s) (60:70) [07:33:22:805]: PROPERTY CHANGE: Adding TARGETDIR property. Its value is 'C:\Windows\SysWOW64\CCM'.
+Action start 7:33:22: CcmSetInstallDir.
+MSI (s) (60:70) [07:33:22:806]: Doing action: CcmSetInstallDirFromCmdLine
+Action ended 7:33:22: CcmSetInstallDir. Return value 1.
+MSI (s) (60:70) [07:33:22:806]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmSetInstallDirFromCmdLine'
+MSI (s) (60:70) [07:33:22:806]: PROPERTY CHANGE: Modifying TARGETDIR property. Its current value is 'C:\Windows\SysWOW64\CCM'. Its new value: 'C:\Windows\CCM\'.
+Action start 7:33:22: CcmSetInstallDirFromCmdLine.
+MSI (s) (60:70) [07:33:22:807]: Doing action: CcmSetPrimaryFolder
+Action ended 7:33:22: CcmSetInstallDirFromCmdLine. Return value 1.
+MSI (s) (60:70) [07:33:22:807]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmSetPrimaryFolder'
+MSI (s) (60:70) [07:33:22:807]: PROPERTY CHANGE: Adding PRIMARYFOLDER property. Its value is 'TARGETDIR'.
+Action start 7:33:22: CcmSetPrimaryFolder.
+MSI (s) (60:70) [07:33:22:808]: Doing action: FindRelatedProducts
+Action ended 7:33:22: CcmSetPrimaryFolder. Return value 1.
+MSI (s) (60:70) [07:33:22:808]: Skipping FindRelatedProducts action: not run in maintenance mode
+Action start 7:33:22: FindRelatedProducts.
+MSI (s) (60:70) [07:33:22:809]: Skipping action: SmsFSPDetectDowngrade (condition is false)
+MSI (s) (60:70) [07:33:22:809]: Doing action: CostInitialize
+Action ended 7:33:22: FindRelatedProducts. Return value 0.
+MSI (s) (60:70) [07:33:22:809]: Machine policy value 'MaxPatchCacheSize' is 10
+MSI (s) (60:70) [07:33:22:813]: PROPERTY CHANGE: Adding ROOTDRIVE property. Its value is 'E:\'.
+MSI (s) (60:70) [07:33:22:813]: PROPERTY CHANGE: Adding CostingComplete property. Its value is '0'.
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2205 2:  3: Patch
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2205 2:  3: PatchPackage
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2205 2:  3: MsiPatchHeaders
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2205 2:  3: __MsiPatchFileList
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2205 2:  3: PatchPackage
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2228 2:  3: PatchPackage 4: SELECT `DiskId`, `PatchId`, `LastSequence` FROM `Media`, `PatchPackage` WHERE `Media`.`DiskId`=`PatchPackage`.`Media_` ORDER BY `DiskId`
+MSI (s) (60:70) [07:33:22:814]: Note: 1: 2205 2:  3: Patch
+Action start 7:33:22: CostInitialize.
+MSI (s) (60:70) [07:33:22:814]: Skipping action: ResolveSource (condition is false)
+MSI (s) (60:70) [07:33:22:814]: Doing action: FileCost
+Action ended 7:33:22: CostInitialize. Return value 1.
+MSI (s) (60:70) [07:33:22:815]: Note: 1: 2262 2: MsiAssembly 3: -2147287038
+MSI (s) (60:70) [07:33:22:815]: Note: 1: 2262 2: Class 3: -2147287038
+MSI (s) (60:70) [07:33:22:815]: Note: 1: 2262 2: Extension 3: -2147287038
+Action start 7:33:22: FileCost.
+MSI (s) (60:70) [07:33:22:815]: Doing action: CostFinalize
+Action ended 7:33:22: FileCost. Return value 1.
+MSI (s) (60:70) [07:33:22:816]: PROPERTY CHANGE: Adding OutOfDiskSpace property. Its value is '0'.
+MSI (s) (60:70) [07:33:22:816]: PROPERTY CHANGE: Adding OutOfNoRbDiskSpace property. Its value is '0'.
+MSI (s) (60:70) [07:33:22:816]: PROPERTY CHANGE: Adding PrimaryVolumeSpaceAvailable property. Its value is '0'.
+MSI (s) (60:70) [07:33:22:816]: PROPERTY CHANGE: Adding PrimaryVolumeSpaceRequired property. Its value is '0'.
+MSI (s) (60:70) [07:33:22:816]: PROPERTY CHANGE: Adding PrimaryVolumeSpaceRemaining property. Its value is '0'.
+MSI (s) (60:70) [07:33:22:816]: PROPERTY CHANGE: Modifying TARGETDIR property. Its current value is 'C:\Windows\CCM\'. Its new value: 'C:\Windows\CCM'.
+MSI (s) (60:70) [07:33:22:817]: PROPERTY CHANGE: Modifying System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933 property. Its current value is 'C:\Windows\system32\'. Its new value: 'C:\Windows\system32'.
+MSI (s) (60:70) [07:33:22:817]: PROPERTY CHANGE: Modifying SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933 property. Its current value is 'C:\Windows\SysWOW64\'. Its new value: 'C:\Windows\SysWOW64'.
+MSI (s) (60:70) [07:33:22:817]: Note: 1: 2205 2:  3: Patch
+MSI (s) (60:70) [07:33:22:817]: Note: 1: 2262 2: Condition 3: -2147287038
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Modifying TARGETDIR property. Its current value is 'C:\Windows\CCM'. Its new value: 'C:\Windows\CCM\'.
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Adding InstallDir.5C76F613_7E3B_40BB_A16D_C5D8CDB88506 property. Its value is 'C:\Windows\CCM\'.
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Modifying System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933 property. Its current value is 'C:\Windows\system32'. Its new value: 'C:\Windows\system32\'.
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Modifying SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933 property. Its current value is 'C:\Windows\SysWOW64'. Its new value: 'C:\Windows\SysWOW64\'.
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Adding FSPVDirRoot.34C6DDB5_4471_431B_A83E_7D5F4BD77BCE property. Its value is 'C:\Windows\CCM\SMS_FSP\'.
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Adding Logs.209B4FC3_090D_436F_9407_2225A6AE1E17 property. Its value is 'C:\Windows\CCM\Logs\'.
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Adding FSPStaging.209B4FC3_090D_436F_9407_2225A6AE1E17 property. Its value is 'C:\Windows\CCM\FSPStaging\'.
+MSI (s) (60:70) [07:33:22:818]: Target path resolution complete. Dumping Directory table...
+MSI (s) (60:70) [07:33:22:818]: Note: target paths subject to change (via custom actions or browsing)
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: AppDataFolder	, Object: C:\Users\VRUser\AppData\Roaming\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: TARGETDIR	, Object: C:\Windows\CCM\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: WindowsFolder	, Object: C:\Windows\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: InstallDir.5C76F613_7E3B_40BB_A16D_C5D8CDB88506	, Object: C:\Windows\CCM\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933	, Object: C:\Windows\system32\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933	, Object: C:\Windows\SysWOW64\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: FSPVDirRoot.34C6DDB5_4471_431B_A83E_7D5F4BD77BCE	, Object: C:\Windows\CCM\SMS_FSP\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: Logs.209B4FC3_090D_436F_9407_2225A6AE1E17	, Object: C:\Windows\CCM\Logs\
+MSI (s) (60:70) [07:33:22:818]: Dir (target): Key: FSPStaging.209B4FC3_090D_436F_9407_2225A6AE1E17	, Object: C:\Windows\CCM\FSPStaging\
+MSI (s) (60:70) [07:33:22:818]: PROPERTY CHANGE: Adding INSTALLLEVEL property. Its value is '1'.
+MSI (s) (60:70) [07:33:22:819]: Disallowing uninstallation of component: {376A39B9-7527-4929-B788-8E076BEDCFE1} since another client exists
+MSI (s) (60:70) [07:33:22:819]: Disallowing uninstallation of component: {376A39B9-7527-4929-B788-8E076BEDCFE1} since another client exists
+MSI (s) (60:70) [07:33:22:819]: Disallowing uninstallation of component: {376A39B9-7527-4929-B788-8E076BEDCFE1} since another client exists
+MSI (s) (60:70) [07:33:22:820]: Disallowing uninstallation of component: {19FDDCF2-7C28-462B-80E6-4C236CD9BE83} since another client exists
+MSI (s) (60:70) [07:33:22:820]: Disallowing uninstallation of component: {19FDDCF2-7C28-462B-80E6-4C236CD9BE83} since another client exists
+MSI (s) (60:70) [07:33:22:820]: Disallowing uninstallation of component: {A203678B-98C4-435D-8D15-6C300BB44838} since another client exists
+MSI (s) (60:70) [07:33:22:820]: Disallowing uninstallation of component: {A203678B-98C4-435D-8D15-6C300BB44838} since another client exists
+Action start 7:33:22: CostFinalize.
+MSI (s) (60:70) [07:33:22:826]: Doing action: MigrateFeatureStates
+Action ended 7:33:22: CostFinalize. Return value 1.
+MSI (s) (60:70) [07:33:22:827]: Skipping MigrateFeatureStates action: not run in maintenance mode
+Action start 7:33:22: MigrateFeatureStates.
+MSI (s) (60:70) [07:33:22:827]: Skipping action: CcmCheckRepairNotInstalled (condition is false)
+MSI (s) (60:70) [07:33:22:827]: Doing action: SmsFSPSuppressReboot
+Action ended 7:33:22: MigrateFeatureStates. Return value 0.
+MSI (s) (60:70) [07:33:22:828]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'SmsFSPSuppressReboot'
+MSI (s) (60:70) [07:33:22:828]: PROPERTY CHANGE: Adding REBOOT property. Its value is 'ReallySuppress'.
+Action start 7:33:22: SmsFSPSuppressReboot.
+MSI (s) (60:70) [07:33:22:828]: Doing action: InstallValidate
+Action ended 7:33:22: SmsFSPSuppressReboot. Return value 1.
+MSI (s) (60:70) [07:33:22:829]: PROPERTY CHANGE: Deleting MsiRestartManagerSessionKey property. Its current value is '9fb02e4ff6bd724f97dcacae82250625'.
+MSI (s) (60:70) [07:33:22:829]: Feature: CcmFramework; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Feature: SmsFallbackStatusPoint; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: FSPStaging.209B4FC3_090D_436F_9407_2225A6AE1E17; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: Logging.209B4FC3_090D_436F_9407_2225A6AE1E17; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: FSPRegistry.209B4FC3_090D_436F_9407_2225A6AE1E17; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: VDir.34C6DDB5_4471_431B_A83E_7D5F4BD77BCE; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: FSP_ISAPI.34C6DDB5_4471_431B_A83E_7D5F4BD77BCE; Installed: Local;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: Core.12C909B6_5F69_4C4D_8EC3_C225C1607933; Installed: Local;   Request: Absent;   Action: Null
+MSI (s) (60:70) [07:33:22:829]: Component: CoreSYSWOW64.12C909B6_5F69_4C4D_8EC3_C225C1607933; Installed: Local;   Request: Absent;   Action: Null
+MSI (s) (60:70) [07:33:22:829]: Component: InstallDir.5C76F613_7E3B_40BB_A16D_C5D8CDB88506; Installed: Local;   Request: Absent;   Action: Null
+MSI (s) (60:70) [07:33:22:829]: Component: __FSPStaging.209B4FC3_090D_436F_9407_2225A6AE1E1765; Installed: Null;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: __Logging.209B4FC3_090D_436F_9407_2225A6AE1E1765; Installed: Null;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: __FSPRegistry.209B4FC3_090D_436F_9407_2225A6AE1E1765; Installed: Null;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: __Logging.209B4FC3_090D_436F_9407_2225A6AE1E1766; Installed: Null;   Request: Absent;   Action: Absent
+MSI (s) (60:70) [07:33:22:829]: Component: __Core.12C909B6_5F69_4C4D_8EC3_C225C160793365; Installed: Null;   Request: Absent;   Action: Null
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2205 2:  3: BindImage
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2205 2:  3: ProgId
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2262 2: PublishComponent 3: -2147287038
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2205 2:  3: SelfReg
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2262 2: Extension 3: -2147287038
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2205 2:  3: Font
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2205 2:  3: Shortcut
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2262 2: Class 3: -2147287038
+MSI (s) (60:70) [07:33:22:829]: Note: 1: 2205 2:  3: Icon
+Action start 7:33:22: InstallValidate.
+MSI (s) (60:70) [07:33:22:835]: PROPERTY CHANGE: Modifying CostingComplete property. Its current value is '0'. Its new value: '1'.
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2205 2:  3: BindImage
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2205 2:  3: ProgId
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2262 2: PublishComponent 3: -2147287038
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2205 2:  3: SelfReg
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2262 2: Extension 3: -2147287038
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2205 2:  3: Font
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2205 2:  3: Shortcut
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2262 2: Class 3: -2147287038
+MSI (s) (60:70) [07:33:22:835]: Note: 1: 2205 2:  3: Icon
+MSI (s) (60:70) [07:33:22:836]: PROPERTY CHANGE: Modifying PrimaryVolumeSpaceAvailable property. Its current value is '0'. Its new value: '130682680'.
+MSI (s) (60:70) [07:33:22:836]: PROPERTY CHANGE: Modifying PrimaryVolumeSpaceRequired property. Its current value is '0'. Its new value: '-20336'.
+MSI (s) (60:70) [07:33:22:836]: PROPERTY CHANGE: Modifying PrimaryVolumeSpaceRemaining property. Its current value is '0'. Its new value: '130703016'.
+MSI (s) (60:70) [07:33:22:836]: PROPERTY CHANGE: Adding PrimaryVolumePath property. Its value is 'C:'.
+MSI (s) (60:70) [07:33:22:861]: Note: 1: 2205 2:  3: ServiceControl
+MSI (s) (60:70) [07:33:22:861]: Note: 1: 2228 2:  3: ServiceControl 4: SELECT `Name`,`Wait`,`Arguments`,`Event`, `Action` FROM `ServiceControl`, `Component` WHERE `Component_` = `Component` AND (`Action` = 0 OR `Action` = 1 OR `Action` = 2)
+MSI (c) (F8:A0) [07:33:22:867]: RESTART MANAGER: Session opened.
+MSI (s) (60:70) [07:33:22:879]: Skipping action: CcmCheckFreeDiskSpace (condition is false)
+MSI (s) (60:70) [07:33:22:879]: Doing action: InstallInitialize
+Action ended 7:33:22: InstallValidate. Return value 1.
+MSI (s) (60:70) [07:33:22:879]: Machine policy value 'AlwaysInstallElevated' is 0
+MSI (s) (60:70) [07:33:22:879]: User policy value 'AlwaysInstallElevated' is 0
+MSI (s) (60:70) [07:33:22:879]: BeginTransaction: Locking Server
+MSI (s) (60:70) [07:33:22:880]: Note: 1: 2203 2: C:\Windows\Installer\inprogressinstallinfo.ipi 3: -2147287038
+MSI (s) (60:70) [07:33:22:880]: SRSetRestorePoint skipped for this transaction.
+MSI (s) (60:70) [07:33:22:880]: Note: 1: 2203 2: C:\Windows\Installer\inprogressinstallinfo.ipi 3: -2147287038
+MSI (s) (60:70) [07:33:22:880]: Server not locked: locking for product {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+Action start 7:33:22: InstallInitialize.
+MSI (s) (60:70) [07:33:22:891]: PROPERTY CHANGE: Deleting ProductToBeRegistered property. Its current value is '1'.
+MSI (s) (60:70) [07:33:22:892]: Note: 1: 2205 2:  3: Icon
+MSI (s) (60:70) [07:33:22:892]: Note: 1: 2228 2:  3: Icon 4: SELECT `Name`, `Data` FROM `Icon`
+MSI (s) (60:70) [07:33:22:892]: Skipping action: CcmValidateCustomWebSite (condition is false)
+MSI (s) (60:70) [07:33:22:892]: Skipping action: AllocateRegistrySpace (condition is false)
+MSI (s) (60:70) [07:33:22:893]: Doing action: ProcessComponents
+Action ended 7:33:22: InstallInitialize. Return value 1.
+Action start 7:33:22: ProcessComponents.
+MSI (s) (60:70) [07:33:22:898]: Doing action: MsiUnpublishAssemblies
+Action ended 7:33:22: ProcessComponents. Return value 1.
+Action start 7:33:22: MsiUnpublishAssemblies.
+MSI (s) (60:70) [07:33:22:900]: Doing action: UnpublishComponents
+Action ended 7:33:22: MsiUnpublishAssemblies. Return value 1.
+MSI (s) (60:70) [07:33:22:900]: Note: 1: 2262 2: PublishComponent 3: -2147287038
+Action start 7:33:22: UnpublishComponents.
+MSI (s) (60:70) [07:33:22:901]: Doing action: UnpublishFeatures
+Action ended 7:33:22: UnpublishComponents. Return value 1.
+Action start 7:33:22: UnpublishFeatures.
+MSI (s) (60:70) [07:33:22:902]: Doing action: StopServices
+Action ended 7:33:22: UnpublishFeatures. Return value 1.
+MSI (s) (60:70) [07:33:22:903]: Note: 1: 2205 2:  3: ServiceControl
+MSI (s) (60:70) [07:33:22:903]: Note: 1: 2228 2:  3: ServiceControl 4: SELECT `Name`,`Wait`,`Arguments`,`Event`, `Action` FROM `ServiceControl`, `Component` WHERE `Component_` = `Component` AND (`Action` = 0 OR `Action` = 1 OR `Action` = 2)
+Action start 7:33:22: StopServices.
+MSI (s) (60:70) [07:33:22:904]: Doing action: DeleteServices
+Action ended 7:33:22: StopServices. Return value 1.
+MSI (s) (60:70) [07:33:22:904]: Note: 1: 2205 2:  3: ServiceControl
+MSI (s) (60:70) [07:33:22:904]: Note: 1: 2228 2:  3: ServiceControl 4: SELECT `Name`,`Wait`,`Arguments`,`Event`, `Action` FROM `ServiceControl`, `Component` WHERE `Component_` = `Component` AND (`Action` = 0 OR `Action` = 1 OR `Action` = 2)
+Action start 7:33:22: DeleteServices.
+MSI (s) (60:70) [07:33:22:905]: Doing action: CcmRemoveIISVirtualDirectoriesInit
+Action ended 7:33:22: DeleteServices. Return value 1.
+MSI (s) (60:70) [07:33:22:905]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmRemoveIISVirtualDirectoriesInit'
+MSI (s) (60:C0) [07:33:22:977]: Invoking remote custom action. DLL: C:\Windows\Installer\MSI9BEE.tmp, Entrypoint: CcmRemoveIISVirtualDirectoriesInit
+MSI (s) (60:50) [07:33:22:980]: Generating random cookie.
+MSI (s) (60:50) [07:33:22:991]: Created Custom Action Server with PID 4964 (0x1364).
+MSI (s) (60:4C) [07:33:23:048]: Running as a service.
+MSI (s) (60:4C) [07:33:23:060]: Hello, I'm your 64bit Impersonated custom action server.
+Action start 7:33:22: CcmRemoveIISVirtualDirectoriesInit.
+[7:33:23] Component Flag for Upgrade Code [{36079892-20F0-45A5-9C76-A61511E5D520}] is 8
+MSI (s) (60!80) [07:33:23:088]: PROPERTY CHANGE: Adding CcmRemoveIISVirtualDirectories property. Its value is 'ConfigMgr Fallback Status Point
+0
+0
+1
+1
+FSPCWSId
+8
+
+
+
+
+
+SMS_FSP,,C:\Windows\CCM\SMS_FSP,N,N
+BEGIN PROPERTY
+AuthAnonymous
+boolean
+true
+AccessExecute
+boolean
+true
+AccessRead
+boolean
+false
+AccessSSL
+boolean
+false
+AccessSSLNegotiateCert
+boolean
+false
+AccessSSLRequireCert
+boolean
+false
+AppPoolId
+string
+SMS Fallback Status Point Pool
+AuthNTLM
+boolean
+false
+EnableDefaultDoc
+boolean
+false
+EnableDirBrowsing
+boolean
+false
+END PROPERTY
+BEGIN SCRIPTMAP
+sms_fsp
+C:\Windows\CCM\FSPIsapi.dll
+0
+POST
+SMS_FSP
+END SCRIPTMAP
+
+'.
+MSI (s) (60!80) [07:33:23:088]: Doing action: CcmRemoveIISVirtualDirectories
+[7:33:23] Queuing IIS virtual directory 'SMS_FSP.34C6DDB5_4471_431B_A83E_7D5F4BD77BCE'
+MSI (s) (60!80) [07:33:23:090]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmRemoveIISVirtualDirectories'
+Action start 7:33:23: CcmRemoveIISVirtualDirectories.
+Action ended 7:33:23: CcmRemoveIISVirtualDirectories. Return value 1.
+MSI (s) (60:70) [07:33:23:186]: Doing action: CcmRemoveIISApplicationPoolsInit
+Action ended 7:33:23: CcmRemoveIISVirtualDirectoriesInit. Return value 1.
+MSI (s) (60:70) [07:33:23:187]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmRemoveIISApplicationPoolsInit'
+MSI (s) (60:80) [07:33:23:260]: Invoking remote custom action. DLL: C:\Windows\Installer\MSI9D08.tmp, Entrypoint: CcmRemoveIISApplicationPoolsInit
+MSI (s) (60!38) [07:33:23:277]: PROPERTY CHANGE: Adding CcmRemoveIISApplicationPools property. Its value is 'SMS Fallback Status Point Pool
+BEGIN PROPERTY
+processModel/identityType
+long
+LocalService
+END PROPERTY
+
+'.
+MSI (s) (60!38) [07:33:23:277]: Doing action: CcmRemoveIISApplicationPools
+Action start 7:33:23: CcmRemoveIISApplicationPoolsInit.
+MSI (s) (60!38) [07:33:23:279]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmRemoveIISApplicationPools'
+Action start 7:33:23: CcmRemoveIISApplicationPools.
+Action ended 7:33:23: CcmRemoveIISApplicationPools. Return value 1.
+MSI (s) (60:70) [07:33:23:369]: Doing action: SelfUnregModules
+Action ended 7:33:23: CcmRemoveIISApplicationPoolsInit. Return value 1.
+MSI (s) (60:70) [07:33:23:369]: Note: 1: 2205 2:  3: SelfReg
+MSI (s) (60:70) [07:33:23:369]: Note: 1: 2228 2:  3: SelfReg 4: Select `File`.`FileName`,`Component`.`Directory_`,`Component`.`Installed`, `File`.`Component_`,`SelfReg`.`File_`  From `SelfReg`, `File`, `Component` Where `SelfReg`.`File_` = `File`.`File` And `File`.`Component_` = `Component`.`Component` And `Component`.`Action` = 0
+Action start 7:33:23: SelfUnregModules.
+MSI (s) (60:70) [07:33:23:370]: Doing action: UnregisterTypeLibraries
+Action ended 7:33:23: SelfUnregModules. Return value 1.
+Action start 7:33:23: UnregisterTypeLibraries.
+MSI (s) (60:70) [07:33:23:371]: Doing action: RemoveRegistryValues
+Action ended 7:33:23: UnregisterTypeLibraries. Return value 1.
+Action start 7:33:23: RemoveRegistryValues.
+MSI (s) (60:70) [07:33:23:375]: Doing action: UnregisterClassInfo
+Action ended 7:33:23: RemoveRegistryValues. Return value 1.
+MSI (s) (60:70) [07:33:23:376]: Note: 1: 2262 2: Class 3: -2147287038
+Action start 7:33:23: UnregisterClassInfo.
+MSI (s) (60:70) [07:33:23:377]: Doing action: UnregisterExtensionInfo
+Action ended 7:33:23: UnregisterClassInfo. Return value 1.
+MSI (s) (60:70) [07:33:23:377]: Note: 1: 2262 2: Extension 3: -2147287038
+Action start 7:33:23: UnregisterExtensionInfo.
+MSI (s) (60:70) [07:33:23:378]: Doing action: UnregisterProgIdInfo
+Action ended 7:33:23: UnregisterExtensionInfo. Return value 1.
+MSI (s) (60:70) [07:33:23:379]: Note: 1: 2205 2:  3: ProgId
+MSI (s) (60:70) [07:33:23:379]: Note: 1: 2228 2:  3: ProgId 4: SELECT DISTINCT `BinaryType`, `ProgId`, `Class_`, `ProgId`.`Description`, `ProgId`.`Icon_`, `ProgId`.`IconIndex`, null, `Component`.`RuntimeFlags` , `Component`.`Component`, `Component`.`Attributes` FROM `ProgId`, `Class`, `Feature`, `Component` WHERE `ProgId`.`Class_` = `Class`.`CLSID` AND `Class`.`Feature_` = `Feature` AND `Class`.`Component_` = `Component` AND (`Feature`.`Action` = 0 OR (`Feature`.`Action` = 4 AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2)) OR ((`Feature`.`Action` = NULL OR `Feature`.`Action` = 3) AND `Component`.`Action` = 0 AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2)))
+Action start 7:33:23: UnregisterProgIdInfo.
+MSI (s) (60:70) [07:33:23:379]: Doing action: RemoveIniValues
+Action ended 7:33:23: UnregisterProgIdInfo. Return value 0.
+MSI (s) (60:70) [07:33:23:380]: Note: 1: 2205 2:  3: IniFile
+MSI (s) (60:70) [07:33:23:380]: Note: 1: 2228 2:  3: IniFile 4: SELECT `FileName`,`IniFile`.`DirProperty`,`Section`,`IniFile`.`Key`,`IniFile`.`Value`,`IniFile`.`Action` FROM `IniFile`, `Component` WHERE `Component`=`Component_` AND `Component`.`Action`=0 ORDER BY `FileName`,`Section`
+Action start 7:33:23: RemoveIniValues.
+MSI (s) (60:70) [07:33:23:381]: Doing action: RemoveShortcuts
+Action ended 7:33:23: RemoveIniValues. Return value 1.
+MSI (s) (60:70) [07:33:23:381]: Note: 1: 2205 2:  3: Shortcut
+MSI (s) (60:70) [07:33:23:381]: Note: 1: 2228 2:  3: Shortcut 4: SELECT  `Shortcut`,`Name`, null, `Shortcut`.`Directory_`, `Component`.`RuntimeFlags`, `Feature`.`Action`, `Component`.`Action` From  `Shortcut`, `Feature`, `Component` WHERE `Target` = `Feature` AND `Shortcut`.`Component_` = `Component` AND (`Feature`.`Action` = 0 OR (`Feature`.`Action` = 4 AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2)) OR ((`Feature`.`Action` = NULL OR `Feature`.`Action` = 3) AND `Component`.`Action` = 0 AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2)))
+Action start 7:33:23: RemoveShortcuts.
+MSI (s) (60:70) [07:33:23:382]: Doing action: CcmDetectFilesInUseRemoveRollback
+Action ended 7:33:23: RemoveShortcuts. Return value 0.
+MSI (s) (60:70) [07:33:23:382]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmDetectFilesInUseRemoveRollback'
+Action start 7:33:23: CcmDetectFilesInUseRemoveRollback.
+MSI (s) (60:70) [07:33:23:463]: Doing action: CcmDetectFilesInUseRemoveInit
+Action ended 7:33:23: CcmDetectFilesInUseRemoveRollback. Return value 1.
+MSI (s) (60:70) [07:33:23:463]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmDetectFilesInUseRemoveInit'
+MSI (s) (60:8C) [07:33:23:535]: Invoking remote custom action. DLL: C:\Windows\Installer\MSI9E13.tmp, Entrypoint: CcmDetectFilesInUseInit
+MSI (s) (60!48) [07:33:23:559]: PROPERTY CHANGE: Adding CcmDetectFilesInUse property. Its value is '*C:\Windows\CCM\FSPStaging\*.*
+*C:\Windows\CCM\Logs\FSP*.log
+-C:\Windows\CCM\FSPIsapi.dll
+'.
+MSI (s) (60!48) [07:33:23:559]: Doing action: CcmDetectFilesInUse
+Action start 7:33:23: CcmDetectFilesInUseRemoveInit.
+MSI (s) (60!48) [07:33:23:560]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmDetectFilesInUse'
+Action start 7:33:23: CcmDetectFilesInUse.
+Action ended 7:33:23: CcmDetectFilesInUse. Return value 1.
+MSI (s) (60:70) [07:33:23:644]: Doing action: CcmDetectFilesInUseRemoveCommit
+Action ended 7:33:23: CcmDetectFilesInUseRemoveInit. Return value 1.
+MSI (s) (60:70) [07:33:23:644]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmDetectFilesInUseRemoveCommit'
+Action start 7:33:23: CcmDetectFilesInUseRemoveCommit.
+MSI (s) (60:70) [07:33:23:733]: Doing action: RemoveFiles
+Action ended 7:33:23: CcmDetectFilesInUseRemoveCommit. Return value 1.
+Action start 7:33:23: RemoveFiles.
+MSI (s) (60:70) [07:33:23:738]: Doing action: RemoveFolders
+Action ended 7:33:23: RemoveFiles. Return value 1.
+Action start 7:33:23: RemoveFolders.
+MSI (s) (60:70) [07:33:23:740]: Doing action: CreateFolders
+Action ended 7:33:23: RemoveFolders. Return value 1.
+Action start 7:33:23: CreateFolders.
+MSI (s) (60:70) [07:33:23:741]: Doing action: MoveFiles
+Action ended 7:33:23: CreateFolders. Return value 1.
+Action start 7:33:23: MoveFiles.
+MSI (s) (60:70) [07:33:23:742]: Skipping action: CcmDetectFilesInUseRollback (condition is false)
+MSI (s) (60:70) [07:33:23:742]: Skipping action: CcmDetectFilesInUseInit (condition is false)
+MSI (s) (60:70) [07:33:23:742]: Skipping action: CcmDetectFilesInUseCommit (condition is false)
+MSI (s) (60:70) [07:33:23:742]: Doing action: InstallFiles
+Action ended 7:33:23: MoveFiles. Return value 1.
+MSI (s) (60:70) [07:33:23:743]: Note: 1: 2205 2:  3: Patch
+MSI (s) (60:70) [07:33:23:743]: Note: 1: 2228 2:  3: Patch 4: SELECT `Patch`.`File_`, `Patch`.`Header`, `Patch`.`Attributes`, `Patch`.`Sequence`, `Patch`.`StreamRef_` FROM `Patch` WHERE `Patch`.`File_` = ? AND `Patch`.`#_MsiActive`=? ORDER BY `Patch`.`Sequence`
+MSI (s) (60:70) [07:33:23:743]: Note: 1: 2205 2:  3: MsiSFCBypass
+MSI (s) (60:70) [07:33:23:743]: Note: 1: 2228 2:  3: MsiSFCBypass 4: SELECT `File_` FROM `MsiSFCBypass` WHERE `File_` = ?
+MSI (s) (60:70) [07:33:23:743]: Note: 1: 2205 2:  3: MsiPatchHeaders
+MSI (s) (60:70) [07:33:23:743]: Note: 1: 2228 2:  3: MsiPatchHeaders 4: SELECT `Header` FROM `MsiPatchHeaders` WHERE `StreamRef` = ?
+Action start 7:33:23: InstallFiles.
+MSI (s) (60:70) [07:33:23:744]: Doing action: PatchFiles
+Action ended 7:33:23: InstallFiles. Return value 1.
+MSI (s) (60:70) [07:33:23:744]: Note: 1: 2205 2:  3: Patch
+MSI (s) (60:70) [07:33:23:744]: Note: 1: 2228 2:  3: Patch 4: SELECT `File`,`FileName`,`FileSize`,`Directory_`,`PatchSize`,`File`.`Attributes`,`Patch`.`Attributes`,`Patch`.`Sequence`,`Component`.`Component`,`Component`.`ComponentId` FROM `File`,`Component`,`Patch` WHERE `Patch`.`#_MsiActive`=? AND `File`=`File_` AND `Component`=`Component_` ORDER BY `Patch`.`Sequence`
+Action start 7:33:23: PatchFiles.
+MSI (s) (60:70) [07:33:23:745]: Doing action: BindImage
+Action ended 7:33:23: PatchFiles. Return value 0.
+Action start 7:33:23: BindImage.
+MSI (s) (60:70) [07:33:23:745]: Doing action: CreateShortcuts
+Action ended 7:33:23: BindImage. Return value 1.
+MSI (s) (60:70) [07:33:23:746]: Note: 1: 2205 2:  3: Shortcut
+MSI (s) (60:70) [07:33:23:746]: Note: 1: 2228 2:  3: Shortcut 4: SELECT  `Shortcut`,`Name`, `FileName`, `Component`.`Directory_`, `Arguments`, `WkDir`, `Icon_`, `IconIndex`, `Hotkey`, `ShowCmd`, `Shortcut`.`Description`, `Shortcut`.`Directory_`, `Component`.`RuntimeFlags`, `Component`.`Action`, `Target`, `ComponentId`, `Feature`.`Action`, `Component`.`Installed`, `DisplayResourceDLL`, `DisplayResourceId`, `DescriptionResourceDLL`, `DescriptionResourceId` From `Shortcut`, `Feature`, `Component`, `File` WHERE `Target` = `Feature` AND `Shortcut`.`Component_` = `Component` AND `Component`.`KeyPath` = `File`.`File` AND ((`Feature`.`Action` = 1 OR `Feature`.`Action` = 2)  OR (`Feature`.`Action` = 4 AND `Feature`.`Installed` = 0) OR (`Feature`.`Action` = 3 AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2 OR `Feature`.`Installed` = 4)) OR (`Feature`.`Action` = NULL AND (`Component`.`Action` = 1 OR `Component`.`Action` = 2) AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2 OR `Feature`.`Installed` = 4)))
+Action start 7:33:23: CreateShortcuts.
+MSI (s) (60:70) [07:33:23:747]: Doing action: RegisterClassInfo
+Action ended 7:33:23: CreateShortcuts. Return value 0.
+MSI (s) (60:70) [07:33:23:747]: Note: 1: 2262 2: Class 3: -2147287038
+Action start 7:33:23: RegisterClassInfo.
+MSI (s) (60:70) [07:33:23:748]: Doing action: RegisterExtensionInfo
+Action ended 7:33:23: RegisterClassInfo. Return value 1.
+MSI (s) (60:70) [07:33:23:749]: Note: 1: 2262 2: Extension 3: -2147287038
+Action start 7:33:23: RegisterExtensionInfo.
+MSI (s) (60:70) [07:33:23:749]: Doing action: RegisterProgIdInfo
+Action ended 7:33:23: RegisterExtensionInfo. Return value 1.
+MSI (s) (60:70) [07:33:23:750]: Note: 1: 2205 2:  3: ProgId
+MSI (s) (60:70) [07:33:23:750]: Note: 1: 2228 2:  3: ProgId 4: SELECT DISTINCT `BinaryType`, `ProgId`, `Class_`, `ProgId`.`Description`, `ProgId`.`Icon_`, `ProgId`.`IconIndex`, null, `Component`.`RuntimeFlags`, `Component`.`Component`, `Component`.`Attributes` FROM `ProgId`, `Class`, `Feature`, `Component` WHERE `ProgId`.`Class_` = `Class`.`CLSID` AND `Class`.`Feature_` = `Feature` AND `Class`.`Component_` = `Component` AND ((`Feature`.`Action` = 1 OR `Feature`.`Action` = 2)  OR (`Feature`.`Action` = 4 AND `Feature`.`Installed` = 0) OR (`Feature`.`Action` = 3 AND (`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2 OR `Feature`.`Installed` = 4)) OR (`Feature`.`Action` = NULL AND (`Component`.`Action` = 1 OR `Component`.`Action` = 2) AND ((`Feature`.`Installed` = 1 OR `Feature`.`Installed` = 2 OR `Feature`.`Installed` = 4))))
+Action start 7:33:23: RegisterProgIdInfo.
+MSI (s) (60:70) [07:33:23:751]: Doing action: WriteRegistryValues
+Action ended 7:33:23: RegisterProgIdInfo. Return value 0.
+Action start 7:33:23: WriteRegistryValues.
+MSI (s) (60:70) [07:33:23:752]: Doing action: WriteIniValues
+Action ended 7:33:23: WriteRegistryValues. Return value 1.
+MSI (s) (60:70) [07:33:23:752]: Note: 1: 2205 2:  3: IniFile
+MSI (s) (60:70) [07:33:23:753]: Note: 1: 2228 2:  3: IniFile 4: SELECT `FileName`,`IniFile`.`DirProperty`,`Section`,`IniFile`.`Key`,`IniFile`.`Value`,`IniFile`.`Action` FROM `IniFile`, `Component` WHERE `Component`=`Component_` AND (`Component`.`Action`=1 OR `Component`.`Action`=2) ORDER BY `FileName`,`Section`
+Action start 7:33:23: WriteIniValues.
+MSI (s) (60:70) [07:33:23:753]: Doing action: RegisterTypeLibraries
+Action ended 7:33:23: WriteIniValues. Return value 1.
+Action start 7:33:23: RegisterTypeLibraries.
+MSI (s) (60:70) [07:33:23:754]: Doing action: SelfRegModules
+Action ended 7:33:23: RegisterTypeLibraries. Return value 1.
+MSI (s) (60:70) [07:33:23:755]: Note: 1: 2205 2:  3: SelfReg
+MSI (s) (60:70) [07:33:23:755]: Note: 1: 2228 2:  3: SelfReg 4: Select `FileAction`.`FileName`,`FileAction`.`Directory_`,`FileAction`.`Action`, `FileAction`.`Component_`,`SelfReg`.`File_` From `SelfReg`, `FileAction` Where `SelfReg`.`File_` = `FileAction`.`File`  And (`FileAction`.`Action` = 1 OR `FileAction`.`Action` = 2)
+Action start 7:33:23: SelfRegModules.
+MSI (s) (60:70) [07:33:23:755]: Doing action: RegisterProduct
+Action ended 7:33:23: SelfRegModules. Return value 1.
+Action start 7:33:23: RegisterProduct.
+MSI (s) (60:70) [07:33:23:756]: Doing action: PublishComponents
+Action ended 7:33:23: RegisterProduct. Return value 1.
+MSI (s) (60:70) [07:33:23:757]: Note: 1: 2262 2: PublishComponent 3: -2147287038
+Action start 7:33:23: PublishComponents.
+MSI (s) (60:70) [07:33:23:757]: Doing action: MsiPublishAssemblies
+Action ended 7:33:23: PublishComponents. Return value 1.
+Action start 7:33:23: MsiPublishAssemblies.
+MSI (s) (60:70) [07:33:23:759]: Doing action: PublishFeatures
+Action ended 7:33:23: MsiPublishAssemblies. Return value 1.
+Action start 7:33:23: PublishFeatures.
+MSI (s) (60:70) [07:33:23:760]: Doing action: PublishProduct
+Action ended 7:33:23: PublishFeatures. Return value 1.
+Action start 7:33:23: PublishProduct.
+MSI (s) (60:70) [07:33:23:763]: Doing action: RegisterUser
+Action ended 7:33:23: PublishProduct. Return value 1.
+Action start 7:33:23: RegisterUser.
+MSI (s) (60:70) [07:33:23:764]: Skipping action: CcmSetObjectSecurityInit (condition is false)
+MSI (s) (60:70) [07:33:23:764]: Doing action: CcmCreateIISVirtualDirectoriesInit
+Action ended 7:33:23: RegisterUser. Return value 0.
+MSI (s) (60:70) [07:33:23:764]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmCreateIISVirtualDirectoriesInit'
+MSI (s) (60:10) [07:33:23:835]: Invoking remote custom action. DLL: C:\Windows\Installer\MSI9F4C.tmp, Entrypoint: CcmCreateIISVirtualDirectoriesInit
+Action start 7:33:23: CcmCreateIISVirtualDirectoriesInit.
+[7:33:23] Component Flag for Upgrade Code [{36079892-20F0-45A5-9C76-A61511E5D520}] is 8
+MSI (s) (60:70) [07:33:23:878]: Doing action: CcmCreateIISApplicationPoolsInit
+Action ended 7:33:23: CcmCreateIISVirtualDirectoriesInit. Return value 1.
+MSI (s) (60:70) [07:33:23:878]: Note: 1: 2235 2:  3: ExtendedType 4: SELECT `Action`,`Type`,`Source`,`Target`, NULL, `ExtendedType` FROM `CustomAction` WHERE `Action` = 'CcmCreateIISApplicationPoolsInit'
+MSI (s) (60:3C) [07:33:23:957]: Invoking remote custom action. DLL: C:\Windows\Installer\MSI9FBB.tmp, Entrypoint: CcmCreateIISApplicationPoolsInit
+Action start 7:33:23: CcmCreateIISApplicationPoolsInit.
+MSI (s) (60:70) [07:33:23:975]: Doing action: InstallServices
+Action ended 7:33:23: CcmCreateIISApplicationPoolsInit. Return value 1.
+MSI (s) (60:70) [07:33:23:975]: Detected older ServiceInstall table schema
+MSI (s) (60:70) [07:33:23:975]: Note: 1: 2205 2:  3: ServiceInstall
+MSI (s) (60:70) [07:33:23:975]: Note: 1: 2228 2:  3: ServiceInstall 4: SELECT `ServiceInstall`,`Name`,`DisplayName`,`ServiceType`,`StartType`,`ErrorControl`,`LoadOrderGroup`,`Dependencies`,`StartName`,`Password`,`ComponentId`,`Directory_`,`FileName`,`Arguments` FROM `ServiceInstall`, `Component`, `File` WHERE `ServiceInstall`.`Component_` = `Component`.`Component` AND (`Component`.`KeyPath` = `File`.`File`) AND (`Action` = 1 OR `Action` = 2)
+Action start 7:33:23: InstallServices.
+MSI (s) (60:70) [07:33:23:976]: Doing action: StartServices
+Action ended 7:33:23: InstallServices. Return value 1.
+MSI (s) (60:70) [07:33:23:976]: Note: 1: 2205 2:  3: ServiceControl
+MSI (s) (60:70) [07:33:23:976]: Note: 1: 2228 2:  3: ServiceControl 4: SELECT `Name`,`Wait`,`Arguments`,`Event`, `Action` FROM `ServiceControl`, `Component` WHERE `Component_` = `Component` AND (`Action` = 0 OR `Action` = 1 OR `Action` = 2)
+Action start 7:33:23: StartServices.
+MSI (s) (60:70) [07:33:23:977]: Doing action: InstallFinalize
+Action ended 7:33:23: StartServices. Return value 1.
+MSI (s) (60:70) [07:33:23:978]: Running Script: C:\Windows\Installer\MSI9BCE.tmp
+MSI (s) (60:70) [07:33:23:978]: PROPERTY CHANGE: Adding UpdateStarted property. Its value is '1'.
+MSI (s) (60:70) [07:33:23:983]: Note: 1: 2265 2:  3: -2147287035
+MSI (s) (60:70) [07:33:23:985]: Machine policy value 'DisableRollback' is 0
+MSI (s) (60:70) [07:33:23:986]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:23:989]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:23:989]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Installer\Rollback\Scripts 3: 2
+MSI (s) (60:70) [07:33:23:990]: Executing op: Header(Signature=1397708873,Version=500,Timestamp=1446067244,LangId=1033,Platform=589824,ScriptType=1,ScriptMajorVersion=21,ScriptMinorVersion=4,ScriptAttributes=1)
+Action start 7:33:23: InstallFinalize.
+MSI (s) (60:70) [07:33:23:991]: Executing op: ProductInfo(ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},ProductName=ConfigMgr Fallback Status Point,PackageName=fsp.msi,Language=1033,Version=83895176,Assignment=1,ObsoleteArg=0,,,PackageCode={1FCE9B15-A730-40D4-8EAB-2B68BC90B6ED},,,InstanceType=0,LUASetting=0,RemoteURTInstalls=0,ProductDeploymentFlags=3)
+MSI (s) (60:70) [07:33:23:991]: Executing op: DialogInfo(Type=0,Argument=1033)
+MSI (s) (60:70) [07:33:23:991]: Executing op: DialogInfo(Type=1,Argument=ConfigMgr Fallback Status Point)
+MSI (s) (60:70) [07:33:23:992]: Executing op: RollbackInfo(,RollbackAction=Rollback,RollbackDescription=Rolling back action:,RollbackTemplate=[1],CleanupAction=RollbackCleanup,CleanupDescription=Removing backup files,CleanupTemplate=File: [1])
+MSI (s) (60:70) [07:33:23:992]: Executing op: SetBaseline(Baseline=0,)
+MSI (s) (60:70) [07:33:23:992]: Executing op: SetBaseline(Baseline=1,)
+MSI (s) (60:70) [07:33:23:992]: Executing op: ActionStart(Name=InstallInitialize,,)
+MSI (s) (60:70) [07:33:23:992]: Executing op: ProductUnregister(UpgradeCode={36079892-20F0-45A5-9C76-A61511E5D520})
+MSI (s) (60:70) [07:33:23:992]: Note: 1: 1402 2: UNKNOWN\Products\39919BB360CA8CA42AF6CB262E08EDDA\Transforms 3: 2
+MSI (s) (60:70) [07:33:23:992]: Note: 1: 1402 2: UNKNOWN\Products\39919BB360CA8CA42AF6CB262E08EDDA\Transforms 3: 2
+MSI (s) (60:70) [07:33:23:993]: Scheduling file 'C:\Windows\Installer\c9be22a.msi' for deletion during post-install cleanup (not post-reboot).
+MSI (s) (60:70) [07:33:24:017]: Note: 1: 1402 2: UNKNOWN\Products\39919BB360CA8CA42AF6CB262E08EDDA\Usage 3: 2
+MSI (s) (60:70) [07:33:24:018]: Executing op: ProductCPDisplayInfoUnregister()
+MSI (s) (60:70) [07:33:24:020]: Executing op: ProductUnpublish(PackageKey={1FCE9B15-A730-40D4-8EAB-2B68BC90B6ED})
+MSI (s) (60:70) [07:33:24:023]: Executing op: UpgradeCodeUnpublish(UpgradeCode={36079892-20F0-45A5-9C76-A61511E5D520})
+MSI (s) (60:70) [07:33:24:024]: Executing op: ProductUnpublishClient(,,)
+MSI (s) (60:70) [07:33:24:024]: Note: 1: 1402 2: UNKNOWN\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA 3: 2
+MSI (s) (60:70) [07:33:24:025]: Executing op: SourceListUnpublish(,)
+MSI (s) (60:70) [07:33:24:025]: Note: 1: 1402 2: UNKNOWN\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA\SourceList 3: 2
+MSI (s) (60:70) [07:33:24:025]: Executing op: ActionStart(Name=ProcessComponents,Description=Updating component registration,)
+MSI (s) (60:70) [07:33:24:025]: Executing op: ProgressTotal(Total=8,Type=1,ByteEquivalent=24000)
+MSI (s) (60:70) [07:33:24:025]: Executing op: UnregisterSharedComponentProvider(Component={0872D5E7-AF8A-4CA4-B281-1FFC253C7A05},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:025]: Executing op: ComponentUnregister(ComponentId={0872D5E7-AF8A-4CA4-B281-1FFC253C7A05},,BinaryType=1,)
+MSI (s) (60:70) [07:33:24:026]: Executing op: UnregisterSharedComponentProvider(Component={8829F20E-42C7-413F-8A56-5D882E0131EA},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:027]: Executing op: ComponentUnregister(ComponentId={8829F20E-42C7-413F-8A56-5D882E0131EA},,BinaryType=1,)
+MSI (s) (60:70) [07:33:24:028]: Executing op: UnregisterSharedComponentProvider(Component={8B0ECA84-E051-4130-8A0F-400B7EDAB4FC},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:028]: Executing op: ComponentUnregister(ComponentId={8B0ECA84-E051-4130-8A0F-400B7EDAB4FC},,BinaryType=1,)
+MSI (s) (60:70) [07:33:24:029]: Executing op: UnregisterSharedComponentProvider(Component={A647252F-585D-4AEB-B59F-B6FCAAAE009F},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:029]: Executing op: ComponentUnregister(ComponentId={A647252F-585D-4AEB-B59F-B6FCAAAE009F},,BinaryType=1,)
+MSI (s) (60:70) [07:33:24:030]: Executing op: UnregisterSharedComponentProvider(Component={9AC025A8-1AF1-4CFF-B412-4D4976E89767},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:031]: Executing op: ComponentUnregister(ComponentId={9AC025A8-1AF1-4CFF-B412-4D4976E89767},,BinaryType=1,)
+MSI (s) (60:70) [07:33:24:032]: Executing op: UnregisterSharedComponentProvider(Component={A203678B-98C4-435D-8D15-6C300BB44838},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:033]: Executing op: ComponentUnregister(ComponentId={A203678B-98C4-435D-8D15-6C300BB44838},,BinaryType=1,PreviouslyPinned=1)
+MSI (s) (60:70) [07:33:24:034]: Executing op: UnregisterSharedComponentProvider(Component={19FDDCF2-7C28-462B-80E6-4C236CD9BE83},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:034]: Executing op: ComponentUnregister(ComponentId={19FDDCF2-7C28-462B-80E6-4C236CD9BE83},,BinaryType=0,PreviouslyPinned=1)
+MSI (s) (60:70) [07:33:24:035]: WIN64DUALFOLDERS: 'C:\Windows\system32\' will substitute 20 characters in 'C:\Windows\SysWOW64\ccmcore.dll' folder path. (mask argument = 1, the folder pair's iSwapAttrib member = 1).
+MSI (s) (60:70) [07:33:24:035]: Executing op: UnregisterSharedComponentProvider(Component={376A39B9-7527-4929-B788-8E076BEDCFE1},ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD})
+MSI (s) (60:70) [07:33:24:035]: Executing op: ComponentUnregister(ComponentId={376A39B9-7527-4929-B788-8E076BEDCFE1},,BinaryType=1,PreviouslyPinned=1)
+MSI (s) (60:70) [07:33:24:036]: Executing op: ProgressTotal(Total=1,Type=1,ByteEquivalent=13200)
+MSI (s) (60:70) [07:33:24:037]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs,,BinaryType=0,,)
+MSI (s) (60:70) [07:33:24:037]: Executing op: ProgressTick()
+MSI (s) (60:70) [07:33:24:037]: Executing op: ProgressTotal(Total=1,Type=1,ByteEquivalent=13200)
+MSI (s) (60:70) [07:33:24:037]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:24:037]: Executing op: ProgressTick()
+MSI (s) (60:70) [07:33:24:037]: Executing op: ActionStart(Name=UnpublishFeatures,Description=Unpublishing Product Features,Template=Feature: [1])
+MSI (s) (60:70) [07:33:24:038]: Executing op: FeatureUnpublish(Feature=CcmFramework,,Absent=2,Component=l'%)]}*F`9hQpW3iJ]*6eG(F+=rzV=T9GE.[%0ERhGsm53ldS?S^ML%.vxXq)
+MSI (s) (60:70) [07:33:24:038]: Note: 1: 1402 2: UNKNOWN\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA 3: 2
+MSI (s) (60:70) [07:33:24:039]: Executing op: FeatureUnpublish(Feature=SmsFallbackStatusPoint,,Absent=2,Component=aQme%Ssm^@yRf%z_@_i$+upiS^eP{8D(DoStBq=tguucTw7yy8c8E]&.4a6zkxTM^jZe)@,9q6zw&k+[Q8]gY&'Oh@+qRW?,p'AI)
+MSI (s) (60:70) [07:33:24:040]: Note: 1: 1402 2: UNKNOWN\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA 3: 2
+MSI (s) (60:70) [07:33:24:041]: Executing op: ActionStart(Name=CcmRemoveIISVirtualDirectories,Description=Removes IIS Virtual Directories found in CcmRemoveIISVirtualDirectoriesInit.,Template=[1])
+MSI (s) (60:70) [07:33:24:044]: Executing op: CustomActionSchedule(Action=CcmRemoveIISVirtualDirectories,ActionType=3073,Source=BinaryData,Target=CcmRemoveIISVirtualDirectories,CustomActionData=ConfigMgr Fallback Status Point
+0
+0
+1
+1
+FSPCWSId
+8
+
+
+
+
+
+SMS_FSP,,C:\Windows\CCM\SMS_FSP,N,N
+BEGIN PROPERTY
+AuthAnonymous
+boolean
+true
+AccessExecute
+boolean
+true
+AccessRead
+boolean
+false
+AccessSSL
+boolean
+false
+AccessSSLNegotiateCert
+boolean
+false
+AccessSSLRequireCert
+boolean
+false
+AppPoolId
+string
+SMS Fallback Status Point Pool
+AuthNTLM
+boolean
+false
+EnableDefaultDoc
+boolean
+false
+EnableDirBrowsing
+boolean
+false
+END PROPERTY
+BEGIN SCRIPTMAP
+sms_fsp
+C:\Windows\CCM\FSPIsapi.dll
+0
+POST
+SMS_FSP
+END SCRIPTMAP
+
+)
+MSI (s) (60:38) [07:33:24:136]: Invoking remote custom action. DLL: C:\Windows\Installer\MSIA058.tmp, Entrypoint: CcmRemoveIISVirtualDirectories
+MSI (s) (60:50) [07:33:24:136]: Generating random cookie.
+MSI (s) (60:50) [07:33:24:145]: Created Custom Action Server with PID 5736 (0x1668).
+MSI (s) (60:4C) [07:33:24:196]: Running as a service.
+MSI (s) (60:4C) [07:33:24:210]: Hello, I'm your 64bit Elevated Non-remapped custom action server.
+[7:33:24] Skipping Port Configuration on Rollback for web site '1'
+[7:33:24] Acquired registry mutex.
+[7:33:24] One or more other components are also installed.Uninstall will not modify the website properties.
+[7:33:24] IIS7 is installed. Removing application 'ConfigMgr Fallback Status Point'.
+[7:33:24] Successfully removed application 'ConfigMgr Fallback Status Point' with IIS7.
+[7:33:24] Removing IIS Virtual Directory 'SMS_FSP'
+[7:33:24] Element not found by searching property 'path' with value 'C:\Windows\CCM\FSPIsapi.dll'
+[7:33:24] Isapi extension 'C:\Windows\CCM\FSPIsapi.dll' not found
+[7:33:24] Deleting vdir 'SMS_FSP'
+[7:33:24] Element not found by searching property 'path' with value '/SMS_FSP'
+[7:33:24] Vdir 'SMS_FSP' does not exists.
+[7:33:24] Deleting vdir 'SMS_FSP'
+[7:33:24] Element not found by searching property 'path' with value '/SMS_FSP'
+[7:33:24] Vdir 'SMS_FSP' does not exists.
+[7:33:24] Successfully removed IIS Virtual Directory 'SMS_FSP'
+[7:33:24] Deleting vdir 'CCM_Outgoing'
+[7:33:24] Element not found by searching property 'path' with value '/CCM_Outgoing'
+[7:33:24] Vdir 'CCM_Outgoing' does not exists.
+[7:33:24] Deleting vdir 'CCM_Outgoing'
+[7:33:24] Element not found by searching property 'path' with value '/CCM_Outgoing'
+[7:33:24] Vdir 'CCM_Outgoing' does not exists.
+MSI (s) (60:70) [07:33:24:424]: Executing op: ActionStart(Name=CcmRemoveIISApplicationPools,Description=Removes IIS Application Pools found in CcmRemoveIISApplicationPoolsInit.,Template=[1])
+[7:33:24] Successfully updated Website Registry Entry 'FSPCWSId' with value '1'
+MSI (s) (60:70) [07:33:24:428]: Executing op: CustomActionSchedule(Action=CcmRemoveIISApplicationPools,ActionType=3073,Source=BinaryData,Target=CcmRemoveIISApplicationPools,CustomActionData=SMS Fallback Status Point Pool
+BEGIN PROPERTY
+processModel/identityType
+long
+LocalService
+END PROPERTY
+
+)
+MSI (s) (60:34) [07:33:24:519]: Invoking remote custom action. DLL: C:\Windows\Installer\MSIA1E0.tmp, Entrypoint: CcmRemoveIISApplicationPools
+[7:33:24] Element not found by searching property 'name' with value 'SMS Fallback Status Point Pool'
+[7:33:24] Application pool 'SMS Fallback Status Point Pool' not found
+MSI (s) (60:70) [07:33:24:569]: Executing op: ActionStart(Name=RemoveRegistryValues,Description=Removing system registry values,Template=Key: [1], Name: [2])
+[7:33:24] Successfully removed application pool 'SMS Fallback Status Point Pool'
+MSI (s) (60:70) [07:33:24:570]: Executing op: ProgressTotal(Total=9,Type=1,ByteEquivalent=13200)
+MSI (s) (60:70) [07:33:24:570]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:24:570]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:24:571]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP 3: 2
+MSI (s) (60:70) [07:33:24:571]: Executing op: RegRemoveValue(Name=FSPInstallDir,Value=[CCMINSTALLDIR],)
+MSI (s) (60:70) [07:33:24:571]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP 3: 2
+MSI (s) (60:70) [07:33:24:571]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP\Logging,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:24:571]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:24:572]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging 3: 2
+MSI (s) (60:70) [07:33:24:572]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP\Logging\fspisapi,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:24:572]: Executing op: RegRemoveValue(Name=LogPath,Value=fspisapi.log,)
+MSI (s) (60:70) [07:33:24:573]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\fspisapi 3: 2
+MSI (s) (60:70) [07:33:24:573]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:24:573]: Executing op: RegRemoveValue(Name=LogDirectory,Value=[Logs.209B4FC3_090D_436F_9407_2225A6AE1E17],)
+MSI (s) (60:70) [07:33:24:573]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:24:573]: Executing op: RegRemoveValue(Name=LogEnabled,Value=#1,)
+MSI (s) (60:70) [07:33:24:574]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:24:574]: Executing op: RegRemoveValue(Name=LogLevel,Value=#0,)
+MSI (s) (60:70) [07:33:24:574]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:24:574]: Executing op: RegRemoveValue(Name=LogMaxHistory,Value=#4,)
+MSI (s) (60:70) [07:33:24:575]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:24:575]: Executing op: RegRemoveValue(Name=LogMaxSize,Value=#5000000,)
+MSI (s) (60:70) [07:33:24:575]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:24:576]: Executing op: ActionStart(Name=CcmDetectFilesInUseRemoveRollback,Description=Calls CcmDetectFilesInUseRollback. Rolls back the files moved by CcmDetectFilesInUse.,)
+MSI (s) (60:70) [07:33:24:579]: Executing op: CustomActionSchedule(Action=CcmDetectFilesInUseRemoveRollback,ActionType=3329,Source=BinaryData,Target=CcmDetectFilesInUseRollback,)
+MSI (s) (60:70) [07:33:24:652]: Executing op: ActionStart(Name=CcmDetectFilesInUse,Description=Moves files that are in use so that they will be deleted upon the next reboot.,)
+MSI (s) (60:70) [07:33:24:656]: Executing op: CustomActionSchedule(Action=CcmDetectFilesInUse,ActionType=3073,Source=BinaryData,Target=CcmDetectFilesInUse,CustomActionData=*C:\Windows\CCM\FSPStaging\*.*
+*C:\Windows\CCM\Logs\FSP*.log
+-C:\Windows\CCM\FSPIsapi.dll
+)
+MSI (s) (60:4C) [07:33:24:747]: Invoking remote custom action. DLL: C:\Windows\Installer\MSIA2CB.tmp, Entrypoint: CcmDetectFilesInUse
+MSI (s) (60:70) [07:33:32:190]: Executing op: ActionStart(Name=CcmDetectFilesInUseRemoveCommit,Description=Calls CcmDetectFilesInUseCommit. Commits action of CcmDetectFileInUse. After this the action cannot be rolled back.,)
+[7:33:32] No installation files are in use.
+MSI (s) (60:70) [07:33:32:194]: Executing op: CustomActionSchedule(Action=CcmDetectFilesInUseRemoveCommit,ActionType=3585,Source=BinaryData,Target=CcmDetectFilesInUseCommit,)
+MSI (s) (60:70) [07:33:32:267]: Executing op: ActionStart(Name=RemoveFiles,Description=Removing files,Template=File: [1], Directory: [9])
+MSI (s) (60:70) [07:33:32:268]: Executing op: ProgressTotal(Total=5,Type=1,ByteEquivalent=175000)
+MSI (s) (60:70) [07:33:32:268]: Executing op: SetTargetFolder(Folder=C:\Windows\CCM\FSPStaging\)
+MSI (s) (60:70) [07:33:32:268]: Executing op: FileRemove(,FileName=00-50-56-A7-FB-A2_{4B9A89A0-DF86-47EC-AA12-7C0A67AD7C42}_800_VR.SMF,,)
+MSI (s) (60:70) [07:33:32:271]: Verifying accessibility of file: 00-50-56-A7-FB-A2_{4B9A89A0-DF86-47EC-AA12-7C0A67AD7C42}_800_VR.SMF
+MSI (s) (60:70) [07:33:32:273]: Executing op: FileRemove(,FileName=00-50-56-A7-FB-A2_{C37B353D-15AB-421E-B16A-394F3694BAEC}_800_VR.SMF,,)
+MSI (s) (60:70) [07:33:32:275]: Verifying accessibility of file: 00-50-56-A7-FB-A2_{C37B353D-15AB-421E-B16A-394F3694BAEC}_800_VR.SMF
+MSI (s) (60:70) [07:33:32:277]: Executing op: FileRemove(,FileName=00-50-56-A7-FB-A2_{F3C645D6-4353-4B45-AE0F-AFF574961B3B}_800_VR.SMF,,)
+MSI (s) (60:70) [07:33:32:279]: Verifying accessibility of file: 00-50-56-A7-FB-A2_{F3C645D6-4353-4B45-AE0F-AFF574961B3B}_800_VR.SMF
+MSI (s) (60:70) [07:33:32:281]: Executing op: SetTargetFolder(Folder=C:\Windows\CCM\Logs\)
+MSI (s) (60:70) [07:33:32:281]: Executing op: FileRemove(,FileName=fspisapi.log,,)
+MSI (s) (60:70) [07:33:32:283]: Verifying accessibility of file: fspisapi.log
+MSI (s) (60:70) [07:33:32:285]: Executing op: FileRemove(,FileName=FSPStateMessage.log,,)
+MSI (s) (60:70) [07:33:32:287]: Verifying accessibility of file: FSPStateMessage.log
+MSI (s) (60:70) [07:33:32:288]: Verifying accessibility of file: FSPStateMessage.log
+MSI (s) (60:70) [07:33:32:289]: Note: 1: 1306 2: C:\Windows\CCM\Logs\FSPStateMessage.log
+MSI (s) (60:70) [07:33:32:289]: Product: ConfigMgr Fallback Status Point -- Error 1306. Another application has exclusive access to the file 'C:\Windows\CCM\Logs\FSPStateMessage.log'.  Please shut down all other applications, then click Retry.
+
+Error 1306. Another application has exclusive access to the file 'C:\Windows\CCM\Logs\FSPStateMessage.log'.  Please shut down all other applications, then click Retry.
+MSI (s) (60:70) [07:33:32:300]: Note: 1: 2265 2:  3: -2147287035
+MSI (s) (60:70) [07:33:32:302]: User policy value 'DisableRollback' is 0
+MSI (s) (60:70) [07:33:32:302]: Machine policy value 'DisableRollback' is 0
+Action ended 7:33:32: InstallFinalize. Return value 3.
+MSI (s) (60:70) [07:33:32:304]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:313]: Executing op: Header(Signature=1397708873,Version=500,Timestamp=1446067244,LangId=1033,Platform=589824,ScriptType=2,ScriptMajorVersion=21,ScriptMinorVersion=4,ScriptAttributes=1)
+MSI (s) (60:70) [07:33:32:313]: Executing op: DialogInfo(Type=0,Argument=1033)
+MSI (s) (60:70) [07:33:32:314]: Executing op: DialogInfo(Type=1,Argument=ConfigMgr Fallback Status Point)
+MSI (s) (60:70) [07:33:32:314]: Executing op: RollbackInfo(,RollbackAction=Rollback,RollbackDescription=Rolling back action:,RollbackTemplate=[1],CleanupAction=RollbackCleanup,CleanupDescription=Removing backup files,CleanupTemplate=File: [1])
+MSI (s) (60:70) [07:33:32:314]: Executing op: RegisterBackupFile(File=C:\Config.Msi\14349b84.rbf)
+MSI (s) (60:70) [07:33:32:314]: Executing op: RegisterBackupFile(File=C:\Config.Msi\14349b85.rbf)
+MSI (s) (60:70) [07:33:32:314]: Executing op: RegisterBackupFile(File=C:\Config.Msi\14349b86.rbf)
+MSI (s) (60:70) [07:33:32:314]: Executing op: RegisterBackupFile(File=C:\Config.Msi\14349b87.rbf)
+MSI (s) (60:70) [07:33:32:314]: Executing op: RegisterBackupFile(File=C:\Config.Msi\14349b88.rbf)
+MSI (s) (60:70) [07:33:32:315]: Executing op: ActionStart(Name=RemoveFiles,Description=Removing files,Template=File: [1], Directory: [9])
+MSI (s) (60:70) [07:33:32:315]: Executing op: SetTargetFolder(Folder=C:\Windows\CCM\Logs\)
+MSI (s) (60:70) [07:33:32:315]: Executing op: ProductInfo(ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},ProductName=ConfigMgr Fallback Status Point,PackageName=fsp.msi,Language=1033,Version=83895176,Assignment=1,ObsoleteArg=0,,,PackageCode={1FCE9B15-A730-40D4-8EAB-2B68BC90B6ED},,,InstanceType=0,LUASetting=0,RemoteURTInstalls=0,ProductDeploymentFlags=3)
+MSI (s) (60:70) [07:33:32:316]: Executing op: FileCopy(SourceName=C:\Config.Msi\14349b87.rbf,,DestName=C:\Windows\CCM\Logs\fspisapi.log,Attributes=32800,FileSize=42132,PerTick=0,,VerifyMedia=0,ElevateFlags=3,,,,,,,InstallMode=4194308,,,,,,,)
+MSI (s) (60:70) [07:33:32:316]: File: C:\Windows\CCM\Logs\fspisapi.log;	To be installed;	Won't patch;	No existing file
+MSI (s) (60:70) [07:33:32:317]: Verifying accessibility of file: 14349b87.rbf
+MSI (s) (60:70) [07:33:32:319]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:319]: Executing op: SetTargetFolder(Folder=C:\Windows\CCM\FSPStaging\)
+MSI (s) (60:70) [07:33:32:319]: Executing op: FileCopy(SourceName=C:\Config.Msi\14349b86.rbf,,DestName=C:\Windows\CCM\FSPStaging\00-50-56-A7-FB-A2_{F3C645D6-4353-4B45-AE0F-AFF574961B3B}_800_VR.SMF,Attributes=32800,FileSize=2388,PerTick=0,,VerifyMedia=0,ElevateFlags=3,,,,,,,InstallMode=4194308,,,,,,,)
+MSI (s) (60:70) [07:33:32:320]: File: C:\Windows\CCM\FSPStaging\00-50-56-A7-FB-A2_{F3C645D6-4353-4B45-AE0F-AFF574961B3B}_800_VR.SMF;	To be installed;	Won't patch;	No existing file
+MSI (s) (60:70) [07:33:32:320]: Verifying accessibility of file: 14349b86.rbf
+MSI (s) (60:70) [07:33:32:322]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:322]: Executing op: FileCopy(SourceName=C:\Config.Msi\14349b85.rbf,,DestName=C:\Windows\CCM\FSPStaging\00-50-56-A7-FB-A2_{C37B353D-15AB-421E-B16A-394F3694BAEC}_800_VR.SMF,Attributes=32800,FileSize=2548,PerTick=0,,VerifyMedia=0,ElevateFlags=3,,,,,,,InstallMode=4194308,,,,,,,)
+MSI (s) (60:70) [07:33:32:322]: File: C:\Windows\CCM\FSPStaging\00-50-56-A7-FB-A2_{C37B353D-15AB-421E-B16A-394F3694BAEC}_800_VR.SMF;	To be installed;	Won't patch;	No existing file
+MSI (s) (60:70) [07:33:32:323]: Verifying accessibility of file: 14349b85.rbf
+MSI (s) (60:70) [07:33:32:324]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:325]: Executing op: FileCopy(SourceName=C:\Config.Msi\14349b84.rbf,,DestName=C:\Windows\CCM\FSPStaging\00-50-56-A7-FB-A2_{4B9A89A0-DF86-47EC-AA12-7C0A67AD7C42}_800_VR.SMF,Attributes=32800,FileSize=2388,PerTick=0,,VerifyMedia=0,ElevateFlags=3,,,,,,,InstallMode=4194308,,,,,,,)
+MSI (s) (60:70) [07:33:32:325]: File: C:\Windows\CCM\FSPStaging\00-50-56-A7-FB-A2_{4B9A89A0-DF86-47EC-AA12-7C0A67AD7C42}_800_VR.SMF;	To be installed;	Won't patch;	No existing file
+MSI (s) (60:70) [07:33:32:325]: Verifying accessibility of file: 14349b84.rbf
+MSI (s) (60:70) [07:33:32:327]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:328]: Executing op: ActionStart(Name=CcmDetectFilesInUseRemoveCommit,Description=Calls CcmDetectFilesInUseCommit. Commits action of CcmDetectFileInUse. After this the action cannot be rolled back.,)
+MSI (s) (60:70) [07:33:32:328]: Executing op: ActionStart(Name=CcmDetectFilesInUse,Description=Moves files that are in use so that they will be deleted upon the next reboot.,)
+MSI (s) (60:70) [07:33:32:328]: Executing op: ActionStart(Name=CcmDetectFilesInUseRemoveRollback,Description=Calls CcmDetectFilesInUseRollback. Rolls back the files moved by CcmDetectFilesInUse.,)
+MSI (s) (60:70) [07:33:32:332]: Executing op: CustomActionRollback(Action=CcmDetectFilesInUseRemoveRollback,ActionType=3329,Source=BinaryData,Target=CcmDetectFilesInUseRollback,)
+MSI (s) (60:A0) [07:33:32:426]: Invoking remote custom action. DLL: C:\Windows\Installer\MSIC0C4.tmp, Entrypoint: CcmDetectFilesInUseRollback
+[7:33:32] No rollback file detected
+MSI (s) (60:70) [07:33:32:459]: Executing op: ActionStart(Name=RemoveRegistryValues,Description=Removing system registry values,Template=Key: [1], Name: [2])
+MSI (s) (60:70) [07:33:32:460]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:460]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:460]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:32:461]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:461]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:32:461]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:461]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:32:461]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:462]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:32:462]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:462]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\@GLOBAL 3: 2
+MSI (s) (60:70) [07:33:32:462]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP\Logging\fspisapi,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:462]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:463]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging\fspisapi 3: 2
+MSI (s) (60:70) [07:33:32:463]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP\Logging,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:463]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:463]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP\Logging 3: 2
+MSI (s) (60:70) [07:33:32:463]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\SMS\FSP,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:464]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:464]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP 3: 2
+MSI (s) (60:70) [07:33:32:464]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:464]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SMS\FSP 3: 2
+MSI (s) (60:70) [07:33:32:465]: Executing op: ActionStart(Name=CcmRemoveIISApplicationPools,Description=Removes IIS Application Pools found in CcmRemoveIISApplicationPoolsInit.,Template=[1])
+MSI (s) (60:70) [07:33:32:465]: Executing op: ActionStart(Name=CcmRemoveIISVirtualDirectories,Description=Removes IIS Virtual Directories found in CcmRemoveIISVirtualDirectoriesInit.,Template=[1])
+MSI (s) (60:70) [07:33:32:466]: Executing op: ActionStart(Name=UnpublishFeatures,Description=Unpublishing Product Features,Template=Feature: [1])
+MSI (s) (60:70) [07:33:32:466]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Features,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:466]: Executing op: RegAddValue(Name=SmsFallbackStatusPoint,Value=aQme%Ssm^@yRf%z_@_i$+upiS^eP{8D(DoStBq=tguucTw7yy8c8E]&.4a6zkxTM^jZe)@,9q6zw&k+[Q8]gY&'Oh@+qRW?,p'AI,)
+MSI (s) (60:70) [07:33:32:468]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:468]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:468]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Classes\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA 3: 2
+MSI (s) (60:70) [07:33:32:468]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Features,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:469]: Executing op: RegAddValue(Name=CcmFramework,Value=l'%)]}*F`9hQpW3iJ]*6eG(F+=rzV=T9GE.[%0ERhGsm53ldS?S^ML%.vxXq,)
+MSI (s) (60:70) [07:33:32:470]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:470]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:470]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Classes\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA 3: 2
+MSI (s) (60:70) [07:33:32:471]: Executing op: ActionStart(Name=ProcessComponents,Description=Updating component registration,)
+MSI (s) (60:70) [07:33:32:471]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:471]: Executing op: RegOpenKey(Root=-2147483646,Key=SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs,SecurityDescriptor=BinaryData,BinaryType=0,,)
+MSI (s) (60:70) [07:33:32:472]: Executing op: ComponentRegister(ComponentId={376A39B9-7527-4929-B788-8E076BEDCFE1},KeyPath=C:\Windows\CCM\,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=0,BinaryType=1)
+MSI (s) (60:70) [07:33:32:472]: Executing op: ComponentRegister(ComponentId={19FDDCF2-7C28-462B-80E6-4C236CD9BE83},KeyPath=C:\Windows\SysWOW64\ccmcore.dll,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=1,BinaryType=0)
+MSI (s) (60:70) [07:33:32:473]: WIN64DUALFOLDERS: 'C:\Windows\system32\' will substitute 20 characters in 'C:\Windows\SysWOW64\ccmcore.dll' folder path. (mask argument = 1, the folder pair's iSwapAttrib member = 1).
+MSI (s) (60:70) [07:33:32:473]: WIN64DUALFOLDERS: 'C:\Windows\system32\' will substitute 20 characters in 'C:\Windows\SysWOW64\ccmcore.dll' folder path. (mask argument = 1, the folder pair's iSwapAttrib member = 1).
+MSI (s) (60:70) [07:33:32:473]: Executing op: RegisterSharedComponentProvider(,,,Component={19FDDCF2-7C28-462B-80E6-4C236CD9BE83},,ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,,,,,)
+MSI (s) (60:70) [07:33:32:476]: Executing op: ComponentRegister(ComponentId={A203678B-98C4-435D-8D15-6C300BB44838},KeyPath=C:\Windows\system32\ccmcore.dll,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=1,BinaryType=1)
+MSI (s) (60:70) [07:33:32:476]: Executing op: RegisterSharedComponentProvider(,,,Component={A203678B-98C4-435D-8D15-6C300BB44838},,ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,,,,,)
+MSI (s) (60:70) [07:33:32:478]: Executing op: ComponentRegister(ComponentId={9AC025A8-1AF1-4CFF-B412-4D4976E89767},KeyPath=C:\Windows\CCM\FSPIsapi.dll,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=0,BinaryType=1)
+MSI (s) (60:70) [07:33:32:479]: Executing op: RegisterSharedComponentProvider(,,,Component={9AC025A8-1AF1-4CFF-B412-4D4976E89767},,ProductCode={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,,,,,)
+MSI (s) (60:70) [07:33:32:481]: Executing op: ComponentRegister(ComponentId={A647252F-585D-4AEB-B59F-B6FCAAAE009F},KeyPath=C:\Windows\CCM\,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=0,BinaryType=1)
+MSI (s) (60:70) [07:33:32:481]: Executing op: ComponentRegister(ComponentId={8B0ECA84-E051-4130-8A0F-400B7EDAB4FC},KeyPath=C:\Windows\CCM\,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=0,BinaryType=1)
+MSI (s) (60:70) [07:33:32:482]: Executing op: ComponentRegister(ComponentId={8829F20E-42C7-413F-8A56-5D882E0131EA},KeyPath=C:\Windows\CCM\,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=0,BinaryType=1)
+MSI (s) (60:70) [07:33:32:483]: Executing op: ComponentRegister(ComponentId={0872D5E7-AF8A-4CA4-B281-1FFC253C7A05},KeyPath=C:\Windows\CCM\,State=3,ProductKey={3BB91993-AC06-4AC8-A26F-BC62E280DEAD},,SharedDllRefCount=0,BinaryType=1)
+MSI (s) (60:70) [07:33:32:484]: Executing op: ActionStart(Name=InstallInitialize,,)
+MSI (s) (60:70) [07:33:32:484]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA\SourceList,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:484]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:484]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA\SourceList 3: 2
+MSI (s) (60:70) [07:33:32:484]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:485]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:485]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA 3: 2
+MSI (s) (60:70) [07:33:32:485]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\UpgradeCodes\298970630F025A54C9676A51115E5D02,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:485]: Executing op: RegAddValue(Name=39919BB360CA8CA42AF6CB262E08EDDA,,)
+MSI (s) (60:70) [07:33:32:487]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:487]: Executing op: RegAddValue(Name=CcmFramework,,)
+MSI (s) (60:70) [07:33:32:488]: Executing op: RegAddValue(Name=SmsFallbackStatusPoint,,)
+MSI (s) (60:70) [07:33:32:488]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Features\39919BB360CA8CA42AF6CB262E08EDDA,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:489]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:489]: Executing op: RegAddValue(Name=ProductName,Value=ConfigMgr Fallback Status Point,)
+MSI (s) (60:70) [07:33:32:490]: Executing op: RegAddValue(Name=PackageCode,Value=51B9ECF1037A4D04E8BAB286CB096BDE,)
+MSI (s) (60:70) [07:33:32:490]: Executing op: RegAddValue(Name=Language,Value=#1033,)
+MSI (s) (60:70) [07:33:32:491]: Executing op: RegAddValue(Name=Version,Value=#83895176,)
+MSI (s) (60:70) [07:33:32:491]: Executing op: RegAddValue(Name=Assignment,Value=#1,)
+MSI (s) (60:70) [07:33:32:491]: Executing op: RegAddValue(Name=AdvertiseFlags,Value=#388,)
+MSI (s) (60:70) [07:33:32:492]: Executing op: RegAddValue(Name=InstanceType,Value=#0,)
+MSI (s) (60:70) [07:33:32:492]: Executing op: RegAddValue(Name=AuthorizedLUAApp,Value=#0,)
+MSI (s) (60:70) [07:33:32:493]: Executing op: RegAddValue(Name=DeploymentFlags,Value=#3,)
+MSI (s) (60:70) [07:33:32:493]: Executing op: RegAddValue(Name=Clients,Value=[~]:[~],)
+MSI (s) (60:70) [07:33:32:494]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA\SourceList,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:494]: Executing op: RegAddValue(Name=PackageName,Value=fsp.msi,)
+MSI (s) (60:70) [07:33:32:495]: Executing op: RegAddValue(Name=LastUsedSource,Value=#%n;1;D:\Program Files\Microsoft Configuration Manager\bin\x64\,)
+MSI (s) (60:70) [07:33:32:495]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA\SourceList\Net,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:495]: Executing op: RegAddValue(Name=1,Value=#%D:\Program Files\Microsoft Configuration Manager\bin\x64\,)
+MSI (s) (60:70) [07:33:32:496]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA\SourceList\Media,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:496]: Executing op: RegAddValue(Name=1,Value=;,)
+MSI (s) (60:70) [07:33:32:497]: Executing op: RegAddValue(Name=2,Value=;,)
+MSI (s) (60:70) [07:33:32:497]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Classes\Installer\Products\39919BB360CA8CA42AF6CB262E08EDDA,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:498]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\{3BB91993-AC06-4AC8-A26F-BC62E280DEAD},SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:498]: Executing op: RegAddValue(Name=DisplayName,Value=ConfigMgr Fallback Status Point,)
+MSI (s) (60:70) [07:33:32:500]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\InstallProperties,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:500]: Executing op: RegAddValue(Name=DisplayName,Value=ConfigMgr Fallback Status Point,)
+MSI (s) (60:70) [07:33:32:502]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\InstallProperties,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:502]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:503]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:503]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:503]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Usage,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:504]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:504]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Usage 3: 2
+MSI (s) (60:70) [07:33:32:504]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Usage,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:504]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:506]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UpgradeCodes\298970630F025A54C9676A51115E5D02,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:506]: Executing op: RegAddValue(Name=39919BB360CA8CA42AF6CB262E08EDDA,,)
+MSI (s) (60:70) [07:33:32:507]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\{3BB91993-AC06-4AC8-A26F-BC62E280DEAD},SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:507]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:508]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:508]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:509]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:509]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:509]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:510]: Executing op: RegAddValue(Name=Language,Value=#1033,)
+MSI (s) (60:70) [07:33:32:510]: Executing op: RegAddValue(Name=Version,Value=#83895176,)
+MSI (s) (60:70) [07:33:32:511]: Executing op: RegAddValue(Name=WindowsInstaller,Value=#1,)
+MSI (s) (60:70) [07:33:32:511]: Executing op: RegAddValue(Name=VersionMinor,Value=#0,)
+MSI (s) (60:70) [07:33:32:511]: Executing op: RegAddValue(Name=VersionMajor,Value=#5,)
+MSI (s) (60:70) [07:33:32:512]: Executing op: RegAddValue(Name=URLUpdateInfo,,)
+MSI (s) (60:70) [07:33:32:512]: Executing op: RegAddValue(Name=URLInfoAbout,,)
+MSI (s) (60:70) [07:33:32:513]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:513]: Executing op: RegAddValue(Name=SystemComponent,Value=#1,)
+MSI (s) (60:70) [07:33:32:514]: Executing op: RegAddValue(Name=EstimatedSize,Value=#4181,)
+MSI (s) (60:70) [07:33:32:514]: Executing op: RegAddValue(Name=Size,,)
+MSI (s) (60:70) [07:33:32:515]: Executing op: RegAddValue(Name=Readme,,)
+MSI (s) (60:70) [07:33:32:515]: Executing op: RegAddValue(Name=Publisher,Value=Microsoft Corporation,)
+MSI (s) (60:70) [07:33:32:516]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:516]: Executing op: RegAddValue(Name=NoRemove,Value=#1,)
+MSI (s) (60:70) [07:33:32:517]: Executing op: RegAddValue(Name=NoModify,Value=#1,)
+MSI (s) (60:70) [07:33:32:517]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:518]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:518]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:518]: Executing op: RegAddValue(Name=InstallSource,Value=D:\Program Files\Microsoft Configuration Manager\bin\x64\,)
+MSI (s) (60:70) [07:33:32:519]: Executing op: RegAddValue(Name=InstallLocation,,)
+MSI (s) (60:70) [07:33:32:520]: Executing op: RegAddValue(Name=InstallDate,Value=20221222,)
+MSI (s) (60:70) [07:33:32:520]: Executing op: RegAddValue(Name=HelpTelephone,,)
+MSI (s) (60:70) [07:33:32:521]: Executing op: RegAddValue(Name=HelpLink,,)
+MSI (s) (60:70) [07:33:32:521]: Executing op: RegAddValue(Name=DisplayVersion,Value=5.00.9096.1000,)
+MSI (s) (60:70) [07:33:32:522]: Executing op: RegAddValue(Name=Contact,,)
+MSI (s) (60:70) [07:33:32:522]: Executing op: RegAddValue(Name=Comments,,)
+MSI (s) (60:70) [07:33:32:523]: Executing op: RegAddValue(Name=AuthorizedCDFPrefix,,)
+MSI (s) (60:70) [07:33:32:523]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\InstallProperties,SecurityDescriptor=BinaryData,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:523]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:525]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:525]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:525]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:526]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:526]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:527]: Executing op: RegAddValue(Name=Language,Value=#1033,)
+MSI (s) (60:70) [07:33:32:527]: Executing op: RegAddValue(Name=Version,Value=#83895176,)
+MSI (s) (60:70) [07:33:32:528]: Executing op: RegAddValue(Name=WindowsInstaller,Value=#1,)
+MSI (s) (60:70) [07:33:32:528]: Executing op: RegAddValue(Name=VersionMinor,Value=#0,)
+MSI (s) (60:70) [07:33:32:529]: Executing op: RegAddValue(Name=VersionMajor,Value=#5,)
+MSI (s) (60:70) [07:33:32:529]: Executing op: RegAddValue(Name=URLUpdateInfo,,)
+MSI (s) (60:70) [07:33:32:530]: Executing op: RegAddValue(Name=URLInfoAbout,,)
+MSI (s) (60:70) [07:33:32:530]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:530]: Executing op: RegAddValue(Name=SystemComponent,Value=#1,)
+MSI (s) (60:70) [07:33:32:531]: Executing op: RegAddValue(Name=EstimatedSize,Value=#4181,)
+MSI (s) (60:70) [07:33:32:531]: Executing op: RegAddValue(Name=Size,,)
+MSI (s) (60:70) [07:33:32:532]: Executing op: RegAddValue(Name=Readme,,)
+MSI (s) (60:70) [07:33:32:532]: Executing op: RegAddValue(Name=Publisher,Value=Microsoft Corporation,)
+MSI (s) (60:70) [07:33:32:533]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:533]: Executing op: RegAddValue(Name=NoRemove,Value=#1,)
+MSI (s) (60:70) [07:33:32:534]: Executing op: RegAddValue(Name=NoModify,Value=#1,)
+MSI (s) (60:70) [07:33:32:534]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:534]: Executing op: RegAddValue(Name=LocalPackage,Value=C:\Windows\Installer\c9be22a.msi,)
+MSI (s) (60:70) [07:33:32:535]: Executing op: RegCreateKey()
+MSI (s) (60:70) [07:33:32:535]: Executing op: RegAddValue(Name=InstallSource,Value=D:\Program Files\Microsoft Configuration Manager\bin\x64\,)
+MSI (s) (60:70) [07:33:32:536]: Executing op: RegAddValue(Name=InstallLocation,,)
+MSI (s) (60:70) [07:33:32:536]: Executing op: RegAddValue(Name=InstallDate,Value=20221222,)
+MSI (s) (60:70) [07:33:32:537]: Executing op: RegAddValue(Name=HelpTelephone,,)
+MSI (s) (60:70) [07:33:32:537]: Executing op: RegAddValue(Name=HelpLink,,)
+MSI (s) (60:70) [07:33:32:538]: Executing op: RegAddValue(Name=DisplayVersion,Value=5.00.9096.1000,)
+MSI (s) (60:70) [07:33:32:538]: Executing op: RegAddValue(Name=Contact,,)
+MSI (s) (60:70) [07:33:32:539]: Executing op: RegAddValue(Name=Comments,,)
+MSI (s) (60:70) [07:33:32:539]: Executing op: RegAddValue(Name=AuthorizedCDFPrefix,,)
+MSI (s) (60:70) [07:33:32:540]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\TempPackages,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:540]: Executing op: RegRemoveValue(Name=C:\Windows\Installer\c9be22a.msi,Value=#0,)
+MSI (s) (60:70) [07:33:32:541]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:541]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Installer\TempPackages 3: 2
+MSI (s) (60:70) [07:33:32:541]: Executing op: RegOpenKey(Root=-2147483646,Key=Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Transforms,,BinaryType=1,,)
+MSI (s) (60:70) [07:33:32:541]: Executing op: RegRemoveKey()
+MSI (s) (60:70) [07:33:32:541]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\39919BB360CA8CA42AF6CB262E08EDDA\Transforms 3: 2
+MSI (s) (60:70) [07:33:32:542]: Executing op: End(Checksum=0,ProgressTotalHDWord=0,ProgressTotalLDWord=0)
+MSI (s) (60:70) [07:33:32:542]: Error in rollback skipped.	Return: 5
+MSI (s) (60:70) [07:33:32:548]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:552]: Note: 1: 2318 2:
+MSI (s) (60:70) [07:33:32:553]: No System Restore sequence number for this installation.
+MSI (s) (60:70) [07:33:32:554]: Unlocking Server
+MSI (s) (60:70) [07:33:32:556]: PROPERTY CHANGE: Deleting UpdateStarted property. Its current value is '1'.
+Action ended 7:33:32: INSTALL. Return value 3.
+Property(S): UpgradeCode = {36079892-20F0-45A5-9C76-A61511E5D520}
+Property(S): TARGETDIR = C:\Windows\CCM\
+Property(S): ALLUSERS = 1
+Property(S): ErrorDialog = ErrorDialog
+Property(S): ProductName = ConfigMgr Fallback Status Point
+Property(S): ProductCode = {3BB91993-AC06-4AC8-A26F-BC62E280DEAD}
+Property(S): PackageCode = {1FCE9B15-A730-40D4-8EAB-2B68BC90B6ED}
+Property(S): Manufacturer = Microsoft Corporation
+Property(S): ProductVersion = 5.00.9096.1000
+Property(S): ProductLanguage = 1033
+Property(S): FSPStaging.209B4FC3_090D_436F_9407_2225A6AE1E17 = C:\Windows\CCM\FSPStaging\
+Property(S): Logs.209B4FC3_090D_436F_9407_2225A6AE1E17 = C:\Windows\CCM\Logs\
+Property(S): AppDataFolder = C:\Users\VRUser\AppData\Roaming\
+Property(S): ARPSYSTEMCOMPONENT = 1
+Property(S): ARPNOREMOVE = 1
+Property(S): ARPNOMODIFY = 1
+Property(S): FSPENABLELOGGING_Default = TRUE
+Property(S): FSPLOGLEVEL_Default = 0
+Property(S): FSPLOGMAXSIZE_Default = 2000000
+Property(S): FSPLOGMAXHISTORY_Default = 1
+Property(S): SecureCustomProperties = FSPSTARTSERVICES;FSPADMINS;FSPENABLELOGGING;FSPLOGLEVEL;FSPLOGMAXHISTORY;FSPLOGMAXSIZE;FSPUPGRADEPRODUCTS;FSPUPLEVELPRODUCTS;FSPAUTODETECT;CCMINSTALLDIR;FSPALLOWSILENTREBOOT;SMSCWS;USESMSPORTS;SMSPORTS
+Property(S): AdminProperties = FSPADMINS;FSPENABLELOGGING;FSPLOGLEVEL;FSPLOGMAXHISTORY;FSPLOGMAXSIZE;FSPALLOWSILENTREBOOT;SMSCWS
+Property(S): SmsFSPDetectDowngrade_ErrorMessage = A newer version of the SMS Fallback Status Point is already installed
+Property(S): SMSCWSREGKEYNAME = FSPCWSPath
+Property(S): SMSCWSIDREGKEYNAME = FSPCWSId
+Property(S): CcmValidateCustomWebSite_ActionText = This custom action validates that either the custom website or default website (if a custom website is not specified) can be used.
+Property(S): CcmCreateIISVirtualDirectoriesInit_ActionText = Processes the CcmIISVirtualDirectory table and passes that information to CcmCreateIISVirtualDirectories to create the virtual directories.
+Property(S): CcmCreateIISVirtualDirectories_ActionText = Creates the virtual directories specified in the CcmIISVirtualDirectory table.
+Property(S): CcmRollbackIISVirtualDirectories_ActionText = Calls CcmRemoveIISVirtualDirectories. Removes IIS Virtual Directories found in CcmRemoveIISVirtualDirectoriesInit.
+Property(S): CcmRemoveIISVirtualDirectoriesInit_ActionText = Queries the CcmIISVirtualDirectory table for IIS Virtual Directories to be removed.
+Property(S): CcmRemoveIISVirtualDirectories_ActionText = Removes IIS Virtual Directories found in CcmRemoveIISVirtualDirectoriesInit.
+Property(S): CcmCreateIISApplicationPoolsInit_ActionText = Processes the CcmIISAplicationPool table and passes that context to CcmCreateIISAplicationPools custom action.
+Property(S): CcmCreateIISApplicationPools_ActionText = Creates the application pools specified in the CcmIISAplicationPools table.
+Property(S): CcmCreateIISApplicationPoolsRollback_ActionText = Calls CcmRemoveIISApplicationPools. Removes IIS Application Pools found in CcmRemoveIISApplicationPoolsInit.
+Property(S): CcmRemoveIISApplicationPoolsInit_ActionText = Queries the CcmIISApplicationPool table for IIS Application Pools to be removed.
+Property(S): CcmRemoveIISApplicationPools_ActionText = Removes IIS Application Pools found in CcmRemoveIISApplicationPoolsInit.
+Property(S): CcmSetObjectSecurityInit_ActionText = Queries the CcmObjectSecurity table and passes this information to CcmSetObjectSecurity.
+Property(S): CcmSetObjectSecurity_ActionText = Sets the security to each object passed from CcmSetObjectSecurityInit.
+Property(S): CcmDetectFilesInUseInit_ActionText = Detects file in use.
+Property(S): CcmDetectFilesInUse_ActionText = Moves files that are in use so that they will be deleted upon the next reboot.
+Property(S): CcmDetectFilesInUseRollback_ActionText = Rolls back files moved by CcmDetectFilesInUse.
+Property(S): CcmDetectFilesInUseCommit_ActionText = Commits action of CcmDetectFileInUse. After this we cannot rollback.
+Property(S): CcmDetectFilesInUseRemoveRollback_ActionText = Calls CcmDetectFilesInUseRollback. Rolls back the files moved by CcmDetectFilesInUse.
+Property(S): CcmDetectFilesInUseRemoveCommit_ActionText = Calls CcmDetectFilesInUseCommit. Commits action of CcmDetectFileInUse. After this the action cannot be rolled back.
+Property(S): CcmSetInstallDirFromCmdLine_ActionText = Sets installation directory from command line parameters.
+Property(S): CcmSetInstallDir_ActionText = Sets installation directory.
+Property(S): CcmSwitchToRepairMode_ActionText = Switches to repair mode if product is already installed.
+Property(S): CcmDetectFilesInUseRemoveInit_ActionText = Detects if file is in use when attempting to remove it.
+Property(S): CcmCheckRepairNotInstalled_ActionText = Checks if reinstall is selected when the product is not installed.
+Property(S): SmsFSPDetectDowngrade_ActionText = Detects if the installation will result in a downgrade.
+Property(S): SmsFSPSuppressReboot_ActionText = Suppresses reboot during installation.
+Property(S): CcmSetPrimaryFolder_ActionText = Sets installation directory.
+Property(S): CcmCheckFreeDiskSpace_ActionText = Checks if there is enough free disk space for installation.
+Property(S): ButtonText_Next = &Next >
+Property(S): ButtonText_Back = < &Back
+Property(S): ButtonText_Cancel = &Cancel
+Property(S): ButtonText_Finish = &Finish
+Property(S): ButtonText_Install = &Install
+Property(S): ButtonText_Close = &Close
+Property(S): ButtonText_OK = &OK
+Property(S): ButtonText_Abort = &Abort
+Property(S): ButtonText_Ignore = &Ignore
+Property(S): ButtonText_No = &No
+Property(S): ButtonText_Yes = &Yes
+Property(S): ButtonText_Retry = &Retry
+Property(S): ButtonText_Exit = &Exit
+Property(S): FilesInUse_Info = Setup has detected that it needs to update some files that are currently in use by other processes.
+
+To prevent having to reboot the machine, please close the following applications:
+Property(S): DefaultUIFont = DefaultDlgFont
+Property(S): DialogBox_Title = ConfigMgr Fallback Status Point Setup
+Property(S): WelcomeDialog_Info = This will install the ConfigMgr Fallback Status Point.
+Property(S): InstallDialog_Title = Install
+Property(S): InstallDialog_SubTitle = The product is now ready to install
+Property(S): InstallDialog_Info = Click Next to proceed.
+Property(S): ProgressDialog_Title = Please Wait
+Property(S): ProgressDialog_SubTitle = Setup is configuring your system.
+Property(S): CompleteDialog_Title = Setup Complete
+Property(S): CompleteDialog_SubTitle = Setup has finished updating your system.
+Property(S): CompleteDialog_Info = Setup was successful.
+Property(S): UserExitDialog_Title = Setup Aborted
+Property(S): UserExitDialog_SubTitle = Setup was cancelled
+Property(S): UserExitDialog_Info = The ConfigMgr Fallback Status Point setup was cancelled.
+Property(S): InstallErrorDialog_Title = Setup Aborted
+Property(S): InstallErrorDialog_SubTitle = Setup failed
+Property(S): InstallErrorDialog_Info = Setup encountered an error and could not continue.
+Property(S): REBOOT = ReallySuppress
+Property(S): PRIMARYFOLDER = TARGETDIR
+Property(S): CcmRemoveIISVirtualDirectories = ConfigMgr Fallback Status Point
+0
+0
+1
+1
+FSPCWSId
+8
+
+
+
+
+
+SMS_FSP,,C:\Windows\CCM\SMS_FSP,N,N
+BEGIN PROPERTY
+AuthAnonymous
+boolean
+true
+AccessExecute
+boolean
+true
+AccessRead
+boolean
+false
+AccessSSL
+boolean
+false
+AccessSSLNegotiateCert
+boolean
+false
+AccessSSLRequireCert
+boolean
+false
+AppPoolId
+string
+SMS Fallback Status Point Pool
+AuthNTLM
+boolean
+false
+EnableDefaultDoc
+boolean
+false
+EnableDirBrowsing
+boolean
+false
+END PROPERTY
+BEGIN SCRIPTMAP
+sms_fsp
+C:\Windows\CCM\FSPIsapi.dll
+0
+POST
+SMS_FSP
+END SCRIPTMAP
+
+
+Property(S): CcmRemoveIISApplicationPools = SMS Fallback Status Point Pool
+BEGIN PROPERTY
+processModel/identityType
+long
+LocalService
+END PROPERTY
+
+
+Property(S): CcmDetectFilesInUse = *C:\Windows\CCM\FSPStaging\*.*
+*C:\Windows\CCM\Logs\FSP*.log
+-C:\Windows\CCM\FSPIsapi.dll
+
+Property(S): CCMINSTALLDIR = C:\Windows\CCM\
+Property(S): REMOVE = ALL
+Property(S): FSPVDirRoot.34C6DDB5_4471_431B_A83E_7D5F4BD77BCE = C:\Windows\CCM\SMS_FSP\
+Property(S): SystemFolder.12C909B6_5F69_4C4D_8EC3_C225C1607933 = C:\Windows\SysWOW64\
+Property(S): System64Folder.12C909B6_5F69_4C4D_8EC3_C225C1607933 = C:\Windows\system32\
+Property(S): InstallDir.5C76F613_7E3B_40BB_A16D_C5D8CDB88506 = C:\Windows\CCM\
+Property(S): MsiLogFileLocation = D:\Program Files\Microsoft Configuration Manager\logs\fspMSI.log
+Property(S): ProductState = 5
+Property(S): CURRENTDIRECTORY = C:\Windows\system32
+Property(S): CLIENTUILEVEL = 3
+Property(S): MSICLIENTUSESEXTERNALUI = 1
+Property(S): CLIENTPROCESSID = 6136
+Property(S): PRODUCTLANGUAGE = 1033
+Property(S): VersionDatabase = 200
+Property(S): VersionMsi = 5.00
+Property(S): VersionNT = 603
+Property(S): VersionNT64 = 603
+Property(S): WindowsBuild = 9600
+Property(S): ServicePackLevel = 0
+Property(S): ServicePackLevelMinor = 0
+Property(S): MsiNTProductType = 3
+Property(S): WindowsFolder = C:\Windows\
+Property(S): WindowsVolume = C:\
+Property(S): System64Folder = C:\Windows\system32\
+Property(S): SystemFolder = C:\Windows\SysWOW64\
+Property(S): RemoteAdminTS = 1
+Property(S): TempFolder = C:\Users\VRUser\AppData\Local\Temp\
+Property(S): ProgramFilesFolder = C:\Program Files (x86)\
+Property(S): CommonFilesFolder = C:\Program Files (x86)\Common Files\
+Property(S): ProgramFiles64Folder = C:\Program Files\
+Property(S): CommonFiles64Folder = C:\Program Files\Common Files\
+Property(S): FavoritesFolder = C:\Users\VRUser\Favorites\
+Property(S): NetHoodFolder = C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Network Shortcuts\
+Property(S): PersonalFolder = C:\Users\VRUser\Documents\
+Property(S): PrintHoodFolder = C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Printer Shortcuts\
+Property(S): RecentFolder = C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\Recent\
+Property(S): SendToFolder = C:\Users\VRUser\AppData\Roaming\Microsoft\Windows\SendTo\
+Property(S): TemplateFolder = C:\ProgramData\Microsoft\Windows\Templates\
+Property(S): CommonAppDataFolder = C:\ProgramData\
+Property(S): LocalAppDataFolder = C:\Users\VRUser\AppData\Local\
+Property(S): MyPicturesFolder = C:\Users\VRUser\Pictures\
+Property(S): AdminToolsFolder = C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\
+Property(S): StartupFolder = C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\
+Property(S): ProgramMenuFolder = C:\ProgramData\Microsoft\Windows\Start Menu\Programs\
+Property(S): StartMenuFolder = C:\ProgramData\Microsoft\Windows\Start Menu\
+Property(S): DesktopFolder = C:\Users\Public\Desktop\
+Property(S): FontsFolder = C:\Windows\Fonts\
+Property(S): GPTSupport = 1
+Property(S): OLEAdvtSupport = 1
+Property(S): ShellAdvtSupport = 1
+Property(S): MsiAMD64 = 6
+Property(S): Msix64 = 6
+Property(S): Intel = 6
+Property(S): PhysicalMemory = 32768
+Property(S): VirtualMemory = 33622
+Property(S): AdminUser = 1
+Property(S): MsiTrueAdminUser = 1
+Property(S): LogonUser = VRUser
+Property(S): UserSID = S-1-5-21-2770504749-1329334717-2188162814-333270
+Property(S): UserLanguageID = 1033
+Property(S): ComputerName = VR-SRV-01
+Property(S): SystemLanguageID = 1033
+Property(S): ScreenX = 1024
+Property(S): ScreenY = 768
+Property(S): CaptionHeight = 23
+Property(S): BorderTop = 1
+Property(S): BorderSide = 1
+Property(S): MsiTabletPC = 1
+Property(S): TextHeight = 16
+Property(S): TextInternalLeading = 3
+Property(S): ColorBits = 32
+Property(S): TTCSupport = 1
+Property(S): Time = 7:33:32
+Property(S): Date = 1/17/2023
+Property(S): MsiNetAssemblySupport = 4.8.3761.0
+Property(S): MsiWin32AssemblySupport = 6.3.17763.3532
+Property(S): RedirectedDllSupport = 2
+Property(S): MsiRunningElevated = 1
+Property(S): Privileged = 1
+Property(S): USERNAME = VividRock
+Property(S): COMPANYNAME = VividRock
+Property(S): Installed = 00:00:00
+Property(S): DATABASE = C:\Windows\Installer\c9be22a.msi
+Property(S): UILevel = 2
+Property(S): OriginalDatabase = C:\Windows\Installer\c9be22a.msi
+Property(S): Preselected = 1
+Property(S): ACTION = INSTALL
+Property(S): ROOTDRIVE = E:\
+Property(S): CostingComplete = 1
+Property(S): OutOfDiskSpace = 0
+Property(S): OutOfNoRbDiskSpace = 0
+Property(S): PrimaryVolumeSpaceAvailable = 130682680
+Property(S): PrimaryVolumeSpaceRequired = -20336
+Property(S): PrimaryVolumeSpaceRemaining = 130703016
+Property(S): INSTALLLEVEL = 1
+Property(S): PrimaryVolumePath = C:
+MSI (s) (60:70) [07:33:32:617]: Note: 1: 1725
+MSI (s) (60:70) [07:33:32:617]: Product: ConfigMgr Fallback Status Point -- Removal failed.
+
+MSI (s) (60:70) [07:33:32:618]: Windows Installer removed the product. Product Name: ConfigMgr Fallback Status Point. Product Version: 5.00.9096.1000. Product Language: 1033. Manufacturer: Microsoft Corporation. Removal success or error status: 1603.
+
+MSI (s) (60:70) [07:33:32:621]: Deferring clean up of packages/files, if any exist
+MSI (s) (60:70) [07:33:32:621]: MainEngineThread is returning 1603
+MSI (s) (60:0C) [07:33:32:626]: RESTART MANAGER: Session closed.
+MSI (s) (60:0C) [07:33:32:626]: No System Restore sequence number for this installation.
+=== Logging stopped: 1/17/2023  7:33:32 ===
+MSI (s) (60:0C) [07:33:32:633]: User policy value 'DisableRollback' is 0
+MSI (s) (60:0C) [07:33:32:633]: Machine policy value 'DisableRollback' is 0
+MSI (s) (60:0C) [07:33:32:633]: Incrementing counter to disable shutdown. Counter after increment: 0
+MSI (s) (60:0C) [07:33:32:634]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Installer\Rollback\Scripts 3: 2
+MSI (s) (60:0C) [07:33:32:634]: Note: 1: 1402 2: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Installer\Rollback\Scripts 3: 2
+MSI (s) (60:0C) [07:33:32:635]: Decrementing counter to disable shutdown. If counter >= 0, shutdown will be denied.  Counter after decrement: -1
+MSI (s) (60:0C) [07:33:32:635]: Destroying RemoteAPI object.
+MSI (s) (60:50) [07:33:32:635]: Custom Action Manager thread ending.
+MSI (c) (F8:00) [07:33:32:638]: Decrementing counter to disable shutdown. If counter >= 0, shutdown will be denied.  Counter after decrement: -1
+MSI (c) (F8:00) [07:33:32:639]: MainEngineThread is returning 1603
+MSI (c) (F8:A0) [07:33:32:646]: RESTART MANAGER: Session closed.
+=== Verbose logging stopped: 1/17/2023  7:33:32 ===
+
