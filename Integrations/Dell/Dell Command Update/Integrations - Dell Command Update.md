@@ -25,22 +25,21 @@ The following items are referenced in the code within this document. Familiarize
   - [Install](#install)
     - [Extract the MSI](#extract-the-msi)
     - [Package in MECM](#package-in-mecm)
+  - [Configure](#configure)
+    - [Export/Import Method](#exportimport-method)
+      - [Export Reference XML](#export-reference-xml)
+      - [Import Reference XML](#import-reference-xml)
+    - [DCU CLI Method](#dcu-cli-method)
+    - [Group Policy Method](#group-policy-method)
+  - [Uninstall](#uninstall)
     - [Example](#example)
     - [Snippets](#snippets)
     - [Output](#output)
-  - [Uninstall](#uninstall)
+- [Basic Snippets](#basic-snippets)
+  - [\[SnippetTitle\]](#snippettitle)
     - [Example](#example-1)
     - [Snippets](#snippets-1)
     - [Output](#output-1)
-  - [Configure](#configure)
-    - [Example](#example-2)
-    - [Snippets](#snippets-2)
-    - [Output](#output-2)
-- [Basic Snippets](#basic-snippets)
-  - [\[SnippetTitle\]](#snippettitle)
-    - [Example](#example-3)
-    - [Snippets](#snippets-3)
-    - [Output](#output-3)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
 - [Appendices](#appendices)
@@ -69,7 +68,13 @@ The following items are referenced in the code within this document. Familiarize
       - [Table 6. Return codes while running the /driverInstall command](#table-6-return-codes-while-running-the-driverinstall-command)
       - [Table 7. Return codes while evaluating the inputs for password encryption](#table-7-return-codes-while-evaluating-the-inputs-for-password-encryption)
       - [Table 8. Return codes if there are issues with the Dell Client Management Service](#table-8-return-codes-if-there-are-issues-with-the-dell-client-management-service)
-  - [Apdx D: \[Name\]](#apdx-d-name)
+  - [Apdx D: GPO Reference](#apdx-d-gpo-reference)
+    - [Administrative Templates\\Dell\\Dell Command Update](#administrative-templatesdelldell-command-update)
+    - [Administrative Templates\\Dell\\Dell Command Update\\Device Category](#administrative-templatesdelldell-command-updatedevice-category)
+    - [Administrative Templates\\Dell\\Dell Command Update\\Recommended Levels](#administrative-templatesdelldell-command-updaterecommended-levels)
+    - [Administrative Templates\\Dell\\Dell Command Update\\Update Settings](#administrative-templatesdelldell-command-updateupdate-settings)
+    - [Administrative Templates\\Dell\\Dell Command Update\\Update Types](#administrative-templatesdelldell-command-updateupdate-types)
+  - [Apdx E: Read GPO Settings](#apdx-e-read-gpo-settings)
 
 &nbsp;
 
@@ -99,25 +104,124 @@ The following items are referenced in the code within this document. Familiarize
 1. Copy the MSI to your Application content repository
 2. Run the following command to create the Application
 
+```powershell
+# Cmdlet
 
+# Admin Service
+# TODO
+```
 
-### Example
+## Configure
 
-[Text]
+### Export/Import Method
 
-### Snippets
+You can perform the Export/Import method using either the built-in Command Line Interface (CLI) or through the Graphical User Interface (GUI).
+
+#### Export Reference XML
+
+Command Line
+
+1. Manually configure the settings on a reference device
+2. Open an elevated command prompt
+3. Run the following command on the reference device
+  - dcu-cli.exe /configure -exportSettings="C:\Temp\DCUExport"
+4. Save the configs XML to your MECM repository
+
+Graphical User Interface (GUI)
+
+1. Open Dell Command | Update
+2. Click the Settings (gear) icon in the right side of the title bar
+3. Click the Import/Export tab
+4. Click Export
+5. Save the configs XML to your MECM repository
+
+#### Import Reference XML
+
+Command Line
+
+1. Open an elevated command prompt
+2. Run the following command on the target device
+  - dcu-cli.exe /configure -exportSettings="C:\Temp\DCUExport"
+
+Graphical User Interface (GUI)
+
+1. Open Dell Command | Update
+2. Click the Settings (gear) icon in the right side of the title bar
+3. Click the Import/Export tab
+4. Click Import
+5. Import the configs XML from your MECM repository
+
+### DCU CLI Method
 
 ```powershell
 # Local Device
+$Configurations = @(
+  # General Tab
+    "-downloadLocation=C:\ProgramData\Dell\UpdateService\Downloads"
+    "-allowXML=disable"
+    "-catalogLocation="
+    "-defaultSourceLocation=enable"
+    "-customProxy=disable"
+      # "-proxyHost="
+      # "-proxyPort="
+      # "-proxyAuthentication=disable"
+      # "-proxyUserName="
+      # "-proxyPassword="
+    "-userConsent=disable"
+  # Update Settings Tab
+    "-scheduleManual"
+    # "-scheduleAuto"
+    # "-scheduleDaily="
+    # "-scheduleWeekly="
+    # "-scheduleMonthly="
+    #   "-scheduleAction="
+    #   "-updatesNotification=enable"
+    "-maxRetry=2"
+    "-delayDays=0"
+
+  # Update Filter Tab
+    # Cannot Configure "What to Display" using CLI
+    "-updateSeverity=Security,Critical,Recommended,Optional"
+    "-updateType=Driver,Application,BIOS,Firmware,Utility,Others"
+    "-updateCategory=Audio,Chipset,Input,Network,Storage,Video,Others"
+
+  # Import/Export Tab
+    # Nothing to configure
+
+  # Advanced Driver Restore Tab
+    "-advancedDriverRestore=disable"
+    #  "-driverLibraryLocation="
+
+  # BIOS Tab
+    "biosPassword=`"`""
+    #  "secureBiosPassword="
+    "autoSuspendBitLocker=enable"
+
+  # Third Party Licenses Tab
+    # Nothing to configure
+)
+
+
+dcu-cli.exe /configure $Configurations
 
 # Remote Device
 
 ```
 
-### Output
+### Group Policy Method
+
+This method utilizes the provided Group Policy templates to dynamically manage your devices.
+
+Detection
 
 ```powershell
-# Add Code Here
+
+```
+
+Remediation
+
+```powershell
+
 ```
 
 ## Uninstall
@@ -132,35 +236,6 @@ The following items are referenced in the code within this document. Familiarize
 
 ```powershell
 # Local Device
-
-# Remote Device
-
-```
-
-### Output
-
-```powershell
-# Add Code Here
-```
-
-## Configure
-
-[Text]
-
-### Example
-
-[Text]
-
-### Snippets
-
-```powershell
-# Local Device
-$Configurations = @(
-
-)
-
-
-dcu-cli.exe /configure $Configurations
 
 # Remote Device
 
@@ -275,6 +350,7 @@ This is a reference for the default settings of Dell Command | Update.
 | System password                   | No value                            |
 | Automatically suspend BitLocker.  | By default, this option is enabled. |
 
+&nbsp;
 
 ## Apdx B: CIM/WMI Reference
 
@@ -378,6 +454,8 @@ class NonComplianceList {
    string NCUpdateList;
 };
 ```
+
+&nbsp;
 
 ## Apdx C: CLI Reference
 
@@ -562,6 +640,134 @@ To use the CLI, perform the following actions:
 | 3004                | The Dell Client Management Service has initiated a self-update install of the application.  | Wait until the service is available to process new requests.                         |
 | 3005                | The Dell Client Management Service is installing pending updates.                           | Wait until the service is available to process new requests.                         |
 
-## Apdx D: [Name]
+&nbsp;
 
-[Text]
+## Apdx D: GPO Reference
+
+The software can be configured utilizing a Group Policy Object (GPO) by importing the ADMX/ADML files from the extracted EXE contents into your Group Policy Central store.
+
+### Administrative Templates\Dell\Dell Command Update
+
+| Display Name                                       | Property Name                         | Registry Key                                                                                                                    | Description                                                                                                                                                                                                                                                                        | SupportedOn            | Settings               |
+|----------------------------------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|------------------------|
+| Allow Catalog XML Files                            | EnableCatalogXML                      | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | When this setting is enabled, it enables Catalog XML Files.                                                                                                                                                                                                                        | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Configure Driver Library                           | IsCabSourceDell                       | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\AdvancedDriverRestore                           | Set the Driver Library Path(No restricted paths should be added)                                                                                                                                                                                                                   | Windows 10, Windows 11 | [string]File Path      |
+| Configure Proxy Authentication                     | UseAuthentication                     | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General\CustomProxySettings\ProxyAuthentication | Configure Proxy Authentication(Username)                                                                                                                                                                                                                                           | Windows 10, Windows 11 | [string]Username       |
+| Configure Proxy Port                               | Port                                  | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General\CustomProxySettings                     | You need to enable "Configure Proxy server" setting before configuring the proxy port range(0-65535)                                                                                                                                                                               | Windows 10, Windows 11 | [int]0-65535           |
+| Configure Proxy Server                             | UseDefaultProxy                       | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General\CustomProxySettings                     | Configure Proxy Server                                                                                                                                                                                                                                                             | Windows 10, Windows 11 | [string]Server Address |
+| Disable ADR                                        | IsAdvancedDriverRestoreEnabled        | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\AdvancedDriverRestore                           | When this setting is enabled, Advanced Driver Restore does not appear below Driver Updates on the Welcome Screen                                                                                                                                                                   | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Enable Autosuspend bitlocker                       | SuspendBitLocker                      | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | When this setting is enabled, you can set BitLocker to be suspended during BIOS updates. Note: BIOS updates will be blocked on BitLocker encrypted drives if this not enabled                                                                                                      | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Enable Lock Settings                               | LockSettings                          | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\CFG                                                      | When this setting is enabled, the end user will not be able to change any DCU Configuration settings                                                                                                                                                                               | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Enable the Default Dell Catalog                    | EnableDefaultDellCatalog              | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | When this setting is enabled, Dell Command Update will use the default Dell Catalog for updates. When it is disabled, you will need to specify a custom catalog for Dell Command Update to use. If you disable this, without specify a custom catalog XML file, DCU will not work. | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Enable User Consent                                | UserConsent                           | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | When this setting is enabled, Dell will collect usage information for the purpose of improving its products and services.                                                                                                                                                          | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Set the Download Path                              | DownloadPath                          | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | Change where the update files are stored. Note: files are automatically deleted from this location after installation.(No restricted paths should be added)                                                                                                                        | Windows 10, Windows 11 | [string]File Path      |
+| Use internet connection if proxy fails             | EnableProxyFallbackToDirectConnection | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General\CustomProxySettings                     | Use internet connection if proxy fails, Applicable only when Proxy settings are configured.                                                                                                                                                                                        | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| What Updates to display                            | FilterApplicableMode                  | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter                                    | Filter Recommended Updates or All Applicable Updates                                                                                                                                                                                                                               | Windows 10, Windows 11 | [string]Dropdown       |
+
+### Administrative Templates\Dell\Dell Command Update\Device Category
+
+| Display Name                                       | Property Name                         | Registry Key                                                                                                                    | Description                                                                                                                                                                                                                                                                        | SupportedOn            | Type                   |
+|----------------------------------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|------------------------|
+| All Others                                         | IsDeviceCategoryOtherSelected         | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, All Other drivers will be included                                                                                                                                                                                                                   | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Audio Drivers                                      | IsAudioSelected                       | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, Audio drivers will be included                                                                                                                                                                                                                       | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Chipset Drivers                                    | IsChipsetSelected                     | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, Chipset drivers will be included                                                                                                                                                                                                                     | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Input (e.g. Mouse, Keyboard) Drivers               | IsInputSelected                       | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, Input drivers will be included                                                                                                                                                                                                                       | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Network Drivers                                    | IsNetworkSelected                     | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, Network drivers will be included                                                                                                                                                                                                                     | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Storage (e.g. Hard drive, CD/DVD) Drivers          | IsStorageSelected                     | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, Storage drivers will be included                                                                                                                                                                                                                     | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Video Drivers                                      | IsVideoSelected                       | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\DeviceCategory                     | When this setting is enabled, Video drivers will be included                                                                                                                                                                                                                       | Windows 10, Windows 11 | [bool]Enable/Disable   |
+
+### Administrative Templates\Dell\Dell Command Update\Recommended Levels
+
+| Display Name                                       | Property Name                         | Registry Key                                                                                                                    | Description                                                                                                                                                                                                                                                                        | SupportedOn            | Type                   |
+|----------------------------------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|------------------------|
+| Critical Updates                                   | IsCriticalUpdatesSelected             | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\RecommendedLevel                   | When this setting is enabled, Critical Updates will be included                                                                                                                                                                                                                    | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Optional Updates                                   | IsOptionalUpdatesSelected             | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\RecommendedLevel                   | When this setting is enabled, Optional Updates will be included                                                                                                                                                                                                                    | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Recommended Updates                                | IsRecommendedUpdatesSelected          | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\RecommendedLevel                   | When this setting is enabled, Recommended Updates will be included                                                                                                                                                                                                                 | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Security Updates                                   | IsSecurityUpdatesSelected             | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\RecommendedLevel                   | When this setting is enabled, Security Updates will be included                                                                                                                                                                                                                    | Windows 10, Windows 11 | [bool]Enable/Disable   |
+
+### Administrative Templates\Dell\Dell Command Update\Update Settings
+
+| Display Name                                       | Property Name                         | Registry Key                                                                                                                    | Description                                                                                                                                                                                                                                                                        | SupportedOn            | Type                   |
+|----------------------------------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|------------------------|
+| Delay Days                                         | ExcludeUpdatesFromLastNDays           | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | Show Updates Older Than [X] Days                                                                                                                                                                                                                                                   | Windows 10, Windows 11 | [int]0-45              |
+| Disable Notifications                              | DisableNotification                   | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\Schedule                                        | Supress all notifications except mandatory scheduled reboot                                                                                                                                                                                                                        | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Installation Deferral                              | InstallationDeferral                  | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\Schedule                                        | To configure Installation Deferral Settings, you need to set "What to do when updates are found" to "Download and install updates(Notify after complete)" and set the "Disable Notifications" setting to Disabled/Not Configured state                                             | Windows 10, Windows 11 |                        |
+| Maximum Retry Attempts                             | MaxRetryAttempts                      | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\General                                         | Retry attempts to install failed updates (Applicable to both manual and scheduled activity)                                                                                                                                                                                        | Windows 10, Windows 11 | [int]1-3               |
+| Reboot after updates are installed                 | EnableForceRestart                    | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\Schedule                                        | Force reboot after applying updates. To configure this, you need to set "What to do when updates are found" to "Download and install updates(Notify after complete)"                                                                                                               | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| System Restart Deferral                            | SystemRestartDeferral                 | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\Schedule                                        | To configure System Restart Deferral Settings, you need to set "What to do when updates are found" to "Download and install updates(Notify after complete)" state                                                                                                                  | Windows 10, Windows 11 | [int]1-99, [int]1-9    |
+| Update Settings                                    | Update Settings                       | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\Schedule                                        | When this setting is enabled, you can set the update schedule. If left "Not configured" the default is Automatic updates                                                                                                                                                           | Windows 10, Windows 11 | Element/Enum           |
+| What to do when updates are found                  | AutomationMode                        | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\Schedule                                        | When this setting is enabled you can configure what happens when updates are found                                                                                                                                                                                                 | Windows 10, Windows 11 | Element/Enum           |
+
+### Administrative Templates\Dell\Dell Command Update\Update Types
+
+| Display Name                                       | Property Name                         | Registry Key                                                                                                                    | Description                                                                                                                                                                                                                                                                        | SupportedOn            | Type                   |
+|----------------------------------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|------------------------|
+| All Others                                         | IsUpdateTypeOtherSelected             | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\UpdateType                         | When this setting is enabled, All Other updates will be included                                                                                                                                                                                                                   | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Application Software (e.g. Dell Command \| Update) | IsApplicationSelected                 | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\UpdateType                         | When this setting is enabled, Application Updates will be included                                                                                                                                                                                                                 | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| BIOS Updates                                       | IsBiosSelected                        | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\UpdateType                         | When this setting is enabled, BIOS Updates will be included                                                                                                                                                                                                                        | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Firmware Updates                                   | IsFirmwareSelected                    | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\UpdateType                         | When this setting is enabled, Firmware will be included                                                                                                                                                                                                                            | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Hardware Drivers                                   | IsDriverSelected                      | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\UpdateType                         | When this setting is enabled, Hardware updates will be included                                                                                                                                                                                                                    | Windows 10, Windows 11 | [bool]Enable/Disable   |
+| Utility Software                                   | IsUtilitySelected                     | SOFTWARE\Policies\Dell\UpdateService\Clients\CommandUpdate\Preferences\Settings\UpdateFilter\UpdateType                         | When this setting is enabled, Utility Software will be included                                                                                                                                                                                                                    | Windows 10, Windows 11 | [bool]Enable/Disable   |
+
+&nbsp;
+
+## Apdx E: Read GPO Settings
+
+This script helps to parse the GPO file and pull out basic configuration information.
+
+```powershell
+# Get Main Policy File
+  [xml]$XMLContent_01 = (Get-Content -Path '.\Dell Command Update.ADMX')
+  $Policies = $XMLContent_01.'policyDefinitions'.'policies'.'policy'
+
+# Get Language File
+  [xml]$XMLContent_02 = (Get-Content -Path '.\en-US\Dell Command Update.ADML')
+  $Policies_Resources = $XMLContent_02.'policyDefinitionResources'.'resources'
+
+$Temp_Object = $null
+$Object_Result = @()
+
+foreach ($Item in $Policies) {
+  # Construct Temp Object
+    $Temp_Object = [PSCustomObject]@{
+      "Class"       = $Item.class
+      "PolicyName"  = $Item.name
+      "DisplayName" = ($Policies_Resources.stringTable.string | Where-Object -FilterScript { $Item.displayName -like "*$($_.id))" }).'#text'
+      "Property"    = $Item.valueName
+      "RegKey"      = $Item.key
+      "Description" = ($Policies_Resources.stringTable.string | Where-Object -FilterScript { $Item.explainText -like "*$($_.id))" }).'#text'
+      "SupportedOn" = ($Policies_Resources.stringTable.string | Where-Object -FilterScript { $(($XMLContent_01.'policyDefinitions'.'supportedOn'.'definitions'.'definition' | Where-Object -FilterScript { $_.Name -eq $Item.'supportedOn'.'ref' }).displayName) -like "*$($_.id)*" }).'#text'
+      "Type"        = $null
+    }
+
+  # EnabledList
+    if ($Item.'enabledList') {
+      $Temp_Object.Property = $Item.'enabledList'.'item'.'valueName'
+    }
+
+  # Text Elements
+    elseif ($Item.'elements'.'text') {
+      $Temp_Object.Property = $Item.'elements'.'text'.'valueName'
+      $Temp_Object.Type = "Element/Text"
+    }
+
+    elseif ($Item.'elements'.'decimal') {
+      $Temp_Object.Property = $Item.'elements'.'decimal'.'valueName'
+      $Temp_Object.Type = "Element/Decimal"
+    }
+
+    elseif ($Item.'elements'.'enum') {
+      $Temp_Object.Property = $Item.'elements'.'enum'.'valueName'
+      $Temp_Object.Type = "Element/Enum"
+    }
+    else {
+      $Temp_Object.Type = "Boolean"
+    }
+
+  # Add Object to Results
+    $Object_Result += $Temp_Object
+}
+
+$Object_Result | Format-Table
+$Object_Result | ConvertTo-Csv | Out-File -FilePath "C:\Users\V00004255.SA\Downloads\Temp_GPO_Output.csv"
+```
