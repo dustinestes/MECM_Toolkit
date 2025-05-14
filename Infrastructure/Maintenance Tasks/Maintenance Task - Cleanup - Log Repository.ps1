@@ -476,7 +476,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
         else {
           $Item."Folders"     = "-"
           $Item."Files"       = "-"
-          $Item."Size(MB)"    = "-"
+          $Item."Size(MB)"    = "0"
         }
       }
 
