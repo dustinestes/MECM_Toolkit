@@ -463,14 +463,23 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
     try {
       foreach ($Item in ($Dataset_Logging_Directories_Results | Where-Object -Property "Remove" -eq $true)) {
         if ($Item.Depth -eq $Param_Depth) {
-          $Temp_Logging_Directory_Measure  = Get-ChildItem -Path $Item.Path -Recurse
-          $Item."Folders"     = ($Temp_Logging_Directory_Measure | Where-Object -Property PSIsContainer -eq $true).Count
-          $Item."Files"       = ($Temp_Logging_Directory_Measure | Where-Object -Property PSIsContainer -eq $false).Count
-          if (($Temp_Logging_Directory_Measure | Where-Object -Property PSIsContainer -eq $false).Count -gt 0) {
-            $Item."Size(MB)"    = ($Temp_Logging_Directory_Measure | Measure-Object -Sum Length).Sum / 1mb
+          $Temp_Logging_Directory_Measure  = Get-ChildItem -Path $Item.Path -Recurse -ErrorAction SilentlyContinue
+
+          if ($Temp_Logging_Directory_Measure) {
+            $Item."Folders"     = ($Temp_Logging_Directory_Measure | Where-Object -Property PSIsContainer -eq $true).Count
+            $Item."Files"       = ($Temp_Logging_Directory_Measure | Where-Object -Property PSIsContainer -eq $false).Count
+            if (($Temp_Logging_Directory_Measure | Where-Object -Property PSIsContainer -eq $false).Count -gt 0) {
+              $Item."Size(MB)"    = [System.Math]::Round(($Temp_Logging_Directory_Measure | Measure-Object -Sum Length).Sum / 1mb, 2)
+            }
+            else {
+              $Item."Size(MB)"    = 0
+            }
           }
           else {
-            $Item."Size(MB)"    = 0
+            $Item."Folders"     = "-"
+            $Item."Files"       = "-"
+            $Item."Size(MB)"    = "0"
+            $Item."Status"      = "Error"
           }
         }
         else {
@@ -516,7 +525,7 @@ Start-Transcript -Path "$($OutputDir)\$($OutputName).log" -ErrorAction SilentlyC
           Remove-Item -LiteralPath $Item.Path -Recurse -Force
           $Item.Status = "Removed"
         }
-        Write-Host "        Space Recovered (GB): $([System.Math]::Round(($Dataset_Logging_Directories_Results | Where-Object -Property "Remove" -eq $true | Measure-Object -Sum "Size(MB)").Sum / 1GB, 2))"
+        Write-Host "        Space Recovered (MB): $(($Dataset_Logging_Directories_Results | Where-Object -Property "Remove" -eq $true | Measure-Object -Sum "Size(MB)").Sum)"
         Write-Host "        Status: Success"
       }
     }
