@@ -14,7 +14,6 @@ A collection of scripts, tools, and processes for the successful installation, a
 | Name           | Description                                                                                                                                                                    |
 |----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | # Templates    | Contain template documents used to generate files within the repo                                                                                                              |
-| # TODO         | Used to place files under development or that need to be redone to align with standards                                                                                        |
 | Applications   | Application management folder for everything pertaining to packaging, deploying, and detecting applications                                                                    |
 | Client         | Client management folder for everything pertaining to installing and managing the MECM client                                                                                  |
 | Infrastructure | Infrastructure management folder for everything pertaining to installation, administration, and automation of the MECM environment                                             |
