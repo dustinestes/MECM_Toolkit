@@ -24,9 +24,12 @@ The following items are referenced in the code within this document. Familiarize
     - [Snippets](#snippets)
     - [Send Schedule Tool (SendSchedule.exe)](#send-schedule-tool-sendscheduleexe)
     - [Output](#output)
-  - [Reset Client Policy](#reset-client-policy)
+  - [Reset Client Policy Using (TriggerSchedule Method)](#reset-client-policy-using-triggerschedule-method)
     - [Snippets](#snippets-1)
     - [Output](#output-1)
+  - [Reset Client Policy (ResetPolicy Method)](#reset-client-policy-resetpolicy-method)
+    - [Snippets](#snippets-2)
+    - [Output](#output-2)
 - [Advanced Functions](#advanced-functions)
   - [\[Title\]](#title)
 - [Appendices](#appendices)
@@ -115,9 +118,9 @@ REM Trigger a Specific Configuration Baseline Evaluation
 
 &nbsp;
 
-## Reset Client Policy
+## Reset Client Policy Using (TriggerSchedule Method)
 
-These snippets utilize the ResetPolicy method to reset the devices current policy.
+These snippets utilize the TriggerSchedule method to reset the devices current policy.
 
 ### Snippets
 
@@ -132,7 +135,64 @@ These snippets utilize the ResetPolicy method to reset the devices current polic
     Invoke-CimMethod -Namespace 'root\CCM' -ClassName SMS_Client -MethodName TriggerSchedule -Arguments @{sScheduleID=$Trigger}
 
 # Remote Device
+  # Using WmiMethod
+  $Computers = "ComputerName1","ComputerName2"
+  $Trigger = "{00000000-0000-0000-0000-000000000021}"
 
+  foreach ($Computer in $Computers) {
+    Invoke-WmiMethod -ComputerName $Computer -Namespace 'root\ccm' -Class SMS_Client -Name TriggerSchedule $Trigger
+  }
+  
+  # Using CIMMethod
+  # TODO
+```
+
+### Output
+
+```powershell
+# TODO
+```
+
+&nbsp;
+
+## Reset Client Policy (ResetPolicy Method)
+
+These snippets utilize the ResetPolicy method to reset the devices current policy.
+
+### Snippets
+
+```powershell
+# Local Device
+  # Using WmiMethod
+  $Flag = "0"
+  $Return = Invoke-WmiMethod -ComputerName $Computer -Namespace root\ccm -Class SMS_Client -Name ResetPolicy -ArgumentList @($Flag)
+  if ($Return.ReturnValue -eq 0) {
+    Write-Host "Status: Success"
+  }
+  else {
+    Write-Host "Status: Error"
+  }
+
+  # Using CIMMethod
+  # TODO
+
+# Remote Device
+  # Using WmiMethod
+  $Computers = "ComputerName1","ComputerName2"
+  $Flag = "0"
+
+  foreach ($Computer in $Computers) {
+    $Return = Invoke-WmiMethod -ComputerName $Computer -Namespace root\ccm -Class SMS_Client -Name ResetPolicy -ArgumentList @($Flag)
+    if ($Return.ReturnValue -eq 0) {
+      Write-Host "$($Computer): Success"
+    }
+    else {
+      Write-Host "$($Computer): Error"
+    }
+  }
+
+  # Using CIMMethod
+  # TODO
 ```
 
 ### Output
@@ -142,8 +202,6 @@ These snippets utilize the ResetPolicy method to reset the devices current polic
 ```
 
 &nbsp;
-
-
 
 
 
