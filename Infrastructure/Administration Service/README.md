@@ -316,11 +316,12 @@ OData provides query optoins that allow clients to refine their requests, such a
 
 The following table describes the OData query functions you can use to filter on string values:
 
-| Function   | Example                           |
-|------------|-----------------------------------|
-| contains   | $filter=contains(name,'(sample)') |
-| endswith   | $filter=endswith(name,'Inc.')     |
-| startswith | $filter=startswith(name,'a')      |
+| Function    | Description                                                                           | Example                                           |
+|-------------|---------------------------------------------------------------------------------------|---------------------------------------------------|
+| contains    |                                                                                       | $filter=contains(name,'(sample)')                 |
+| endswith    |                                                                                       | $filter=endswith(name,'Inc.')                     |
+| startswith  |                                                                                       | $filter=startswith(name,'a')                      |
+| any         | Search for a single string within an array type property                              | $filter=PropertyName/any(item: item eq 'String')  |
 
 <br>
 
