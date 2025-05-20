@@ -56,11 +56,21 @@
       - [PowerShell](#powershell-10)
     - [Cancel Pending Distributions](#cancel-pending-distributions)
       - [PowerShell](#powershell-11)
-- [\[Category\]](#category)
-  - [\[SubCategory\]](#subcategory)
+- [Administrative Categories](#administrative-categories)
+  - [Queries](#queries-2)
+  - [Creation](#creation-2)
     - [\[Function\]](#function)
       - [Web URI](#web-uri-10)
       - [PowerShell](#powershell-12)
+  - [Deletion](#deletion-2)
+    - [\[Function\]](#function-1)
+      - [Web URI](#web-uri-11)
+      - [PowerShell](#powershell-13)
+- [\[Category\]](#category)
+  - [\[SubCategory\]](#subcategory)
+    - [\[Function\]](#function-2)
+      - [Web URI](#web-uri-12)
+      - [PowerShell](#powershell-14)
 - [Appendices](#appendices)
   - [Apdx A: \[Name\]](#apdx-a-name)
   - [Template](#template)
@@ -362,8 +372,6 @@ Potential Queries
 | All Applications that Match a String | Returns all Applications that match the string in the fields: Manufacturer, LocalizedDisplayName, SoftwareVersion. | - |
 | All Applications that are Superseded | - | - |
 | All Applications that are Expired | - | - |
-
-
 
 <br>
 
@@ -832,7 +840,73 @@ Content Distribution - Cancelled Packages
       Target: [ServerFQDN]
       Status: [Status]
 ```
+<br>
 
+# Administrative Categories
+
+## Queries
+
+| Description | URI |
+|-|-|
+| All Applications with An Admin Category that Matches a String | https://[ServerFQDN]/AdminService/wmi/SMS_Application?$filter=LocalizedCategoryInstanceNames/any(item: item eq 'Intune Sync') |
+
+<br>
+
+## Creation
+
+[Text]
+
+### [Function]
+
+[Text]
+
+#### Web URI
+
+```https://[SMSProvider]/AdminService/wmi/[Resource]/[QueryOptions]```
+
+#### PowerShell
+
+Snippet
+
+```powershell
+
+```
+
+Output
+
+```powershell
+
+```
+
+<br>
+
+## Deletion
+
+[Text]
+
+### [Function]
+
+[Text]
+
+#### Web URI
+
+```https://[SMSProvider]/AdminService/wmi/[Resource]/[QueryOptions]```
+
+#### PowerShell
+
+Snippet
+
+```powershell
+
+```
+
+Output
+
+```powershell
+
+```
+
+<br>
 
 # [Category]
 
@@ -861,8 +935,6 @@ Output
 ```powershell
 
 ```
-
-
 
 
 
