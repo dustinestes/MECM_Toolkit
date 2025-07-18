@@ -274,65 +274,61 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequences\Copy TS an
 
     Write-Host "  Environment"
 
-    # # Create TSEnvironment COM Object
-    #     Write-Host "    - Create TSEnvironment COM Object"
+	# Import the PowerShell Module
+	Write-Host "    - Import the PowerShell Module"
 
-    #     try {
-    #         $Object_MECM_TSEnvironment = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Stop
-    #         Write-Host "        Status: Success"
-    #     }
-    #     catch {
-    #         Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
-    #     }
+	try {
+		if((Get-Module ConfigurationManager -ErrorAction Stop) -in $null,"") {
+			Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1" -ErrorAction Stop
+			Write-Host "            Status: Success"
+		}
+		else {
+			Write-Host "            Status: Already Imported"
+		}
+	}
+	catch {
+		if ($PSItem.Exception.Message -match "A drive with the name '[a-zA-Z0-9]{3}' already exists") {
+			# Do Nothing
+		}
+		else {
+			Write-vr_ErrorCode -Code 1401 -Exit $true -Object $PSItem
+		}
+		
+	}
 
-    # Connect to MECM Infrastructure
-        Write-Host "    - Connect to MECM Infrastructure"
+	# Create the Site Drive
+	Write-Host "    - Create the Site Drive"
 
-        try {
-            if (Test-Connection -ComputerName $Param_SMSProvider -Count 2 -Quiet) {
-                # Import the PowerShell Module
-                    Write-Host "        Import the PowerShell Module"
+	try {
+		Remove-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction Ignore
 
-                    if((Get-Module ConfigurationManager -ErrorAction Stop) -in $null,"") {
-                        Import-Module -Name "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1" -ErrorAction Stop
-                        Write-Host "            Status: Success"
-                    }
-                    else {
-                        Write-Host "            Status: Already Imported"
-                    }
+		if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -in $null,"") {
+			New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider -ErrorAction Stop | Out-Null
+			Write-Host "            Status: Success"
+		}
+		else {
+			Write-Host "            Status: Already Exists"
+		}
+	}
+	catch {
+		Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
+	}
 
-                # Create the Site Drive
-                    Write-Host "        Create the Site Drive"
+	# Set the Location to Site Drive
+	Write-Host "    - Set the Location to Site Drive"
 
-                    Remove-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction Ignore
-
-                    if((Get-PSDrive -Name $Param_SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -in $null,"") {
-                        New-PSDrive -Name $Param_SiteCode -PSProvider CMSite -Root $Param_SMSProvider -ErrorAction Stop | Out-Null
-                        Write-Host "            Status: Success"
-                    }
-                    else {
-                        Write-Host "            Status: Already Exists"
-                    }
-
-                # Set the Location
-                    Write-Host "        Set the Location"
-
-                    if ((Get-Location -ErrorAction Stop).Path -ne "$($Param_SiteCode):\") {
-                        Set-Location "$($Param_SiteCode):\" -ErrorAction Stop
-                        Write-Host "            Status: Success"
-                    }
-                    else {
-                        Write-Host "            Status: Already Set"
-                    }
-            }
-            else {
-                Write-Host "        Status: MECM Server Unreachable"
-                Throw "Status: MECM Server Unreachable"
-            }
-        }
-        catch {
-            Write-vr_ErrorCode -Code 1402 -Exit $true -Object $PSItem
-        }
+	try {
+		if ((Get-Location -ErrorAction Stop).Path -ne "$($Param_SiteCode):\") {
+			Set-Location "$($Param_SiteCode):\" -ErrorAction Stop
+			Write-Host "            Status: Success"
+		}
+		else {
+			Write-Host "            Status: Already Set"
+		}
+	}
+	catch {
+		Write-vr_ErrorCode -Code 1403 -Exit $true -Object $PSItem
+	}
 
     Write-Host "    - Complete"
     Write-Host ""
