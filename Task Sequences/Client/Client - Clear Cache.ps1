@@ -9,7 +9,7 @@
 # )
 
 #--------------------------------------------------------------------------------------------
-# Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequence\Client - Clear Client Cache.log" -ErrorAction SilentlyContinue
+# Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequence\Client - Clear Cache.log" -ErrorAction SilentlyContinue
 
 #--------------------------------------------------------------------------------------------
 # Header
@@ -17,7 +17,7 @@
 #Region Header
 
   Write-Host "------------------------------------------------------------------------------"
-  Write-Host "  MECM Toolkit - Task Sequence - Client - Clear Client Cache"
+  Write-Host "  MECM Toolkit - Task Sequence - Client - Clear Cache"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host "    Author:     Dustin Estes"
   Write-Host "    Company:    VividRock"
