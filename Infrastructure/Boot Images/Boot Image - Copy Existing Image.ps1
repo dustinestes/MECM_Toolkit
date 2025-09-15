@@ -680,8 +680,8 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Infrastructure\Boot Image
             Write-Host "        Status: Exists"
           }
           else {
-            Write-Host "        Status: Not Exists"
-            Throw "Target Boot WIM was not found at the path provided"
+            Copy-Item -Path "filesystem::$($Temp_BootImage_Source.ImagePath)" -Destination "filesystem::$($Param_TargetWIM)" -Force
+            Write-Host "        Status: Copied Source WIM File to Target WIM Path"
           }
       }
     }
