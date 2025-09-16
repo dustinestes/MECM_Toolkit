@@ -2,11 +2,15 @@
 # Parameters
 #--------------------------------------------------------------------------------------------
 
-# param (
-#   [string]$SiteCode,                  # 'ABC'
-#   [string]$SMSProvider,               # '[ServerFQDN]'
-#   [string]$ParamName                  # '[ExampleInputValues]'
-# )
+param (
+	[string]$ContentID="911a2f",                   # '[ContentID]'     Regex pattern to identify one or more content IDs to delete. Null is equal to all content IDs.
+	[int]$OlderThanDays,                # '[OlderThanDays]' An amount of days a content must be older than before it is deleted. Null is equal to all content.
+	[int]$SizeMB,                          # '[SizeMB]'        An amount of megabytes a content must be larger than before it is deleted. Null is equal to all content.
+  [switch]$IncludeOrphaned=$true              # True/False      If enabled, checks the path to the MECM Client cache for folders that do not match the paths of the elements returned by the Client API.
+  # [string]$SiteCode,                  # 'ABC',
+  # [string]$SMSProvider,               # '[ServerFQDN]'
+  # [string]$ParamName                  # '[ExampleInputValues]'
+)
 
 #--------------------------------------------------------------------------------------------
 # Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Task Sequence\Client - Clear Cache.log" -ErrorAction SilentlyContinue
@@ -23,17 +27,13 @@
   Write-Host "    Company:    VividRock"
   Write-Host "    Date:       December 23, 2019"
   Write-Host "    Copyright:  VividRock LLC - All Rights Reserved"
-  Write-Host "    Purpose:    This script will attempt to clear the client cache."
+  Write-Host "    Purpose:    This script will attempt to clear the client cache. If content"
+  Write-Host "                is set to be persisted, then the MECM API will honor this"
+  Write-Host "                setting and not delete the content"
   Write-Host "    Links:      None"
   Write-Host "    Template:   1.1"
   Write-Host "------------------------------------------------------------------------------"
   Write-Host ""
-
-<#
-  To Do:
-    - Item
-    - Item
-#>
 
 #EndRegion Header
 #--------------------------------------------------------------------------------------------
@@ -48,9 +48,13 @@
   Write-Host "  Variables"
 
   # Parameters
-    $Param_SiteCode         = $SiteCode
-    $Param_SMSProvider      = $SMSProvider
-    $Param_ParamName        = $ParamName
+    $Param_ContentID          = $ContentID
+    $Param_OlderThanDays      = $OlderThanDays
+    $Param_SizeMB             = $SizeMB
+    $Param_IncludeOrphaned    = $IncludeOrphaned
+    # $Param_SiteCode         = $SiteCode
+    # $Param_SMSProvider      = $SMSProvider
+    # $Param_ParamName        = $ParamName
 
   # Metadata
     $Meta_Script_Start_DateTime     = Get-Date
@@ -80,11 +84,9 @@
   # WMI
 
   # Datasets
+    $Dataset_MECM_CacheElements = @()
 
   # Temporary
-	$Temp_Counter_Success 	= 0
-	$Temp_Counter_Error 	= 0
-	$Temp_Counter_Total 	= 0
 
   # Output to Log
     Write-Host "    - Parameters"
@@ -129,7 +131,7 @@
         switch ($Exit) {
           $true {
             Write-Host "        Exit: $($Code)"
-            Stop-Transcript
+            # Stop-Transcript
             Exit $Code
           }
           $false {
@@ -273,6 +275,24 @@
 	# 		Write-vr_ErrorCode -Code 1501 -Exit $true -Object $PSItem
 	# 	}
 
+  # Parameters
+		Write-Host "    - Parameters"
+
+		try {
+      Write-Host "        OlderThanDays: Set to -1 if Null"
+      
+      if ($Param_OlderThanDays -in "",$null,0) {
+        $Param_OlderThanDays = -1
+        Write-Host "          Status: Success"
+      }
+      else {
+        Write-Host "          Status: Skipped"
+      }
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1502 -Exit $true -Object $PSItem
+		}
+
 	Write-Host "    - Complete"
 	Write-Host ""
 
@@ -310,17 +330,102 @@
   #     Write-vr_ErrorCode -Code 1602 -Exit $true -Object $PSItem
   #   }
 
-	# Get Cache Elements
-    Write-Host "    - Get Cache Elements"
+	# Get Cache Info
+    Write-Host "    - Get Cache Info"
 
     try {
-      $Temp_MECM_CacheElements = $Object_MECM_ResourceMgr.GetCacheInfo().GetCacheElements()
-			$Temp_Counter_Total = $Temp_MECM_CacheElements.Count
-			Write-Host "        Total: $($Temp_Counter_Total)"
+      $Dataset_MECM_CacheInfo = $Object_MECM_ResourceMgr.GetCacheInfo()
+
+			Write-Host "        Location: $($Dataset_MECM_CacheInfo.Location)"
+			Write-Host "        TotalSize: $($Dataset_MECM_CacheInfo.TotalSize)"
+			Write-Host "        FreeSize: $($Dataset_MECM_CacheInfo.FreeSize)"
+			Write-Host "        TombStoneDuration: $($Dataset_MECM_CacheInfo.TombStoneDuration)"
+			Write-Host "        MaxCacheDuration: $($Dataset_MECM_CacheInfo.MaxCacheDuration)"
+			Write-Host "        ReservedSize: $($Dataset_MECM_CacheInfo.ReservedSize)"
 			Write-Host "        Status: Success"
 		}
 		catch {
 			Write-vr_ErrorCode -Code 1603 -Exit $true -Object $PSItem
+		}
+    
+  # Get Cache Elements
+    Write-Host "    - Get Cache Elements"
+    
+    try {
+      $Dataset_MECM_CacheElements = @()
+      
+      foreach ($Item in $Object_MECM_ResourceMgr.GetCacheInfo().GetCacheElements()) {
+        $Temp_Item = [PSCustomObject]@{
+          CacheElementID      = $Item.CacheElementId
+          ContentID           = $Item.ContentId
+          Version             = $Item.ContentVersion
+          Location            = $Item.Location
+          ReferenceCount      = $Item.ReferenceCount
+          LastReferenceTime   = $Item.LastReferenceTime
+          AgeDays             = ((Get-Date) - $Item.LastReferenceTime).Days
+          Size                = $Item.ContentSize
+          SizeMB              = [math]::Round($Item.ContentSize / 1kb, 2)
+          Delete              = $false
+          Status              = "Not Processed"
+        }
+        
+        $Dataset_MECM_CacheElements += $Temp_Item
+      }
+      
+			Write-Host "        Count: $(($Dataset_MECM_CacheElements | Measure-Object).Count)  ($(($Dataset_MECM_CacheElements.SizeMB | Measure-Object -Sum).Sum) MB)"
+			Write-Host "        Status: Success"
+		}
+		catch {
+      Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
+		}
+    
+  # Get Cache Directory Info
+    Write-Host "    - Get Cache Directory Info"
+
+    if ($Param_IncludeOrphaned) {
+      try {
+        $Dataset_MECM_CacheDirectoryInfo = @()
+  
+        foreach ($Item in (Get-ChildItem -Path $Dataset_MECM_CacheInfo.Location -Directory -Recurse -Depth 1)) {
+          $Temp_Item = [PSCustomObject]@{
+            Name        = $Item.Name
+            Path        = $Item.FullName
+            Parent      = $Item.Parent
+            SizeMB      = [math]::Round( (Get-ChildItem -Path $Item.FullName -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1mb, 2)
+            IsOrphaned  = if ($Item.FullName -in $Dataset_MECM_CacheElements.Location) { $false } else { $true }
+            Status      = "Not Processed"
+          }
+  
+          $Dataset_MECM_CacheDirectoryInfo += $Temp_Item
+        }
+  
+        Write-Host "        Count: $(($Dataset_MECM_CacheDirectoryInfo | Measure-Object).Count)  ($(($Dataset_MECM_CacheDirectoryInfo | Measure-Object -Property SizeMB -Sum).Sum) MB)"
+        Write-Host "        Orphaned: $(($Dataset_MECM_CacheDirectoryInfo | Where-Object {$_.IsOrphaned -eq $true} | Measure-Object).Count)  ($(($Dataset_MECM_CacheDirectoryInfo | Where-Object {$_.IsOrphaned -eq $true} | Measure-Object -Property SizeMB -Sum).Sum) MB)"
+        Write-Host "        Status: Success"
+      }
+      catch {
+        Write-vr_ErrorCode -Code 1604 -Exit $true -Object $PSItem
+      }
+    }
+    else {
+      Write-Host "        Status: Skipped, IncludeOrphaned parameter not supplied"
+    }
+    
+  # Filter Cache Elements
+    Write-Host "    - Filter Cache Elements"
+
+    try {
+      foreach ($Item in $Dataset_MECM_CacheElements) {
+        if (($Item.ContentId -match $Param_ContentID) -and ($Item.AgeDays -gt $Param_OlderThanDays) -and ($Item.SizeMB -gt $Param_SizeMB)) {
+          $Item.Delete = $true
+        }
+      }
+			Write-Host "        Delete: $((($Dataset_MECM_CacheElements | Where-Object {$_.Delete -eq $true}) | Measure-Object).Count)  ($((($Dataset_MECM_CacheElements | Where-Object {$_.Delete -eq $true}) | Measure-Object -Property SizeMB -Sum).Sum) MB)"
+			Write-Host "        Remain: $((($Dataset_MECM_CacheElements | Where-Object {$_.Delete -eq $false}) | Measure-Object).Count)  ($((($Dataset_MECM_CacheElements | Where-Object {$_.Delete -eq $false}) | Measure-Object -Property SizeMB -Sum).Sum) MB)"
+      Write-Host "        Status: Success"
+		}
+		catch {
+			Write-vr_ErrorCode -Code 1606 -Exit $true -Object $PSItem
 		}
 
 	Write-Host "    - Complete"
@@ -342,23 +447,76 @@
 		Write-Host "    - Delete Cache Elements"
 
 		try {
-			foreach ($Item in $Temp_MECM_CacheElements) {
-        Write-Host "        Content ID: $($Item.ContentId)"
-        Write-Host "        Version: $($Item.ContentVersion)"
+			foreach ($Item in $Dataset_MECM_CacheElements) {
+        Write-Host "        ContentID: $($Item.ContentId)"
         Write-Host "        Location: $($Item.Location)"
-        Write-Host "        Last Reference Time: $($Item.LastReferenceTime)"
-        Write-Host "        Size (MB): $([math]::Round($Item.ContentSize / 1kb, 2))"
 
-        $MECMObject.GetCacheInfo().DeleteCacheElement([string]$($Item.CacheElementID))
+        if ($Item.Delete) {
+          Write-Host "        CacheElementID: $($Item.CacheElementID)"
+          Write-Host "        Version: $($Item.Version)"
+          Write-Host "        LastReferenceTime: $($Item.LastReferenceTime)"
+          Write-Host "        AgeDays: $($Item.AgeDays)"
+          Write-Host "        SizeMB: $($Item.SizeMB)"
+          Write-Host "        Delete: $($Item.Delete)"
 
-        Write-Host "        Status: Deleted"
+          $Object_MECM_ResourceMgr.GetCacheInfo().DeleteCacheElement([string]$($Item.CacheElementID))
+
+          if (($Object_MECM_ResourceMgr.GetCacheInfo().GetCacheElements() | Where-Object {$_.CacheElementID -eq $Item.CacheElementID})) {
+            $Item.Status = "Persisted"
+          }
+          else {
+            $Item.Status = "Deleted"
+          }
+        }
+        else {
+          $Item.Status = "Skipped"
+        }
+        
+        Write-Host "        Status: $($Item.Status)"
         Write-Host ""
 			}
 		}
 		catch {
-      $Temp_Counter_Error ++
+      $Item.Status = "Error"
 			Write-vr_ErrorCode -Code 1701 -Exit $false -Object $PSItem
 		}
+  
+	# Delete Orphaned Directories
+    Write-Host "    - Delete Orphaned Directories"
+
+    if ($Param_IncludeOrphaned) {
+      try {
+        foreach ($Item in $Dataset_MECM_CacheDirectoryInfo) {
+          Write-Host "        Name: $($Item.Name)"
+          Write-Host "        Path: $($Item.Path)"
+          Write-Host "        Size: $($Item.SizeMB)"
+          
+          if ($Item.IsOrphaned) {
+            Remove-Item -Path $Item.Path -Recurse -Force -Confirm:$false
+  
+            if (Test-Path -Path $Item.Path) {
+              $Item.Status = "Error"
+            }
+            else {
+              $Item.Status = "Deleted"
+            }
+          }
+          else {
+            $Item.Status = "Skipped"
+          }
+          
+          Write-Host "        Status: $($Item.Status)"
+          Write-Host ""
+        }
+      }
+      catch {
+        $Item.Status = "Error"
+        Write-vr_ErrorCode -Code 1702 -Exit $false -Object $PSItem
+      }
+    }
+    else {
+      Write-Host "        Status: Skipped, IncludeOrphaned parameter not supplied"
+    }
 
 	# Determine Script Result
 		$Meta_Script_Result = $true,"Success"
@@ -378,23 +536,39 @@
 
 	Write-Host "  Output"
 
-	# Cache Element Status
-		Write-Host "    - Cache Element Status"
+	# Results
+		Write-Host "    - Results"
 
 		try {
-			$Temp_MECM_CacheElements_Validate = $Object_MECM_ResourceMgr.GetCacheInfo().GetCacheElements()
-			Write-Host "        Total: $($Temp_MECM_CacheElements_Validate.Count)"
-
-			if ($Temp_MECM_CacheElements_Validate.Count -ne 0) {
-				Write-Host "        Status: Error. Some Elements Not Deleted"
-			}
-			else {
-				Write-Host "        Status: Success"
-			}
+      Write-Host "        Persisted"
+      Write-Host "          Count: $((($Dataset_MECM_CacheElements | Where-Object {($_.Delete -eq $true) -and ($_.Status -eq "Persisted")}) | Measure-Object).Count)"
+      Write-Host "          Size (MB): $((($Dataset_MECM_CacheElements | Where-Object {($_.Delete -eq $true) -and ($_.Status -eq "Persisted")}).SizeMB | Measure-Object -Sum).Sum)"
+      Write-Host "        Cleared"
+      Write-Host "          Count: $((($Dataset_MECM_CacheElements | Where-Object {($_.Delete -eq $true) -and ($_.Status -ne "Persisted")}) | Measure-Object).Count)"
+      Write-Host "          Size (MB): $((($Dataset_MECM_CacheElements | Where-Object {($_.Delete -eq $true) -and ($_.Status -ne "Persisted")}).SizeMB | Measure-Object -Sum).Sum)"
+      Write-Host "        Orphaned"
+      Write-Host "          Count: $((($Dataset_MECM_CacheDirectoryInfo | Where-Object {($_.IsOrphaned -eq $true) -and ($_.Status -notin "Skipped")}) | Measure-Object).Count)"
+      Write-Host "          Size (MB): $((($Dataset_MECM_CacheDirectoryInfo | Where-Object {($_.IsOrphaned -eq $true) -and ($_.Status -notin "Skipped")}).SizeMB | Measure-Object -Sum).Sum)"
+      Write-Host "        Skipped"
+      Write-Host "          Count: $((($Dataset_MECM_CacheElements | Where-Object {$_.Delete -eq $false}) | Measure-Object).Count)"
+      Write-Host "          Size (MB): $((($Dataset_MECM_CacheElements | Where-Object {$_.Delete -eq $false}).SizeMB | Measure-Object -Sum).Sum)"
+			
 		}
 		catch {
 			Write-vr_ErrorCode -Code 1801 -Exit $false -Object $PSItem
 		}
+    
+  # Datasets
+    Write-Host "    - Datasets"
+    
+    try {
+      $Dataset_MECM_CacheElements
+
+      $Dataset_MECM_CacheDirectoryInfo
+    }
+    catch {
+      Write-vr_ErrorCode -Code 1802 -Exit $false -Object $PSItem
+    }
 
 	Write-Host "    - Complete"
 	Write-Host ""
@@ -454,7 +628,7 @@
 
 	# Output
 		Write-Host "------------------------------------------------------------------------------"
-		Write-Host "  Script Result: $($Meta_Script_Result[0])"
+		Write-Host "  Script Result: $($Meta_Script_Result[1])"
 		Write-Host "  Script Started: $($Meta_Script_Start_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
 		Write-Host "  Script Completed: $($Meta_Script_Complete_DateTime.ToUniversalTime().ToString(`"yyyy-MM-dd HH:mm:ss`")) (UTC)"
 		Write-Host "  Total Time: $($Meta_Script_Complete_TimeSpan.Days) days, $($Meta_Script_Complete_TimeSpan.Hours) hours, $($Meta_Script_Complete_TimeSpan.Minutes) minutes, $($Meta_Script_Complete_TimeSpan.Seconds) seconds, $($Meta_Script_Complete_TimeSpan.Milliseconds) milliseconds"
