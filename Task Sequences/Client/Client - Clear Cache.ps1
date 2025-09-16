@@ -3,10 +3,10 @@
 #--------------------------------------------------------------------------------------------
 
 param (
-	[string]$ContentID="911a2f",                   # '[ContentID]'     Regex pattern to identify one or more content IDs to delete. Null is equal to all content IDs.
-	[int]$OlderThanDays,                # '[OlderThanDays]' An amount of days a content must be older than before it is deleted. Null is equal to all content.
-	[int]$SizeMB,                          # '[SizeMB]'        An amount of megabytes a content must be larger than before it is deleted. Null is equal to all content.
-  [switch]$IncludeOrphaned=$true              # True/False      If enabled, checks the path to the MECM Client cache for folders that do not match the paths of the elements returned by the Client API.
+	[string]$ContentID,                   # '[ContentID]'     Regex pattern to identify one or more content IDs to delete. Null is equal to all content IDs.
+	[int]$OlderThanDays,                  # '[OlderThanDays]' An amount of days a content must be older than before it is deleted. Null is equal to all content.
+	[int]$SizeMB,                         # '[SizeMB]'        An amount of megabytes a content must be larger than before it is deleted. Null is equal to all content.
+  [switch]$IncludeOrphaned              # True/False      If enabled, checks the path to the MECM Client cache for folders that do not match the paths of the elements returned by the Client API.
   # [string]$SiteCode,                  # 'ABC',
   # [string]$SMSProvider,               # '[ServerFQDN]'
   # [string]$ParamName                  # '[ExampleInputValues]'
