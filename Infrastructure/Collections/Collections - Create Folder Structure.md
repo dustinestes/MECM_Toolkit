@@ -33,8 +33,8 @@
         CS - Client Settings                                        Occurs every 1 days effective 1/01/2020 8:04 PM
             Remote Tools                                            Same as parent folder
         CU - Client Upgrades                                        Occurs every 1 days effective 1/01/2020 8:06 PM
-        EP - Endpoint Protection                                    Occurs every 1 days effective 1/01/2020 8:08 PM
-        IW - Intune Workloads                                       Occurs every 1 days effective 1/01/2020 8:10 PM
+        CW - Cloud Workloads                                        Occurs every 1 days effective 1/01/2020 8:08 PM
+        EP - Endpoint Protection                                    Occurs every 1 days effective 1/01/2020 8:10 PM
         MW - Maintenance Windows                                    Occurs every 1 days effective 1/01/2020 8:12 PM
         OS - Operating System                                       Occurs every 1 days effective 1/01/2020 8:14 PM
             Static Images                                           Same as parent folder
