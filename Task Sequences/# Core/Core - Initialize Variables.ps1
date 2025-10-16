@@ -131,6 +131,7 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\Core\Initialize Variables
                     "vr_Directory_TS_EventLogs"     = "%vr_Directory_TaskSequences%\EventLogs"                      # A subdirectory for exporting event log files
                     "vr_Directory_TS_Validation"    = "%vr_Directory_TaskSequences%\Validation"                     # A subdirectory for storing output from the validation scripts in the toolkit
                     "vr_Directory_TS_Variables"     = "%vr_Directory_TaskSequences%\Variables"                      # A subdirectory for exporting the Task Sequence variable dump
+                    "vr_Directory_TS_Windows"       = "%vr_Directory_TaskSequences%\Windows"                        # A subdirectory for exporting the Windows Setup related logs
                     "vr_Directory_TS_XML"           = "%vr_Directory_TaskSequences%\XML"                            # A subdirectory for exporting the XML content of all Task Sequences and Sub Taskequences executed
                 "vr_Directory_Logs_Updates"         = "%vr_Directory_Logs%\Updates"                                 # All log files associated with Windows Updates
                 "vr_Directory_Logs_Upgrades"        = "%vr_Directory_Logs%\Upgrades"                                # All log files associated with Windows Upgrades
