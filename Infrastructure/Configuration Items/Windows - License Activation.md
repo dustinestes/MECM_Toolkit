@@ -143,7 +143,7 @@ There are other parameters in the script, but only the ones listed below should 
   # MECM Settings
   $Name_ConfigurationItem = "CI - Windows - License Activation (Windows X)"
   $Operation_Type         = "Discovery" # "Discovery","Remediation"
-  $Path_Log_Directory     = "$($env:FSI_Directory_Logs)\ConfigurationBaselines\$($Operation_Type)"
+  $Path_Log_Directory     = "$($env:VR_Directory_Logs)\ConfigurationBaselines\$($Operation_Type)"
 
 # Windows Licensing
   $License_Key            = ""
