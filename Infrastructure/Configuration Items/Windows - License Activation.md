@@ -34,10 +34,10 @@ Microsoft provides a rudimentary method for applying and activating Windows oper
 
 | Operating System  | Supported | Notes                     |
 |-------------------|-----------|---------------------------|
-| Windows 7         | ?         |                           |
+| Windows 7         | True      |                           |
 | Windows 8/8.1     | ?         |                           |
-| Windows 10        | ?         |                           |
-| Windows 11        | ?         |                           |
+| Windows 10        | True      |                           |
+| Windows 11        | True      |                           |
 
 #### PowerShell
 
@@ -48,7 +48,7 @@ Microsoft provides a rudimentary method for applying and activating Windows oper
 | 3.0           | ?         |                               |
 | 4.0           | ?         |                               |
 | 5.0           | ?         |                               |
-| 5.1           | ?         |                               |
+| 5.1           | True      |                               |
 | 6.x           | ?         |                               |
 | 7.x           | ?         |                               |
 
