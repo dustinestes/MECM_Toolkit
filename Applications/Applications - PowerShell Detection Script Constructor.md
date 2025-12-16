@@ -414,9 +414,9 @@ Cmdlets
 > Requires administrative rights to use the Get-AppxProvisionedPackage cmdlet
 >
 > Required Variables to edit
-> - App_MSIXCmdlet_Vendor - the value that is stored in the Vendor WMI property
-> - App_MSIXCmdlet_Name - the value that is stored in the Name WMI property
-> - App_MSIXCmdlet_Version - the value that is stored in the Version WMI property
+> - App_MSIXCmdlet_Publisher - the value that is stored in the Publisher object property
+> - App_MSIXCmdlet_Name - the value that is stored in the Name object property
+> - App_MSIXCmdlet_Version - the value that is stored in the Version object property
 
 Snippet:
 
@@ -435,7 +435,7 @@ Snippet:
     # Variables
       Out-File -InputObject "        Variables" @Params_Logging
 
-      $App_MSIXCmdlet_Vendor      = "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+      $App_MSIXCmdlet_Publisher      = "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
       $App_MSIXCmdlet_Name        = "MSTeams"
       $App_MSIXCmdlet_Version     = "24193.1805.3040.8975"
 
@@ -449,13 +449,13 @@ Snippet:
       Out-File -InputObject "        Detection" @Params_Logging
 
       switch ($Dataset_App_MSIXCmdlet_Products) {
-        # Match Vendor Name and Exact Version
-          {($_.Publisher -eq $App_MSIXCmdlet_Vendor) -and ($_.Name -eq $App_MSIXCmdlet_Name) -and ($_.Version -eq $App_MSIXCmdlet_Version)} {
+        # Match Publisher Name and Exact Version
+          {($_.Publisher -eq $App_MSIXCmdlet_Publisher) -and ($_.Name -eq $App_MSIXCmdlet_Name) -and ($_.Version -eq $App_MSIXCmdlet_Version)} {
             Out-File -InputObject "            Exact match: $($_.Publisher) - $($_.Name) - $($_.Version)" @Params_Logging
             $Temp_Count_Matches += 1
           }
-        # Match Vendor Name and Newer Version
-          {($_.Publisher -eq $App_MSIXCmdlet_Vendor) -and ($_.Name -eq $App_MSIXCmdlet_Name) -and ([System.Version]$_.Version -gt [System.Version]$App_MSIXCmdlet_Version)} {
+        # Match Publisher Name and Newer Version
+          {($_.Publisher -eq $App_MSIXCmdlet_Publisher) -and ($_.Name -eq $App_MSIXCmdlet_Name) -and ([System.Version]$_.Version -gt [System.Version]$App_MSIXCmdlet_Version)} {
             Out-File -InputObject "            Newer Version: $($_.Publisher) - $($_.Name) - $($_.Version)" @Params_Logging
             $Temp_Count_Matches += 1
           }
