@@ -53,7 +53,7 @@ The below ToC links you to the various sections and code snippets within this ma
     - [Remove Environment Variable](#remove-environment-variable)
 
 
-&nbsp;
+<br/>
 
 ## MECM
 
@@ -65,7 +65,7 @@ The following snippets are used when creating applications within MECM.
 | PowerShell Executable Install/Uninstall | MECM | This command is used to install/uninstall apps using their direct install executables. There is also an option to add a delay/sleep timer to this. | [Link](###-powershell-executable-install_uninstall) |
 | Add a Delay Before MECM Evaluates | MECM | This additional command is used in conjunction with the above command to add a delay/sleep timer to this. | [Link](###-add-a-delay-before-mecm-evaluates) |
 
-&nbsp;
+<br/>
 
 ### PowerShell Script Install/Uninstall
 
@@ -75,7 +75,7 @@ Snippet
 Powershell.exe -ExecutionPolicy Bypass -File "[scriptname].ps1"
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -83,7 +83,7 @@ Example
 Powershell.exe -ExecutionPolicy Bypass -File "Manufacturer_Product_Version_Install.ps1"
 ```
 
-&nbsp;
+<br/>
 
 ### Powershell Executable Install/Uninstall
 
@@ -92,7 +92,7 @@ Powershell.exe -ExecutionPolicy Bypass -File "Manufacturer_Product_Version_Insta
 > -	Filepath: points to the filename (use dot sourcing)
 > -	Argumentlist: provide command line parameters
 
-&nbsp;
+<br/>
 
 Snippet
 
@@ -100,7 +100,7 @@ Snippet
 Powershell.exe -ExecutionPolicy Bypass -Command "Start-Process -NoNewWindow -FilePath '[. \Filepath]' -Argumentlist '[Argumentlist]' -Wait"
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -108,13 +108,13 @@ Example
 Powershell.exe -ExecutionPolicy Bypass -Command "Start-Process -NoNewWindow -FilePath 'C:\Program Files\SoftwareName\uninstall.exe' -ArgumentList '/S' -Wait"
 ```
 
-&nbsp;
+<br/>
 
 ### Add a Delay Before MECM Evaluates
 
 You can add a delay to the completion of this command by placing the following code at the end of the above snippet, after the "-Wait" param and inside the double quotes.
 
-&nbsp;
+<br/>
 
 Snippet
 
@@ -122,7 +122,7 @@ Snippet
 ; Start-Sleep -Seconds [Integer]
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -130,7 +130,7 @@ Example
 Powershell.exe -ExecutionPolicy Bypass -Command "Start-Process -NoNewWindow -FilePath 'C:\Program Files\VividRock\uninstall.exe' -ArgumentList '/S' -Wait; Start-Sleep -Seconds 15"
 ```
 
-&nbsp;
+<br/>
 
 ## Logging
 
@@ -141,7 +141,7 @@ The following snippets are used to envelope PowerShell Scripts with transcript l
 | Start Logging | Logging | Begins the transcript of the PowerShell script. All app-specific text should be used inbetween this start snippet and the End Logging Snippet. | [Link](###-logging---start-snippet) |
 | End Logging | Logging | Ends the transcript of the PowerShell script. All app-specifc text should be usd inbetween this end snippet and the Start Logging Snippet. | [Link](###-logging---end-snippet) |
 
-&nbsp;
+<br/>
 
 ### Start Logging
 
@@ -152,14 +152,14 @@ Snippet
 > - [logname]: Use a standard naming convention for log files. Format: Publisher_ProductName_Version
 > - [_PS_install.log]: ensure to use this suffix so as to distinguish the ouput file from this PowerShell script from the standard log generated from the actual application install/uninstall.
 
-&nbsp;
+<br/>
 
 ```powershell
 # Start Logging
     Start-Transcript -Path "C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\[logname]_PS_Install.log"
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -168,7 +168,7 @@ Example
     Start-Transcript -Path "C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\VividRock_ApplciationName_1.5.0_PS_Install.log"
 ```
 
-&nbsp;
+<br/>
 
 ### End Logging
 
@@ -178,14 +178,14 @@ Snippet
 >
 > There are no parameters for this.
 
-&nbsp;
+<br/>
 
 ```powershell
 # End Logging
     Stop-Transcript
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -194,7 +194,7 @@ Example
     Stop-Transcript
 ```
 
-&nbsp;
+<br/>
 
 ## Installation
 
@@ -202,7 +202,7 @@ Example
 | ---- | ------- | ----------- | ---- |
 | Standard Installation | Installation | A basic PowerShell snippet for simply installing an application. | [Link](###-standard-installation) |
 
-&nbsp;
+<br/>
 
 ### Standard Installation
 
@@ -214,19 +214,19 @@ Snippet
 > - Argumentlist: provide command line parameters
 > - ExitCode: added to the end so that the output ExitCode of the operation is returned to MECM.
 
-&nbsp;
+<br/>
 
 > Passing Quotation Marks:
 > To pass quotes through the ArgumentList or other parameters, use the tilda escape key with a second set of quotes: "INSTALLDIR='"C:Program Files\VividRock\ApplicationName'""
 
-&nbsp;
+<br/>
 
 ```powershell
 # Install Application
     Start-Process -NoNewWindow -FilePath ".\[filepath]" -Argumentlist "[parameters for installation]" -Wait
 ```
 
-&nbsp;
+<br/>
 
 Example (EXE)
 
@@ -235,7 +235,7 @@ Example (EXE)
     Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Install.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
-&nbsp;
+<br/>
 
 Example (MSI)
 
@@ -248,7 +248,7 @@ Example (MSI)
     Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.msi","/qn","/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
-&nbsp;
+<br/>
 
 ## Uninstallation
 
@@ -259,7 +259,7 @@ The following snippets are for uninstalling applications:
 | Standard Uninstallation | Uninstallation | A basic PowerShell snippet for simply uninstalling an application. | [Link](###-standard-uninstallation) |
 | MSI Bulk Uninstallation | Uninstallation | Use a hashtable of values to bulk remove multiple MSIs with minimal lines of code. | [Link](###-msi-bulk-uninstallation) |
 
-&nbsp;
+<br/>
 
 ### Standard Uninstallation
 
@@ -271,14 +271,14 @@ Snippet
 > -	[Argumentlist]: provide command line parameters
 > - [ExitCode]: added to the end so that the output Exitcode of the operation is returned to MECM.
 
-&nbsp;
+<br/>
 
 ```powershell
 # Uninstall Application
     (Start-Process -NoNewWindow -FilePath ".\[Filepath]" -Argumentlist "[parameters for installation]" -Wait).ExitCode
 ```
 
-&nbsp;
+<br/>
 
 Example (EXE)
 
@@ -287,7 +287,7 @@ Example (EXE)
     (Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Uninstall.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
-&nbsp;
+<br/>
 
 Example (MSI)
 
@@ -300,7 +300,7 @@ Example (MSI)
     (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
-&nbsp;
+<br/>
 
 ### MSI Bulk Uninstallation
 
@@ -313,7 +313,7 @@ Snippet
 > -	[ConcatenatedName]: provide the concatenated name used to uniquely name log files (Standard = Manufacturer_Product_Version)
 > - [GUID/FilePath]: provides the product code GUID or points to the product MSI
 
-&nbsp;
+<br/>
 
 ```powershell
 # Uninstall Applications (MSI Bulk)
@@ -328,7 +328,7 @@ Snippet
         }
 ```
 
-&nbsp;
+<br/>
 
 ## Add/Remove Programs (ARP) Entry
 
@@ -399,7 +399,7 @@ Example
 ```
 
 
-&nbsp;
+<br/>
 
 ## Delay/Sleep
 
@@ -409,7 +409,7 @@ The following snippets are for adding delays or sleeping execution of the script
 | ---- | ------- | ----------- | ---- |
 | Start Sleep | Delay/Sleep | sleeps the execution of the script for the specified number of seconds. | [Link](###-logging---start-start-snippet) |
 
-&nbsp;
+<br/>
 
 ### Start Sleep
 
@@ -422,14 +422,14 @@ Snippet
 > Alternate Parameters
 >  - -Milliseconds [milliseconds] - This can be used instead of seconds.
 
-&nbsp;
+<br/>
 
 ```powershell
 # Sleep Script Execution
     Start-Sleep -Seconds [seconds]
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -438,7 +438,7 @@ Example
     Start-Sleep -Seconds 15
 ```
 
-&nbsp;
+<br/>
 
 ## File & Folder Management
 
@@ -448,7 +448,7 @@ The following snippets are for managing files and folders:
 | ---- | ------- | ----------- | ---- |
 | Copy Files | File Management | Used to copy files to the specified destination on the device. | [Link](###-copy-files) |
 
-&nbsp;
+<br/>
 
 ### Copy Files
 
@@ -459,14 +459,14 @@ Snippet
 > - [filepath]: points to a file to copy to the destination
 > - [destinationpath]: folder to copy the file to
 
-&nbsp;
+<br/>
 
 ```powershell
 # Copy Files
     Copy-Item -Path ".\[filepath]" -Destination "[destinationpath]" -Force
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -475,7 +475,7 @@ Example
     Copy-Item -Path ".\Configuration.ini" -Destination "C:\Program Files\VividRock\" -Force
 ```
 
-&nbsp;
+<br/>
 
 ## WMI Management
 
@@ -485,7 +485,7 @@ The following snippets are for managing files and folders:
 | ---- | ------- | ----------- | ---- |
 |  |  |  |  |
 
-&nbsp;
+<br/>
 
 > Need to add in some sections of code here for managing WMI. Possible options could be:
 >
@@ -494,7 +494,7 @@ The following snippets are for managing files and folders:
 > - Modify WMI Entry
 > - Delete WMI Entry
 
-&nbsp;
+<br/>
 
 ## Shortcut Management
 
@@ -505,7 +505,7 @@ The following snippets are for managing shortcuts:
 | Create Start Menu Shortcut (All Users) | Shortcut Management | Create a missing or useful shortcut on the start menu during application installation. This creates the link for All Users. | [Link](###-create-start-menu-shortcut-all-users) |
 | Create Start Menu Shortcut (Current User) | Shortcut Management | Create a missing or useful shortcut on the start menu during application installation. This creates the link for the Current User. | [Link](###-create-start-menu-shortcut-current-user) |
 
-&nbsp;
+<br/>
 
 ### Create Start Menu Shortcut (All Users)
 
@@ -517,7 +517,7 @@ Snippet
 > - [ShortcutName]: name you want the link to displayin the start menu (usually the name of the program the shortcut will launch)
 > - [ShortcutTarget]: path to the target file the shortcut will execute
 
-&nbsp;
+<br/>
 
 ```powershell
 # Create Start Menu Shortcut for All Users
@@ -537,7 +537,7 @@ Snippet
         $Shortcut.Save()
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -559,7 +559,7 @@ Example
         $Shortcut.Save()
 ```
 
-&nbsp;
+<br/>
 
 ### Create Start Menu Shortcut (Current User)
 
@@ -571,7 +571,7 @@ Snippet
 > - [ShortcutName]: name you want the link to displayin the start menu (usually the name of the program the shortcut will launch)
 > - [ShortcutTarget]: path to the target file the shortcut will execute
 
-&nbsp;
+<br/>
 
 ```powershell
 # Create Start Menu Shortcut for Current User
@@ -591,7 +591,7 @@ Snippet
         $Shortcut.Save()
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -613,7 +613,7 @@ Example
         $Shortcut.Save()
 ```
 
-&nbsp;
+<br/>
 
 ## Service Management
 
@@ -626,7 +626,7 @@ The following snippets are for managing services:
 | Restart Service | Service Management | Used to restart a specific service that is running | [Link](###-restart-a-service) |
 
 
-&nbsp;
+<br/>
 
 ### Stop a Service
 
@@ -636,14 +636,14 @@ Snippet
 >
 > - [servicename]: provide the name of the service you want to stop
 
-&nbsp;
+<br/>
 
 ```powershell
 # Stop a Service
     Stop-Service -Name "[servicename]" -NoWait -Force
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -652,7 +652,7 @@ Example
     Stop-Service -Name "Spooler" -NoWait -Force
 ```
 
-&nbsp;
+<br/>
 
 ### Start a Service
 
@@ -662,14 +662,14 @@ Snippet
 >
 > - [servicename]: provide the name of the service you want to start
 
-&nbsp;
+<br/>
 
 ```powershell
 # Start a Service
     Start-Service -Name "[servicename]"
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -678,7 +678,7 @@ Example
     Start-Service -Name "Spooler"
 ```
 
-&nbsp;
+<br/>
 
 ### Restart a Service
 
@@ -688,14 +688,14 @@ Snippet
 >
 > - [servicename]: provide the name of the service you want to restart
 
-&nbsp;
+<br/>
 
 ```powershell
 # Restart a Service
     Restart-Service -Name "[servicename]" Force
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -704,7 +704,7 @@ Example
     Restart-Service -Name "Spooler" -Force
 ```
 
-&nbsp;
+<br/>
 
 ## Process Management
 
@@ -716,7 +716,7 @@ The following snippets are for managing processes:
 | Wait for Process to Start | Process Management | Used to suspend the script execution until the specified process starts. | [Link](###-wait-for-process-to-start) |
 | Wait for Process to Stop | Process Management | Used to suspend the script execution until the specified process stops. | [Link](###-wait-for-process-to-stop) |
 
-&nbsp;
+<br/>
 
 ### Stop a Process
 
@@ -726,14 +726,14 @@ Snippet
 >
 > - [processname]: provide the name of the process you want to stop.
 
-&nbsp;
+<br/>
 
 ```powershell
 # Stop a Process
     Stop-Process -Name "[processname]" -Force
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -742,7 +742,7 @@ Example
     Stop-Process -Name "notepad" -Force
 ```
 
-&nbsp;
+<br/>
 
 ### Wait for a Process to Start
 
@@ -753,7 +753,7 @@ Snippet
 > - [ProcessName]: provide the name of the process you want to monitor for.
 > - [WaitInterval]: provide the number of seconds you want to wait between checks for the process (no quotes, this needs to be an integer).
 
-&nbsp;
+<br/>
 
 ```powershell
 # Wait for a Process to Start
@@ -770,7 +770,7 @@ Snippet
         )
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -789,7 +789,7 @@ Example
         )
 ```
 
-&nbsp;
+<br/>
 
 ## Certificate Management
 
@@ -800,7 +800,7 @@ The following snippets are managing certificates:
 | Install All Certificate Files | Certificate Management | Get all certificate files in the specified directory and install them into the specified certificate store. | [Link](###-install-all-certificate-files) |
 | Install Specific Certificate Files | Certificate Management | Utilizes a hash table so you can specify each certificate to install and the desired certificate store. | [Link](###-install-specific-certificate-files) |
 
-&nbsp;
+<br/>
 
 ### Install All Certificate Files
 
@@ -812,7 +812,7 @@ Snippet
 > - [extension]: the extension used to search and find the certificate files
 > - [certificatestore]: the store to import the certificates into
 
-&nbsp;
+<br/>
 
 ```powershell
 # Install All Certificate Files
@@ -846,13 +846,13 @@ Example
         }
 ```
 
-&nbsp;
+<br/>
 
 ### Install Specific Certificate Files
 
 > This needs to be created. Use a hash table approach to enumerate and process each key/value pair.
 
-&nbsp;
+<br/>
 
 ## Driver Management
 
@@ -862,11 +862,11 @@ The following snippets are for managing drivers:
 | ---- | ------- | ----------- | ---- |
 |  |  |  |  |
 
-&nbsp;
+<br/>
 
 > This needs to be created.
 
-&nbsp;
+<br/>
 
 ## Registry Management
 
@@ -878,7 +878,7 @@ The following snippets are for managing registry keys:
 | Add/Modify Registry Property (System) | Registry Management | Adds the property/value pair or modifies the existing property/value pair if it exists. | [Link](###-add_modify-registry-property-_system_) |
 | Add/Modify Registry Property (Current User) | Registry Management | Adds the property/value pair or modifies the existing property/value pair if it exists. | [Link](###-add_modify-registry-property-_current-user_) |
 
-&nbsp;
+<br/>
 
 ### Add/Modify Registry Property (System)
 
@@ -891,7 +891,7 @@ Snippet
 > - [propertyvalue]: value to add/modify in the property
 > - [propertytype]: property type of the property/value you are adding/modifying. The possible values are: String, ExpandString, Binary, DWord, MultiString, QWord, Unknown
 
-&nbsp;
+<br/>
 
 ```powershell
 # Add/Modify Registry Property (System)
@@ -908,7 +908,7 @@ Snippet
         New-ItemProperty -Path $RegistryPath -Name $PropertyName -Value $PropertyValue -PropertyType $PropertyType -Force | Out-Null
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -927,7 +927,7 @@ Example
         New-ItemProperty -Path $RegistryPath -Name $PropertyName -Value $PropertyValue -PropertyType $PropertyType -Force | Out-Null
 ```
 
-&nbsp;
+<br/>
 
 ### Add/Modify Registry Property (Current User)
 
@@ -935,7 +935,7 @@ This is the exact same as the code for the System snippets above. The only diffe
 
 > Script not duplicated here for brevity and to reduce the number of copies of the code that have to be maintained.
 
-&nbsp;
+<br/>
 
 ### Add/Modify All Users Profiles
 
@@ -946,7 +946,7 @@ Snippet
 > - Add the registry changes you want to make inside the block with the header: Add Per-User Registry Changes Here
 > - Ensure you use the $UserKey variable as this is set to each loaded profile
 
-&nbsp;
+<br/>
 
 ```powershell
 <# -----------------------------------------------------------------------------------------------------------------------------
@@ -1057,7 +1057,7 @@ Snippet
   }
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -1065,7 +1065,7 @@ Example
 # Example Omitted for Brevity
 ```
 
-&nbsp;
+<br/>
 
 ## Registry Sample Modules
 
@@ -1075,7 +1075,7 @@ The following are sampel modules you can use to make changes to the registry.
 | ---- | ------- | ----------- | ---- |
 | File Type Association | Sample Module | Add this snippet to the Add/Modify All Users Profiles snippet so that you can iterate through each profile and change the default application that is used when opening the specific file type. | [Link](###-file-type-association) |
 
-&nbsp;
+<br/>
 
 ### File Type Association
 
@@ -1085,14 +1085,14 @@ In order to set a default application for all users, including new users who log
 >
 > It's important to note the distinction below. While most registry edits to the .DEFAULT user profile will be enough to configure all newly created profiles, this is not the case when dealing with Default Applications. The DISM tool MUST BE USED to affect new profiles.
 
-&nbsp;
+<br/>
 
 | Tool | Description |
 | ---- | ----------- |
 | Registry | The registry is how you will modify all existing profiles so that they use the new Default Application associated with the file type. |
 | DISM | The DISM tool is how you set the Default Application for all new profiles that are created when new users login. An XML needs to be exported from a manually configured device and then edited to include only the changes you want. Then it will be imported in to devices to configure them. This is the same process if you were to deploy the settings via GPO. |
 
-&nbsp;
+<br/>
 
 #### Registry
 
@@ -1104,7 +1104,7 @@ This snippet for the registry part of the process performs the following actions
 - Deletes the $UserRootKey if it exists
 - ENumerates and iterates through the nested hashtables to create each registry entry adding the keys and property/value pairs for each nested hashtable of data
 
-&nbsp;
+<br/>
 
 Snippet
 
@@ -1120,7 +1120,7 @@ Snippet
 >   - PropertyType = The type of the property. Supported values are: String, ExpandString, Binary, DWord, MultiString, QWord, Unknown
 >
 
-&nbsp;
+<br/>
 
 ```powershell
 # Define Variables
@@ -1170,7 +1170,7 @@ Snippet
     }
 ```
 
-&nbsp;
+<br/>
 
 #### DISM
 
@@ -1181,7 +1181,7 @@ Using he DISM.ex tool (available on all Windows 10 devices), you can export/impo
 - Delete all lines except the settings you actually want to apply
 - Run the below import command on devices you want to apply the Default Application settings to
 
-&nbsp;
+<br/>
 
 Snippet (Export)
 
@@ -1191,14 +1191,14 @@ Snippet (Export)
 >
 > - [filepath]: Name of the file you want to export the settings to
 
-&nbsp;
+<br/>
 
 ```powershell
 # Export Default Application Associations
     Dism.exe /Online /Export-DefaultAppAssociations:"[filepath].xml"
 ```
 
-&nbsp;
+<br/>
 
 Snippet (Import)
 
@@ -1208,16 +1208,16 @@ Snippet (Import)
 >
 > - [filepath]: Name of the exported file you want to import
 
-&nbsp;
+<br/>
 
 ```powershell
 # Import Default Application Associations
     Dism.exe /Online /Import-DefaultAppAssociations:"[filepath].xml"
 ```
 
-&nbsp;
+<br/>
 
-&nbsp;
+<br/>
 
 ---
 
@@ -1230,7 +1230,7 @@ The following snippets are for managing environment variables:
 | Add/Modify Environment Variable | Environment Variable Management | Allows you to add an Environment Variable and its value to the specified scope. | [Link](###-addmodify-environment-variable) |
 | Remove Environment Variable | Environment Variable Management | Allows you to remove an Environment Variable and its value from the specified scope. | [Link](###-remove-environment-variable) |
 
-&nbsp;
+<br/>
 
 ### Add/Modify Environment Variable
 
@@ -1242,14 +1242,14 @@ Snippet
 > - [variablevalue]: the value you want to store with the variable
 > - [scope]: the scope that the variable will be added to (Machine, User, Process)
 
-&nbsp;
+<br/>
 
 ```powershell
 # Add/Modify an Environment Variable
     [System.Environment]::SetEnvironmentVariable('[variablename]','[variablevalue]','[scope]')
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -1258,7 +1258,7 @@ Example
     [System.Environment]::SetEnvironmentVariable('LICENSE_SERVER','28000@SERVERNAME','Machine')
 ```
 
-&nbsp;
+<br/>
 
 ### Remove Environment Variable
 
@@ -1270,14 +1270,14 @@ Snippet
 > - [variablevalue]: the value you want to store with the variable
 > - [scope]: the scope that the variable exists in (Machine, User, Process)
 
-&nbsp;
+<br/>
 
 ```powershell
 # Remove an Environment Variable
     [System.Environment]::SetEnvironmentVariable('[variablename]','','[scope]')
 ```
 
-&nbsp;
+<br/>
 
 Example
 
@@ -1286,6 +1286,6 @@ Example
     [System.Environment]::SetEnvironmentVariable('LICENSE_SERVER','','Machine')
 ```
 
-&nbsp;
+<br/>
 
 
