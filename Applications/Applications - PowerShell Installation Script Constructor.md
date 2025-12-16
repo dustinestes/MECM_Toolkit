@@ -223,7 +223,7 @@ Snippet
 
 ```powershell
 # Install Application
-    Start-Process -NoNewWindow -FilePath ".\[filepath]" -Argumentlist "[parameters for installation]" -Wait
+Start-Process -NoNewWindow -FilePath ".\[filepath]" -Argumentlist "[parameters for installation]" -Wait
 ```
 
 <br/>
@@ -232,7 +232,7 @@ Example (EXE)
 
 ```powershell
 # Install Application
-    Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Install.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
+Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Install.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
 <br/>
@@ -245,7 +245,16 @@ Example (MSI)
 
 ```powershell
 # Install Application
-    Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.msi","/qn","/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
+Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.msi","/qn","/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
+```
+
+<br/>
+
+Example (MSIX)
+
+```powershell
+# Install Application
+Add-AppxPackage -Path "[Path]]\[Filename].msix"
 ```
 
 <br/>
@@ -298,6 +307,15 @@ Example (MSI)
 ```powershell
 # Uninstall Application
     (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+```
+
+<br/>
+
+Example (MSIX)
+
+```powershell
+# Uninstall Application
+Remove-AppxPackage -Package "[Path]]\[Filename].msix" -AllUsers
 ```
 
 <br/>
