@@ -18,6 +18,7 @@ A collection of scripts, tools, and processes for the successful installation, a
 | Client         | Client management folder for everything pertaining to installing and managing the MECM client                                                                                  |
 | Infrastructure | Infrastructure management folder for everything pertaining to installation, administration, and automation of the MECM environment                                             |
 | Integrations   | Integrations management folder for everything pertaining to integrating 3rd party components and products into MECM                                                            |
+| Scripts        | Scripts folder for everything pertaining to pushable scripts that can be initiated or scheduled on devices using the MECM Console                                              |
 | Task Sequences | Task Sequences folder for everything pertaining to the steps and their content for use with Operating System Deployments, In-place Upgrades, and other types of Task Sequences |
 
 &nbsp;
