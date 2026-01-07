@@ -889,6 +889,10 @@ This snippet will create the collection with all of the identified settings abov
 The below snippet can be used from the SQL Server Management Studio (or your tool of choice) to query the same information that the Collection is pulling.
 
 ```sql
+-- Rule 1
+select * from v_R_System where v_R_System.Build01 < '10.0.22000' and v_R_System.Operating_System_Name_and0 like '%Microsoft Windows NT Workstation 10.0%'
+
+-- Rule 2
 select * from v_R_System inner join v_GS_OPERATING_SYSTEM on v_GS_OPERATING_SYSTEM.ResourceID = v_R_System.ResourceID where v_GS_OPERATING_SYSTEM.Caption0 like '%Microsoft Windows 10%'
 ```
 
