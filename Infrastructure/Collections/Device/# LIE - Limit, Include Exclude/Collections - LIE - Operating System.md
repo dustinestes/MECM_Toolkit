@@ -1181,6 +1181,14 @@ A collection of all devices running Windows 11.
 |-------------------------------|-------------------------------------------------------------------------------------------|
 | Enabled                       | True                                                                                      |
 | Type                          | Query                                                                                     |
+| Name                          | Build >= "10.0.22000" and OSName like "Workstation 10.0"                                  |
+| Resource Class                | System Resource                                                                           |
+| Snippet                       | select * from SMS_R_System where SMS_R_System.Build >= "10.0.22000" and SMS_R_System.OperatingSystemNameandVersion like "%Microsoft Windows NT Workstation 10.0%" |
+
+| Property                      | Value                                                                                     |
+|-------------------------------|-------------------------------------------------------------------------------------------|
+| Enabled                       | True                                                                                      |
+| Type                          | Query                                                                                     |
 | Name                          | Caption like "Microsoft Windows 11%                                                       |
 | Resource Class                | System Resource                                                                           |
 | Snippet                       | select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceID where SMS_G_System_OPERATING_SYSTEM.Caption like "Microsoft Windows 11%" |
@@ -1219,8 +1227,6 @@ This snippet will create the collection with all of the identified settings abov
     $Collection_Type            = "Device"
     $Collection_RefreshType     = "Both"
     $Schedule_FullUpdate        = New-CMSchedule -Start (Get-Date -Date "01/01/2020" -Hour "19" -Minute "26" -Second "00" -Format o) -DurationInterval Days -DurationCount 0 -RecurInterval Days -RecurCount 1
-    $MembershipRule_Name        = 'Caption like "Microsoft Windows 11%'
-    $MembershipRule_QueryLogic  = 'select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceID where SMS_G_System_OPERATING_SYSTEM.Caption like "Microsoft Windows 11%"'
 
 # Create Collection
     $Object_Collection = New-CMCollection -Name $Collection_Name -Comment $Collection_Comment -LimitingCollectionName $Collection_Limiting -CollectionType $Collection_Type -RefreshType $Collection_RefreshType -RefreshSchedule $Schedule_FullUpdate
@@ -1229,6 +1235,12 @@ This snippet will create the collection with all of the identified settings abov
     Move-CMObject -InputObject $Object_Collection -FolderPath $MECM_FolderPath
 
 # Set Membership Rules
+    $MembershipRule_Name        = 'Build >= "10.0.22000" and OSName like "Workstation 10.0"'
+    $MembershipRule_QueryLogic  = 'select * from SMS_R_System where SMS_R_System.Build >= "10.0.22000" and SMS_R_System.OperatingSystemNameandVersion like "%Microsoft Windows NT Workstation 10.0%"'
+    Add-CMDeviceCollectionQueryMembershipRule -InputObject $Object_Collection -RuleName $MembershipRule_Name -QueryExpression $MembershipRule_QueryLogic
+
+    $MembershipRule_Name        = 'Caption like "Microsoft Windows 11%'
+    $MembershipRule_QueryLogic  = 'select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceID where SMS_G_System_OPERATING_SYSTEM.Caption like "Microsoft Windows 11%"'
     Add-CMDeviceCollectionQueryMembershipRule -InputObject $Object_Collection -RuleName $MembershipRule_Name -QueryExpression $MembershipRule_QueryLogic
 ```
 
@@ -1237,6 +1249,10 @@ This snippet will create the collection with all of the identified settings abov
 The below snippet can be used from the SQL Server Management Studio (or your tool of choice) to query the same information that the Collection is pulling.
 
 ```sql
+-- Rule 1
+select * from v_R_System where v_R_System.Build01 >= '10.0.22000' and v_R_System.Operating_System_Name_and0 like '%Microsoft Windows NT Workstation 10.0%'
+
+-- Rule 2
 select * from v_R_System inner join v_GS_OPERATING_SYSTEM on v_GS_OPERATING_SYSTEM.ResourceID = v_R_System.ResourceID where v_GS_OPERATING_SYSTEM.Caption0 like '%Microsoft Windows 11%'
 ```
 
