@@ -46,7 +46,7 @@ The following prerequisites are needed before running any of the code snippets w
 
 ## List of Collections
 
-- [MECM - Collections - LIE - Operating System](#mecm---collections---lie---operating-system)
+- [MECM Toolkit - Collections - LIE - Operating System](#mecm-toolkit---collections---lie---operating-system)
   - [About](#about)
   - [Prerequisites](#prerequisites)
   - [List of Collections](#list-of-collections)
@@ -821,6 +821,14 @@ A collection of all devices running Windows 10.
 |-------------------------------|-------------------------------------------------------------------------------------------|
 | Enabled                       | True                                                                                      |
 | Type                          | Query                                                                                     |
+| Name                          | Build < "10.0.22000" and OSName like "Workstation 10.0"                                   |
+| Resource Class                | System Resource                                                                           |
+| Snippet                       | select * from SMS_R_System where SMS_R_System.Build < "10.0.22000" and SMS_R_System.OperatingSystemNameandVersion like "%Microsoft Windows NT Workstation 10.0%" |
+
+| Property                      | Value                                                                                     |
+|-------------------------------|-------------------------------------------------------------------------------------------|
+| Enabled                       | True                                                                                      |
+| Type                          | Query                                                                                     |
 | Name                          | Caption like "Microsoft Windows 10%                                                       |
 | Resource Class                | System Resource                                                                           |
 | Snippet                       | select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceID where SMS_G_System_OPERATING_SYSTEM.Caption like "Microsoft Windows 10%" |
@@ -859,8 +867,6 @@ This snippet will create the collection with all of the identified settings abov
     $Collection_Type            = "Device"
     $Collection_RefreshType     = "Both"
     $Schedule_FullUpdate        = New-CMSchedule -Start (Get-Date -Date "01/01/2020" -Hour "19" -Minute "26" -Second "00" -Format o) -DurationInterval Days -DurationCount 0 -RecurInterval Days -RecurCount 1
-    $MembershipRule_Name        = 'Caption like "Microsoft Windows 10%'
-    $MembershipRule_QueryLogic  = 'select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceID where SMS_G_System_OPERATING_SYSTEM.Caption like "Microsoft Windows 10%"'
 
 # Create Collection
     $Object_Collection = New-CMCollection -Name $Collection_Name -Comment $Collection_Comment -LimitingCollectionName $Collection_Limiting -CollectionType $Collection_Type -RefreshType $Collection_RefreshType -RefreshSchedule $Schedule_FullUpdate
@@ -869,6 +875,12 @@ This snippet will create the collection with all of the identified settings abov
     Move-CMObject -InputObject $Object_Collection -FolderPath $MECM_FolderPath
 
 # Set Membership Rules
+    $MembershipRule_Name        = 'Build < "10.0.22000" and OSName like "Workstation 10.0"'
+    $MembershipRule_QueryLogic  = 'select * from SMS_R_System where SMS_R_System.Build < "10.0.22000" and SMS_R_System.OperatingSystemNameandVersion like "%Microsoft Windows NT Workstation 10.0%"'
+    Add-CMDeviceCollectionQueryMembershipRule -InputObject $Object_Collection -RuleName $MembershipRule_Name -QueryExpression $MembershipRule_QueryLogic
+
+    $MembershipRule_Name        = 'Caption like "Microsoft Windows 10%'
+    $MembershipRule_QueryLogic  = 'select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceID where SMS_G_System_OPERATING_SYSTEM.Caption like "Microsoft Windows 10%"'
     Add-CMDeviceCollectionQueryMembershipRule -InputObject $Object_Collection -RuleName $MembershipRule_Name -QueryExpression $MembershipRule_QueryLogic
 ```
 
