@@ -253,8 +253,18 @@ Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.
 Example (MSIX)
 
 ```powershell
-# Install Application
-Add-AppxPackage -Path "[Path]]\[Filename].msix"
+# Get User/System Context
+Write-Host "Get User/System Context"
+$Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+
+# Install Windows App (Context)
+if ($Meta_Script_Execution_User.IsSystem) {
+  Write-Host "Install Windows App (SYSTEM)"
+  Add-AppxProvisionedPackage -Online -PackagePath "App Installer_1.27.350.0_X64_msix_en-US.msix" -Verbose
+} else {
+  Write-Host "Install Windows App (USER)"
+  Add-AppxPackage -Path "App Installer_1.27.350.0_X64_msix_en-US.msix" -Verbose
+}
 ```
 
 <br/>
@@ -293,7 +303,7 @@ Example (EXE)
 
 ```powershell
 # Uninstall Application
-    (Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Uninstall.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+  (Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Uninstall.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
 <br/>
@@ -306,7 +316,7 @@ Example (MSI)
 
 ```powershell
 # Uninstall Application
-    (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+  (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
 <br/>
@@ -314,8 +324,18 @@ Example (MSI)
 Example (MSIX)
 
 ```powershell
-# Uninstall Application
-Remove-AppxPackage -Package "[Path]]\[Filename].msix" -AllUsers
+# Get User/System Context
+Write-Host "Get User/System Context"
+$Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+
+# Uninstall Windows App (Context)
+if ($Meta_Script_Execution_User.IsSystem) {
+    Write-Host "Uninstall Windows App (SYSTEM)"
+    Remove-AppxProvisionedPackage -Online -PackageName "Microsoft.DesktopAppInstaller_2025.1021.1948.0_neutral_~_8wekyb3d8bbwe" -AllUsers -LogLevel Debug -LogPath "$($env:FSI_Directory_Logs)\Applications\Uninstall\MicrosoftCorporation_DesktopAppInstaller_1.27.350.0_Appx_Uninstall.log" -Verbose
+} else {
+    Write-Host "Uninstall Windows App (USER)"
+    Remove-AppxPackage -Package "Microsoft.DesktopAppInstaller_1.27.350.0_x64__8wekyb3d8bbwe" -Verbose
+}
 ```
 
 <br/>
