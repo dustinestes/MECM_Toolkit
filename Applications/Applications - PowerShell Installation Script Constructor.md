@@ -15,6 +15,7 @@ The below ToC links you to the various sections and code snippets within this ma
     - [End Logging](#end-logging)
   - [Installation](#installation)
     - [Standard Installation](#standard-installation)
+    - [MSI Bulk Installation](#msi-bulk-installation)
   - [Uninstallation](#uninstallation)
     - [Standard Uninstallation](#standard-uninstallation)
     - [MSI Bulk Uninstallation](#msi-bulk-uninstallation)
@@ -223,6 +224,8 @@ Snippet
 
 ```powershell
 # Install Application
+Write-Host "Install Application"
+Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `".\[filepath]`" -Argumentlist `"[parameters for installation]`" -Wait"
 Start-Process -NoNewWindow -FilePath ".\[filepath]" -Argumentlist "[parameters for installation]" -Wait
 ```
 
@@ -232,7 +235,9 @@ Example (EXE)
 
 ```powershell
 # Install Application
-Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Install.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
+Write-Host "Install Application"
+Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `".\setup.exe`" -Argumentlist `"-s`",`"-f1 .\Install.iss`",`"-f2 C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log`" -Wait"
+Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl .\Install.iss", "-f2 C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
 <br/>
@@ -245,6 +250,8 @@ Example (MSI)
 
 ```powershell
 # Install Application
+Write-Host "Install Application"
+Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `"MsiExec.exe`" -Argumentlist `"/i`",`"Filename.msi`",`"/qn`",`"/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log`" -Wait"
 Start-Process -NoNewWindow -FilePath "MsiExec.exe" -Argumentlist "/i","Filename.msi","/qn","/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Install.log" -Wait
 ```
 
@@ -260,11 +267,44 @@ $Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::G
 # Install Windows App (Context)
 if ($Meta_Script_Execution_User.IsSystem) {
   Write-Host "Install Windows App (SYSTEM)"
+  Write-Host "  - Command: Add-AppxProvisionedPackage -Online -PackagePath `"App Installer_1.27.350.0_X64_msix_en-US.msix`" -Verbose"
   Add-AppxProvisionedPackage -Online -PackagePath "App Installer_1.27.350.0_X64_msix_en-US.msix" -Verbose
 } else {
   Write-Host "Install Windows App (USER)"
+  Write-Host "  - Command: Add-AppxPackage -Path `"App Installer_1.27.350.0_X64_msix_en-US.msix`" -Verbose"
   Add-AppxPackage -Path "App Installer_1.27.350.0_X64_msix_en-US.msix" -Verbose
 }
+```
+
+<br/>
+
+### MSI Bulk Installation
+
+This should only be used when the application's primary installation manager or installer will not install all products that are necessary for the application.
+
+Snippet
+
+> Notes:
+>
+> -	[ConcatenatedName]: provide the concatenated name used to uniquely name log files (Standard = Manufacturer_Product_Version)
+> - [GUID/FilePath]: provides the product code GUID or points to the product MSI
+
+<br/>
+
+```powershell
+# Install Applications (MSI Bulk)
+Write-Host "Install Applications (MSI Bulk)"
+  # Define Variables
+    $Hashtable_MSIs = @{
+      "[ConcatenatedName]" = "[GUID/FilePath]"
+    }
+
+  # Install Applications
+    foreach ($item in $Hashtable_MSIs.GetEnumerator()) {
+      Write-Host "  - $($item.Key)"
+      Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `"MsiExec.exe`" -Argumentlist `"/x`",`"$($_.Value)`",`"/qn`",`"/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\$($_.Key)$_Install.log`" -Wait"
+      Start-Process -NoNewWindow -FilePath "MsiExec.exe" -ArgumentList "/x", "$($_.Value)", "/qn", "/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Install\$($_.Key)_Install.log" -Wait
+    }
 ```
 
 <br/>
@@ -294,7 +334,9 @@ Snippet
 
 ```powershell
 # Uninstall Application
-    (Start-Process -NoNewWindow -FilePath ".\[Filepath]" -Argumentlist "[parameters for installation]" -Wait).ExitCode
+Write-Host "Uninstall Application"
+Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `".\[filepath]`" -Argumentlist `"[parameters for installation]`" -Wait"
+Start-Process -NoNewWindow -FilePath ".\[Filepath]" -Argumentlist "[parameters for installation]" -Wait
 ```
 
 <br/>
@@ -303,7 +345,9 @@ Example (EXE)
 
 ```powershell
 # Uninstall Application
-  (Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl.\Manufacturer_Product_Version_Uninstall.iss", "-f2C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+Write-Host "Uninstall Application"
+Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `".\setup.exe`" -Argumentlist `"-s`",`"-f1 .\Uninstall.iss`",`"-f2 C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Install.log`" -Wait"
+(Start-Process -NoNewWindow -FilePath ".\setup.exe" -Argumentlist "-s", "-fl .\Uninstall.iss", "-f2 C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
 ```
 
 <br/>
@@ -316,7 +360,9 @@ Example (MSI)
 
 ```powershell
 # Uninstall Application
-  (Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait).ExitCode
+Write-Host "Uninstall Application"
+Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `"MsiExec.exe`" -Argumentlist `"/x`",`"{VR000000-0000-0000-0000-000000000000}`",`"/qn`",`"/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Install\Manufacturer_Product_Version_Uninstall.log`" -Wait"
+Start-Process -NoNewWindow -FilePath "msiexec.exe" -ArgumentList "/x","{VR000000-0000-0000-0000-000000000000}","/qn","/l·v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\Manufacturer_Product_Version_Uninstall.log" -Wait
 ```
 
 <br/>
@@ -330,11 +376,13 @@ $Meta_Script_Execution_User     = [System.Security.Principal.WindowsIdentity]::G
 
 # Uninstall Windows App (Context)
 if ($Meta_Script_Execution_User.IsSystem) {
-    Write-Host "Uninstall Windows App (SYSTEM)"
-    Remove-AppxProvisionedPackage -Online -PackageName "Microsoft.DesktopAppInstaller_2025.1021.1948.0_neutral_~_8wekyb3d8bbwe" -AllUsers -LogLevel Debug -LogPath "$($env:FSI_Directory_Logs)\Applications\Uninstall\MicrosoftCorporation_DesktopAppInstaller_1.27.350.0_Appx_Uninstall.log" -Verbose
+  Write-Host "Uninstall Windows App (SYSTEM)"
+  Write-Host "  - Command: Remove-AppxProvisionedPackage -Online -PackageName `"Microsoft.DesktopAppInstaller_2025.1021.1948.0_neutral_~_8wekyb3d8bbwe`" -AllUsers -LogLevel Debug -LogPath `"$($env:vr_Directory_Logs)\Applications\Uninstall\MicrosoftCorporation_DesktopAppInstaller_1.27.350.0_Appx_Uninstall.log`" -Verbose"
+  Remove-AppxProvisionedPackage -Online -PackageName "Microsoft.DesktopAppInstaller_2025.1021.1948.0_neutral_~_8wekyb3d8bbwe" -AllUsers -LogLevel Debug -LogPath "$($env:vr_Directory_Logs)\Applications\Uninstall\MicrosoftCorporation_DesktopAppInstaller_1.27.350.0_Appx_Uninstall.log" -Verbose
 } else {
-    Write-Host "Uninstall Windows App (USER)"
-    Remove-AppxPackage -Package "Microsoft.DesktopAppInstaller_1.27.350.0_x64__8wekyb3d8bbwe" -Verbose
+  Write-Host "Uninstall Windows App (USER)"
+  Write-Host "  - Command: Remove-AppxPackage -Package `"Microsoft.DesktopAppInstaller_1.27.350.0_x64__8wekyb3d8bbwe`" -Verbose"
+  Remove-AppxPackage -Package "Microsoft.DesktopAppInstaller_1.27.350.0_x64__8wekyb3d8bbwe" -Verbose
 }
 ```
 
@@ -355,15 +403,18 @@ Snippet
 
 ```powershell
 # Uninstall Applications (MSI Bulk)
-    # Define Variables
-        $Hashtable_MSIs = @{
-            "[ConcatenatedName]" = "[GUID/FilePath]"
-        }
+Write-Host "Uninstall Applications (MSI Bulk)"
+  # Define Variables
+    $Hashtable_MSIs = @{
+      "[ConcatenatedName]" = "[GUID/FilePath]"
+    }
 
-    # Uninstall Applications
-        foreach ($item in $Hashtable_MSIs.GetEnumerator()) {
-            (Start-Process -NoNewWindow -FilePath "MsiExec.exe" -ArgumentList "/x", "$($_.Value)", "/qn", "/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Uninstall\$($_.Key)_Uninstall.log" -Wait).ExitCode
-        }
+  # Uninstall Applications
+    foreach ($item in $Hashtable_MSIs.GetEnumerator()) {
+      Write-Host "  - $($item.Key)"
+      Write-Host "  - Command: Start-Process -NoNewWindow -FilePath `"MsiExec.exe`" -Argumentlist `"/x`",`"$($_.Value)`",`"/qn`",`"/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Applications\Uninstall\$($_.Key)$_Uninstall.log`" -Wait"
+      Start-Process -NoNewWindow -FilePath "MsiExec.exe" -ArgumentList "/x", "$($_.Value)", "/qn", "/l*v C:\ProgramData\VividRock\MECMScriptToolkit\Logging\Application\Uninstall\$($_.Key)_Uninstall.log" -Wait
+    }
 ```
 
 <br/>
