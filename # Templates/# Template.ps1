@@ -29,12 +29,6 @@ Start-Transcript -Path "C:\VividRock\MECM Toolkit\Logs\[Collection]\[SpecificOpe
   Write-Host "------------------------------------------------------------------------------"
   Write-Host ""
 
-<#
-  To Do:
-    - Item
-    - Item
-#>
-
 #EndRegion Header
 #--------------------------------------------------------------------------------------------
 
